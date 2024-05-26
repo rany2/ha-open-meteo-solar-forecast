@@ -1,0 +1,5 @@
+{
+    "name": "Open-Meteo Solar Forecast",
+    "render_readme": false,
+    "homeassistant": "2022.11"
+}
