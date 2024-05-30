@@ -1,5 +1,9 @@
 ### Changes
 
+v0.1.1
+
+- Update to open-meteo-solar-forecast 0.1.7.
+
 v0.1.0
 
 - Initial release.
