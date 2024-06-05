@@ -1,5 +1,10 @@
 ### Changes
 
+v0.1.6
+
+- Add D2, D3, D4, D5, D6, D7 energy production sensors.
+- Clarify that effiency factor is only for DC wire efficiency not cell efficiency.
+
 v0.1.5
 
 - Fix start time for power sensors.
