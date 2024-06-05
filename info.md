@@ -1,5 +1,9 @@
 ### Changes
 
+v0.1.8
+
+- Fix ` TypeError: unsupported operand type(s) for *: ‘NoneType’ and ‘int’` bug.
+
 v0.1.6
 
 - Add D2, D3, D4, D5, D6, D7 energy production sensors.
