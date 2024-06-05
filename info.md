@@ -1,5 +1,9 @@
 ### Changes
 
+v0.1.5
+
+- Fix start time for power sensors.
+
 v0.1.4
 
 - Fix typo in cell temperature calculation.
