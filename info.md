@@ -1,5 +1,9 @@
 ### Changes
 
+v0.1.4
+
+- Fix typo in cell temperature calculation.
+
 v0.1.3
 
 - Account for cell efficiency and wind speed for cell temperature calculations.
