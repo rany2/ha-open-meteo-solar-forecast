@@ -1,5 +1,9 @@
 ### Changes
 
+v0.1.9
+
+- Switched to using GitHub releases.
+
 v0.1.8
 
 - Fix ` TypeError: unsupported operand type(s) for *: ‘NoneType’ and ‘int’` bug.

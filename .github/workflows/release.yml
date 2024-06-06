@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release_zip_file:
+    name: Prepare release asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      # Pack the open_meteo_solar_forecast dir as a zip and upload to the release
+      - name: ZIP open_meteo_solar_forecast Dir
+        run: |
+          cd ${{ github.workspace }}/custom_components/open_meteo_solar_forecast
+          zip open_meteo_solar_forecast.zip -r ./
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ github.workspace }}/custom_components/open_meteo_solar_forecast/open_meteo_solar_forecast.zip
+          asset_name: open_meteo_solar_forecast.zip
+          tag: ${{ github.ref }}
+          overwrite: true
