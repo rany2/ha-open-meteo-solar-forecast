@@ -1,5 +1,13 @@
 # Changelog
 
+v0.1.10
+
+- Fix setting of custom Open-Meteo URL
+- Add support for capping power to inverter capacity
+- Provide detailed forecast in sensor attribute
+- Fix config_flow.py for HA <2024.4.0b0
+- Write some documentation
+
 v0.1.9
 
 - Switched to using GitHub releases.
