@@ -37,14 +37,14 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         api_key = entry.options.get(CONF_API_KEY) or None
 
         self.forecast = OpenMeteoSolarForecast(
-            base_url=entry.data.get(CONF_BASE_URL),
             api_key=api_key,
             session=async_get_clientsession(hass),
             latitude=entry.data[CONF_LATITUDE],
             longitude=entry.data[CONF_LONGITUDE],
+            azimuth=entry.options[CONF_AZIMUTH] - 180,
+            base_url=entry.options[CONF_BASE_URL],
             declination=entry.options[CONF_DECLINATION],
             efficiency_factor=entry.options[CONF_EFFICIENCY_FACTOR],
-            azimuth=entry.options[CONF_AZIMUTH] - 180,
             kwp=(entry.options[CONF_MODULES_POWER] / 1000),
         )
 
