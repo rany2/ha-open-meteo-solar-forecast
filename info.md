@@ -6,7 +6,7 @@ v0.1.9
 
 v0.1.8
 
-- Fix ` TypeError: unsupported operand type(s) for *: ‘NoneType’ and ‘int’` bug.
+- Fix `TypeError: unsupported operand type(s) for *: ‘NoneType’ and ‘int’` bug.
 
 v0.1.6
 
