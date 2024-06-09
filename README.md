@@ -44,13 +44,17 @@ The DC efficiency is the efficiency of the DC wiring and should not be confused 
 
 The power sensors start with "Solar production forecast Estimated power" and the energy sensors start with "Solar production forecast Estimated energy". The power sensors show the power expected to be available at that time, and the energy sensors show the energy expected to be produced as an average over an hour.
 
+### Confusion between "Open-Meteo" and "Open-Meteo Solar Forecast" Integrations
+
+The "Open-Meteo" integration is for weather data, and the "Open-Meteo Solar Forecast" integration is for solar production data. They are separate integrations and should not be confused with each other.
+
 ### Disabled Sensors
 
 Some sensors are disabled by default to reduce load on the recorder database. If you want one of these sensors, you can enable it and wait about a minute for sensor data to appear.
 
 ## Changes
 
-Changes are documented in the [CHANGELOG.md](/CHANGELOG.md).
+Changes are documented in the [CHANGELOG.md](https://github.com/rany2/ha-open-meteo-solar-forecast/blob/master/CHANGELOG.md).
 
 ## Credits
 
