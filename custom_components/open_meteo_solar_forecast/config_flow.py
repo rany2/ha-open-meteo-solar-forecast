@@ -21,6 +21,7 @@ from .const import (
     CONF_DECLINATION,
     CONF_EFFICIENCY_FACTOR,
     CONF_MODULES_POWER,
+    CONF_INVERTER_POWER,
     DOMAIN,
 )
 
@@ -55,6 +56,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_BASE_URL: user_input[CONF_BASE_URL],
                     CONF_DECLINATION: user_input[CONF_DECLINATION],
                     CONF_MODULES_POWER: user_input[CONF_MODULES_POWER],
+                    CONF_INVERTER_POWER: user_input[CONF_INVERTER_POWER],
                     CONF_EFFICIENCY_FACTOR: user_input[CONF_EFFICIENCY_FACTOR],
                 },
             )
@@ -84,6 +86,9 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     ),
                     vol.Required(CONF_MODULES_POWER): vol.All(
                         vol.Coerce(int), vol.Range(min=1)
+                    ),
+                    vol.Required(CONF_INVERTER_POWER, default=0): vol.All(
+                        vol.Coerce(int), vol.Range(min=0)
                     ),
                     vol.Optional(CONF_EFFICIENCY_FACTOR, default=1.0): vol.All(
                         vol.Coerce(float), vol.Range(min=0)
@@ -138,6 +143,10 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                         CONF_MODULES_POWER,
                         default=self.config_entry.options[CONF_MODULES_POWER],
                     ): vol.All(vol.Coerce(int), vol.Range(min=1)),
+                    vol.Required(
+                        CONF_INVERTER_POWER,
+                        default=self.config_entry.options.get(CONF_INVERTER_POWER, 0),
+                    ): vol.All(vol.Coerce(int), vol.Range(min=0)),
                     vol.Optional(
                         CONF_EFFICIENCY_FACTOR,
                         default=self.config_entry.options.get(
