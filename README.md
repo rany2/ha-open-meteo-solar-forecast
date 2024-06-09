@@ -34,7 +34,7 @@ This should be left blank as the Open-Meteo API does not require an API key. An 
 
 ### Azimuth
 
-The azimuth range for this integration is 0 to 360 degrees, with 0 being North, 90 being East, 180 being South, and 270 being West. If you have a negative azimuth, add 360 to it to get the correct value.
+The azimuth range for this integration is 0 to 360 degrees, with 0 being North, 90 being East, 180 being South, and 270 being West. If you have a negative azimuth, add 360 to it to get the correct value. For example, -90 degrees should be entered as 270 degrees.
 
 ### DC Efficiency
 
