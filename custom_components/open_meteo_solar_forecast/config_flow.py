@@ -8,7 +8,6 @@ import voluptuous as vol
 from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
-    ConfigFlowResult,
     OptionsFlow,
 )
 from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
@@ -23,6 +22,11 @@ from .const import (
     CONF_MODULES_POWER,
     DOMAIN,
 )
+
+try:
+    from homeassistant.config_entries import ConfigFlowResult  # >=2024.4.0b0
+except ImportError:
+    from homeassistant.data_entry_flow import FlowResult as ConfigFlowResult
 
 
 class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
