@@ -52,6 +52,23 @@ The "Open-Meteo" integration is for weather data, and the "Open-Meteo Solar Fore
 
 Some sensors are disabled by default to reduce load on the recorder database. If you want one of these sensors, you can enable it and wait about a minute for sensor data to appear.
 
+### Power Sensor Update Frequency
+
+The power sensors update every 15 minutes, so you may not see immediate changes in the power sensors. They are not interpolated every minute. For example, consider that the integration knows that the power values will be as follows for the given instants:
+
+- `12:00`: `100` W
+- `12:15`: `200` W
+- `12:30`: `300` W
+
+If you check the "Power Now" sensor at:
+
+- `12:00`, it will show `100` W (data taken from `12:00`)
+- `12:15`, it will show `200` W (data taken from `12:15`)
+- `12:22`, it will show `200` W (data taken from `12:15`)
+- `12:37`, it will show `300` W (data taken from `12:30`)
+
+Notice that the power sensor picks the last known value until the next update, not necessarily the closest value. Also, the power sensors are not interpolated, so the "Power Now" sensor will not show ~`150` W at `12:07`.
+
 ## Changes
 
 Changes are documented in the [CHANGELOG.md](https://github.com/rany2/ha-open-meteo-solar-forecast/blob/master/CHANGELOG.md).
