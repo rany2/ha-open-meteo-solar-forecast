@@ -1,6 +1,6 @@
 {
     "name": "Open-Meteo Solar Forecast",
-    "render_readme": false,
+    "render_readme": true,
     "homeassistant": "2022.11",
     "zip_release": true,
     "filename": "open_meteo_solar_forecast.zip"

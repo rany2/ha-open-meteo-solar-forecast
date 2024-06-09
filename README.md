@@ -48,6 +48,10 @@ The power sensors start with "Solar production forecast Estimated power" and the
 
 Some sensors are disabled by default to reduce load on the recorder database. If you want one of these sensors, you can enable it and wait about a minute for sensor data to appear.
 
+## Changes
+
+Changes are documented in the [CHANGELOG.md](/CHANGELOG.md).
+
 ## Credits
 
 The [forecast_solar component code](https://github.com/home-assistant/core/tree/dev/homeassistant/components/forecast_solar) was used as a base for this integration. Thanks for such a clean starting point!
