@@ -1,5 +1,9 @@
 # Changelog
 
+v0.1.11
+
+- Fixes a bug where sometimes data is fetched when attempting to update the power sensors.
+
 v0.1.10
 
 - Fix setting of custom Open-Meteo URL
