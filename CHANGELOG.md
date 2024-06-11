@@ -1,5 +1,9 @@
 # Changelog
 
+v0.1.12
+
+- Sort integration's `manifest.json` to pass hassfest validation. This is required for submission to the Home Assistant Community Store's default repo.
+
 v0.1.11
 
 - Fixes a bug where sometimes data is fetched when attempting to update the power sensors.
