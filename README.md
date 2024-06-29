@@ -69,10 +69,6 @@ If you check the "Power Now" sensor at:
 
 Notice that the power sensor picks the last known value until the next update, not necessarily the closest value. Also, the power sensors are not interpolated, so the "Power Now" sensor will not show ~`150` W at `12:07`.
 
-## Changes
-
-Changes are documented in the [CHANGELOG.md](https://github.com/rany2/ha-open-meteo-solar-forecast/blob/master/CHANGELOG.md).
-
 ## Credits
 
 The [forecast_solar component code](https://github.com/home-assistant/core/tree/dev/homeassistant/components/forecast_solar) was used as a base for this integration. Thanks for such a clean starting point!
