@@ -29,31 +29,31 @@
         "name": "Прогнознa енергия - след час"
       },
       "energy_production_today": {
-        "name": "Прогнознa енергия - днес"
+        "name": "Прогноза за днес"
       },
       "energy_production_today_remaining": {
-        "name": "Прогнознa енергия - оставащи днес"
+        "name": "Прогнозa оставащи за днес"
       },
       "energy_production_tomorrow": {
-        "name": "Прогнознa енергия - утре"
+        "name": "Прогноза за утре"
       },
       "energy_production_d2": {
-        "name": "Прогнознa енергия - след ден"
+        "name": "Прогноза за след ден"
       },
       "energy_production_d3": {
-        "name": "Прогнознa енергия - след 3"
+        "name": "Прогноза за след 3 дни"
       },
       "energy_production_d4": {
-        "name": "Прогнознa енергия - след 4"
+        "name": "Прогноза за след 4 дни"
       },
       "energy_production_d5": {
-        "name": "Прогнознa енергия - след 5"
+        "name": "Прогноза за след 5 дни"
       },
       "energy_production_d6": {
-        "name": "Прогнознa енергия - след 6"
+        "name": "Прогноза за след 6 дни"
       },
       "energy_production_d7": {
-        "name": "Прогнознa енергия - след 7"
+        "name": "Прогноза за след 7 дни"
       },
       "power_highest_peak_time_today": {
         "name": "Върхова мощност - днес"
@@ -62,22 +62,22 @@
         "name": "Върхова мощност - утре"
       },
       "power_production_next_12hours": {
-        "name": "Прогнознa енергия - след 12 часа"
+        "name": "Прогноза за след 12 часа"
       },
       "power_production_next_24hours": {
-        "name": "Прогнознa енергия - след 24 часа"
+        "name": "Прогноза за след 24 часа"
       },
       "power_production_next_hour": {
-        "name": "Прогнознa енергия - след час"
+        "name": "Прогноза за след час"
       },
       "power_production_now": {
-        "name": "Прогнознa енергия - сега "
+        "name": "Прогноза за сега "
       },
       "power_production_next_15minutes": {
-        "name": "Прогнознa енергия - след 15 минути"
+        "name": "Прогноза за след 15 минути"
       },
       "power_production_next_30minutes": {
-        "name": "Прогнознa енергия - след 30 минути"
+        "name": "Прогноза за след 30 минути"
       }
     }
   },
