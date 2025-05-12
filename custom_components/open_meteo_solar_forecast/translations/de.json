@@ -32,6 +32,24 @@
       "energy_production_tomorrow": {
         "name": "Geschätzte Energieproduktion – morgen"
       },
+      "energy_production_d2": {
+        "name": "Geschätzte Energieproduktion - übermorgen"
+      },
+      "energy_production_d3": {
+        "name": "Geschätzte Energieproduktion - in 3 Tagen"
+      },
+      "energy_production_d4": {
+        "name": "Geschätzte Energieproduktion - in 4 Tagen"
+      },
+      "energy_production_d5": {
+        "name": "Geschätzte Energieproduktion - in 5 Tagen"
+      },
+      "energy_production_d6": {
+        "name": "Geschätzte Energieproduktion - in 6 Tagen"
+      },
+      "energy_production_d7": {
+        "name": "Geschätzte Energieproduktion - in 7 Tagen"
+      },
       "power_highest_peak_time_today": {
         "name": "Höchste Leistungsspitzenzeit - heute"
       },
@@ -49,6 +67,12 @@
       },
       "power_production_now": {
         "name": "Geschätzte Stromproduktion – jetzt"
+      },
+      "power_production_next_15minutes": {
+        "name": "Geschätzte Stromproduktion - nächste 15 Minuten"
+      },
+      "power_production_next_30minutes": {
+        "name": "Geschätzte Stromproduktion - nächste 30 Minuten"
       }
     }
   },
