@@ -40,6 +40,16 @@ The azimuth range for this integration is 0 to 360 degrees, with 0 being North, 
 
 The DC efficiency is the efficiency of the DC wiring and should not be confused with the cell efficiency. The DC efficiency is typically around 0.93. The cell efficiency is accounted for in the cell temperature calculation and is assumed to be 0.12.
 
+### Dampening of Values
+
+The damping factor is a number between 0.0 and 1.0.
+
+A lower damping factor means higher solar panel power. At 0.0, there’s no damping and the panels produce maximum power.
+A higher damping factor means lower power. At 1.0, damping is full and the power is at its minimum.
+
+If a damping factor of 1.0 is applied for damping_morning, the power starts at 0 and increases steadily until midday `(sunrise + (sunset - sunrise) / 2)`.
+If a damping factor is applied for damping_evening, the same happens in reverse and power decreases steadily as the sun sets.
+
 ### Confusing Power Sensors with Energy Sensors
 
 The power sensors start with "Solar production forecast Estimated power" and the energy sensors start with "Solar production forecast Estimated energy". The power sensors show the power expected to be available at that time, and the energy sensors show the energy expected to be produced as an average over an hour.
