@@ -7,14 +7,10 @@ This custom component integrates the [open-meteo-solar-forecast](https://github.
 ### HACS
 
 1. Go to the HACS page in your Home Assistant instance.
-2. Click on `Integrations`.
-3. Click on the three dots in the top right corner.
-4. Click on `Custom repositories`.
-5. Add `rany2/ha-open-meteo-solar-forecast` as the repository URL.
-6. Click on `Category` and select `Integration`.
-7. Click on `Add`.
-8. A new custom integration shows up for installation "Open-Meteo Solar Forecast", install it.
-9. Restart Home Assistant.
+1. Search for `Open-Meteo Solar Forecast`.
+   - If it doesn't immediately show up, check that the `Type` filter has `Integrations` ticked.
+1. Install it.
+1. Restart Home Assistant.
 
 ### Manual
 
