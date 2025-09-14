@@ -6,6 +6,8 @@ This custom component integrates the [open-meteo-solar-forecast](https://github.
 
 ### HACS
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=rany2&repository=ha-open-meteo-solar-forecast&category=integration)
+
 1. Go to the HACS page in your Home Assistant instance.
 1. Search for `Open-Meteo Solar Forecast`.
    - If it doesn't immediately show up, check that the `Type` filter has `Integrations` ticked.
