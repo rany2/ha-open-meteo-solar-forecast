@@ -6,15 +6,25 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .const import DOMAIN
-from .coordinator import OpenMeteoSolarForecastDataUpdateCoordinator
+from .const import CONF_INSTANCE_TYPE, DOMAIN, INSTANCE_TYPE_CUMULATIVE
+from .coordinator import (
+    OpenMeteoSolarForecastCumulativeCoordinator,
+    OpenMeteoSolarForecastDataUpdateCoordinator,
+)
 
 PLATFORMS = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solar Forecast from a config entry."""
-    coordinator = OpenMeteoSolarForecastDataUpdateCoordinator(hass, entry)
+    # Get instance type, defaulting to normal for backward compatibility
+    instance_type = entry.data.get(CONF_INSTANCE_TYPE, "normal")
+    
+    if instance_type == INSTANCE_TYPE_CUMULATIVE:
+        coordinator = OpenMeteoSolarForecastCumulativeCoordinator(hass, entry)
+    else:
+        coordinator = OpenMeteoSolarForecastDataUpdateCoordinator(hass, entry)
+    
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator

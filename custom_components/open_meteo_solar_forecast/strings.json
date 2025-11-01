@@ -2,20 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "description": "Fill in the data of your solar panels.",
+        "title": "Select Instance Type",
+        "description": "Choose the type of solar forecast instance to create.",
         "data": {
-          "api_key": "[%key:common::config_flow::data::api_key%]",
-          "azimuth": "Azimuth (360 degrees, 0 = North, 90 = East, 180 = South, 270 = West)",
-          "damping_morning": "Damping factor: adjusts the results in the morning (0.0-1.0, 0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Damping factor: adjusts the results in the evening (0.0-1.0, 0.0 = no damping, 1.0 = max damping)",
-          "declination": "Declination (0 = Horizontal, 90 = Vertical)",
+          "instance_type": "Instance Type"
+        },
+        "data_description": {
+          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+        }
+      },
+      "normal": {
+        "title": "Configure Single Orientation",
+        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "data": {
+          "name": "[%key:common::config_flow::data::name%]",
           "latitude": "[%key:common::config_flow::data::latitude%]",
           "longitude": "[%key:common::config_flow::data::longitude%]",
-          "efficiency_factor": "DC efficiency factor (0.0-1.0, 0.0 = 100% loss, 1.0 = no loss)",
+          "api_key": "[%key:common::config_flow::data::api_key%]",
+          "base_url": "API Base URL",
+          "azimuth": "Azimuth",
+          "declination": "Declination",
+          "modules_power": "Total Watt Peak Power",
+          "inverter_power": "Inverter Capacity",
+          "damping_morning": "Morning Damping Factor",
+          "damping_evening": "Evening Damping Factor",
+          "efficiency_factor": "DC Efficiency Factor",
+          "model": "Weather Model",
+          "include_in_cumulative": "Include in Cumulative Forecast"
+        },
+        "data_description": {
+          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')",
+          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
+          "declination": "0 = Horizontal, 90 = Vertical",
           "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt",
-          "name": "[%key:common::config_flow::data::name%]",
-          "model": "The weather model to use"
+          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
+          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
+          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
+          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
+          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations"
+        }
+      },
+      "cumulative": {
+        "title": "Configure Cumulative Forecast",
+        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "data": {
+          "name": "[%key:common::config_flow::data::name%]"
+        },
+        "data_description": {
+          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
         }
       }
     }
@@ -26,17 +60,19 @@
     },
     "step": {
       "init": {
-        "description": "[%key:component::open_meteo_solar_forecast::config::step::user::description%]",
+        "description": "Update settings for this solar forecast instance.",
         "data": {
           "api_key": "[%key:common::config_flow::data::api_key%]",
-          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::user::data::azimuth%]",
-          "damping_morning": "[%key:component::open_meteo_solar_forecast::config::step::user::data::damping_morning%]",
-          "damping_evening": "[%key:component::open_meteo_solar_forecast::config::step::user::data::damping_evening%]",
-          "declination": "[%key:component::open_meteo_solar_forecast::config::step::user::data::declination%]",
-          "efficiency_factor": "[%key:component::open_meteo_solar_forecast::config::step::user::data::efficiency_factor%]",
-          "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::modules_power%]",
-          "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
-          "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]"
+          "base_url": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::base_url%]",
+          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::azimuth%]",
+          "declination": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::declination%]",
+          "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::modules_power%]",
+          "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::inverter_power%]",
+          "damping_morning": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::damping_morning%]",
+          "damping_evening": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::damping_evening%]",
+          "efficiency_factor": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::efficiency_factor%]",
+          "model": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::model%]",
+          "include_in_cumulative": "[%key:component::open_meteo_solar_forecast::config::step::normal::data::include_in_cumulative%]"
         }
       }
     }

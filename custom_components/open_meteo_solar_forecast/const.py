@@ -16,6 +16,11 @@ CONF_DAMPING_EVENING = "damping_evening"
 CONF_INVERTER_POWER = "inverter_power"
 CONF_EFFICIENCY_FACTOR = "efficiency_factor"
 CONF_MODEL = "model"
+CONF_INSTANCE_TYPE = "instance_type"
+CONF_INCLUDE_IN_CUMULATIVE = "include_in_cumulative"
+
+INSTANCE_TYPE_NORMAL = "normal"
+INSTANCE_TYPE_CUMULATIVE = "cumulative"
 
 ATTR_WATTS = "watts"
 ATTR_WH_PERIOD = "wh_period"
