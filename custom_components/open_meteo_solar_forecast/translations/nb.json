@@ -38,7 +38,8 @@
           "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
           "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
           "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations"
+          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
+          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
         }
       },
       "cumulative": {

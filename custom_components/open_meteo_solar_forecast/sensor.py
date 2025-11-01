@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -232,6 +233,7 @@ async def async_setup_entry(
     async_add_entities(
         OpenMeteoSolarForecastSensorEntity(
             entry_id=entry.entry_id,
+            entry_title=entry.title,
             coordinator=coordinator,
             entity_description=entity_description,
         )
@@ -251,20 +253,29 @@ class OpenMeteoSolarForecastSensorEntity(
         self,
         *,
         entry_id: str,
+        entry_title: str,
         coordinator: OpenMeteoSolarForecastDataUpdateCoordinator,
         entity_description: OpenMeteoSolarForecastSensorEntityDescription,
     ) -> None:
         """Initialize Open-Meteo Solar sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = entity_description
-        self.entity_id = f"{SENSOR_DOMAIN}.{entity_description.key}"
+        
+        # Create a slug from the entry title for entity IDs
+        # e.g., "East Panels" -> "east_panels", "Total Solar" -> "total_solar"
+        title_slug = entry_title.lower().replace(" ", "_").replace("-", "_")
+        # Remove any special characters and multiple underscores
+        title_slug = re.sub(r'[^a-z0-9_]', '', title_slug)
+        title_slug = re.sub(r'_+', '_', title_slug).strip('_')
+        
+        self.entity_id = f"{SENSOR_DOMAIN}.{entity_description.key}_{title_slug}"
         self._attr_unique_id = f"{entry_id}_{entity_description.key}"
 
         self._attr_device_info = DeviceInfo(
             entry_type=DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, entry_id)},
             manufacturer="Open-Meteo",
-            name="Solar production forecast",
+            name=entry_title,
             configuration_url="https://open-meteo.com",
         )
 
