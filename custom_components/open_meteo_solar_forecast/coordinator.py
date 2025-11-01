@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import datetime, timedelta
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE
@@ -18,10 +19,14 @@ from .const import (
     CONF_DAMPING_MORNING,
     CONF_DECLINATION,
     CONF_EFFICIENCY_FACTOR,
+    CONF_INCLUDE_IN_CUMULATIVE,
+    CONF_INSTANCE_TYPE,
     CONF_INVERTER_POWER,
     CONF_MODEL,
     CONF_MODULES_POWER,
     DOMAIN,
+    INSTANCE_TYPE_CUMULATIVE,
+    INSTANCE_TYPE_NORMAL,
     LOGGER,
 )
 
@@ -66,3 +71,80 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
     async def _async_update_data(self) -> Estimate:
         """Fetch Open-Meteo Solar Forecast estimates."""
         return await self.forecast.estimate()
+
+
+class CumulativeEstimate(Estimate):
+    """Cumulative estimate that sums data from multiple instances."""
+
+    def __init__(self, estimates: list[Estimate]) -> None:
+        """Initialize cumulative estimate from multiple estimates."""
+        if not estimates:
+            # Create empty estimate
+            super().__init__(
+                watts={},
+                wh_days={},
+                wh_period={},
+            )
+            return
+
+        # Use the first estimate as base
+        first = estimates[0]
+        
+        # Sum up all watts
+        all_watts: dict[datetime, int] = {}
+        for estimate in estimates:
+            for dt, value in estimate.watts.items():
+                all_watts[dt] = all_watts.get(dt, 0) + value
+
+        # Sum up all wh_days
+        all_wh_days: dict[Any, int] = {}
+        for estimate in estimates:
+            for day, value in estimate.wh_days.items():
+                all_wh_days[day] = all_wh_days.get(day, 0) + value
+
+        # Sum up all wh_period
+        all_wh_period: dict[datetime, int] = {}
+        for estimate in estimates:
+            for dt, value in estimate.wh_period.items():
+                all_wh_period[dt] = all_wh_period.get(dt, 0) + value
+
+        # Initialize with summed data
+        super().__init__(
+            watts=all_watts,
+            wh_days=all_wh_days,
+            wh_period=all_wh_period,
+        )
+
+
+class OpenMeteoSolarForecastCumulativeCoordinator(DataUpdateCoordinator[Estimate]):
+    """Coordinator that aggregates data from multiple instances."""
+
+    config_entry: ConfigEntry
+
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+        """Initialize the cumulative coordinator."""
+        self.config_entry = entry
+        update_interval = timedelta(minutes=1)  # Update more frequently to pick up changes
+
+        super().__init__(hass, LOGGER, name=DOMAIN, update_interval=update_interval)
+
+    async def _async_update_data(self) -> Estimate:
+        """Aggregate data from all instances marked for cumulation."""
+        estimates: list[Estimate] = []
+        
+        # Find all instances marked for cumulation
+        for entry_id, coordinator in self.hass.data.get(DOMAIN, {}).items():
+            if entry_id == self.config_entry.entry_id:
+                # Skip self
+                continue
+            
+            if not isinstance(coordinator, OpenMeteoSolarForecastDataUpdateCoordinator):
+                # Skip non-standard coordinators
+                continue
+            
+            # Check if this instance is marked for cumulation
+            if coordinator.config_entry.options.get(CONF_INCLUDE_IN_CUMULATIVE, False):
+                if coordinator.data:
+                    estimates.append(coordinator.data)
+        
+        return CumulativeEstimate(estimates)

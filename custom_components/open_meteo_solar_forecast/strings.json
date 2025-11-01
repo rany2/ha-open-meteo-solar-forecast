@@ -4,6 +4,7 @@
       "user": {
         "description": "Fill in the data of your solar panels.",
         "data": {
+          "instance_type": "Instance Type (normal = single orientation, cumulative = sum of multiple orientations)",
           "api_key": "[%key:common::config_flow::data::api_key%]",
           "azimuth": "Azimuth (360 degrees, 0 = North, 90 = East, 180 = South, 270 = West)",
           "damping_morning": "Damping factor: adjusts the results in the morning (0.0-1.0, 0.0 = no damping, 1.0 = max damping)",
@@ -15,7 +16,8 @@
           "modules_power": "Total Watt peak power of your solar modules",
           "inverter_power": "The capacity of your inverter in Watt",
           "name": "[%key:common::config_flow::data::name%]",
-          "model": "The weather model to use"
+          "model": "The weather model to use",
+          "include_in_cumulative": "Include this orientation in cumulative forecast"
         }
       }
     }
@@ -36,7 +38,8 @@
           "efficiency_factor": "[%key:component::open_meteo_solar_forecast::config::step::user::data::efficiency_factor%]",
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::modules_power%]",
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
-          "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]"
+          "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]",
+          "include_in_cumulative": "[%key:component::open_meteo_solar_forecast::config::step::user::data::include_in_cumulative%]"
         }
       }
     }
