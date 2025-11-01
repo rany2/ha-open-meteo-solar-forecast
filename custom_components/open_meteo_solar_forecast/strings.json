@@ -45,15 +45,10 @@
         "title": "Configure Cumulative Forecast",
         "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
         "data": {
-          "name": "[%key:common::config_flow::data::name%]",
-          "latitude": "[%key:common::config_flow::data::latitude%]",
-          "longitude": "[%key:common::config_flow::data::longitude%]",
-          "api_key": "[%key:common::config_flow::data::api_key%]",
-          "base_url": "API Base URL"
+          "name": "[%key:common::config_flow::data::name%]"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'",
-          "base_url": "Usually https://api.open-meteo.com"
+          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
         }
       }
     }

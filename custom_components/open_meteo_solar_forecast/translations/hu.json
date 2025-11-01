@@ -2,16 +2,54 @@
   "config": {
     "step": {
       "user": {
+        "title": "Select Instance Type",
+        "description": "Choose the type of solar forecast instance to create.",
         "data": {
-          "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)",
-          "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
-          "latitude": "Szélesség",
-          "longitude": "Hosszúság",
-          "modules power": "A napelemmodulok teljes Watt csúcsteljesítménye",
-          "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye",
-          "name": "Elnevezés"
+          "instance_type": "Instance Type"
         },
-        "description": "Töltse ki a napelemek adatait. Kérem, olvassa el a dokumentációt, ha egy mező nem egyértelmű."
+        "data_description": {
+          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+        }
+      },
+      "normal": {
+        "title": "Configure Single Orientation",
+        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "data": {
+          "name": "Name",
+          "latitude": "Latitude",
+          "longitude": "Longitude",
+          "api_key": "API key",
+          "base_url": "API Base URL",
+          "azimuth": "Azimuth",
+          "declination": "Declination",
+          "modules_power": "Total Watt Peak Power",
+          "inverter_power": "Inverter Capacity",
+          "damping_morning": "Morning Damping Factor",
+          "damping_evening": "Evening Damping Factor",
+          "efficiency_factor": "DC Efficiency Factor",
+          "model": "Weather Model",
+          "include_in_cumulative": "Include in Cumulative Forecast"
+        },
+        "data_description": {
+          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
+          "declination": "0 = Horizontal, 90 = Vertical",
+          "modules_power": "Total Watt peak power of your solar modules",
+          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
+          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
+          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
+          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
+          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations"
+        }
+      },
+      "cumulative": {
+        "title": "Configure Cumulative Forecast",
+        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "data": {
+          "name": "Name"
+        },
+        "data_description": {
+          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+        }
       }
     }
   },

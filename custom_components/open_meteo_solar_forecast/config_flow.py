@@ -164,13 +164,13 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
             return self.async_create_entry(
                 title=user_input[CONF_NAME],
                 data={
-                    CONF_LATITUDE: user_input[CONF_LATITUDE],
-                    CONF_LONGITUDE: user_input[CONF_LONGITUDE],
+                    CONF_LATITUDE: self.hass.config.latitude,
+                    CONF_LONGITUDE: self.hass.config.longitude,
                     CONF_INSTANCE_TYPE: INSTANCE_TYPE_CUMULATIVE,
                 },
                 options={
-                    CONF_API_KEY: user_input.get(CONF_API_KEY, ""),
-                    CONF_BASE_URL: user_input[CONF_BASE_URL],
+                    CONF_API_KEY: "",
+                    CONF_BASE_URL: "https://api.open-meteo.com",
                 },
             )
 
@@ -180,16 +180,6 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                 {
                     vol.Required(
                         CONF_NAME, default=self.hass.config.location_name + " Total"
-                    ): str,
-                    vol.Required(
-                        CONF_LATITUDE, default=self.hass.config.latitude
-                    ): cv.latitude,
-                    vol.Required(
-                        CONF_LONGITUDE, default=self.hass.config.longitude
-                    ): cv.longitude,
-                    vol.Optional(CONF_API_KEY, default=""): str,
-                    vol.Required(
-                        CONF_BASE_URL, default="https://api.open-meteo.com"
                     ): str,
                 }
             ),
