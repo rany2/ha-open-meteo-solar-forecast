@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 from datetime import datetime, timedelta
 from typing import Any
 
@@ -126,14 +127,13 @@ class OpenMeteoSolarForecastCumulativeCoordinator(DataUpdateCoordinator[Estimate
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         """Initialize the cumulative coordinator."""
         self.config_entry = entry
-        update_interval = timedelta(minutes=1)  # Update more frequently to pick up changes
+        # Update every 5 minutes - balance between responsiveness and resource usage
+        update_interval = timedelta(minutes=5)
 
         super().__init__(hass, LOGGER, name=DOMAIN, update_interval=update_interval)
 
     async def _async_update_data(self) -> Estimate:
         """Aggregate data from all instances marked for cumulation."""
-        import datetime as dt
-        
         estimates: list[Estimate] = []
         
         # Find all instances marked for cumulation

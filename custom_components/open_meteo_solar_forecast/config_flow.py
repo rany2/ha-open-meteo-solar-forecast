@@ -174,7 +174,7 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                 vol.Required(
                     CONF_AZIMUTH,
                     default=self.config_entry.options.get(CONF_AZIMUTH, 180),
-                ): vol.All(vol.Coerce(int), vol.Range(min=-0, max=360)),
+                ): vol.All(vol.Coerce(int), vol.Range(min=0, max=360)),
                 vol.Required(
                     CONF_MODULES_POWER,
                     default=self.config_entry.options.get(CONF_MODULES_POWER, 0),
