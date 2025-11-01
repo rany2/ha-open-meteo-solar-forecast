@@ -24,6 +24,37 @@ This custom component integrates the [open-meteo-solar-forecast](https://github.
 
 To use this integration in your installation, head to "Settings" in the Home Assistant UI, then "Integrations". Click on the plus button and search for "Open-Meteo Solar Forecast" and follow the instructions.
 
+### Multi-Orientation Support
+
+This integration now supports multi-orientation PV installations through cumulative forecasting. This feature allows you to:
+
+1. **Create separate instances for each orientation**: Set up an individual integration instance for each panel orientation (e.g., East, South, West).
+2. **Mark instances for cumulation**: In each orientation instance's configuration, enable "Include this orientation in cumulative forecast" to mark it for aggregation.
+3. **Create a cumulative instance**: Add a new instance and select "cumulative" as the instance type. This instance will automatically sum the forecasts from all marked orientation instances.
+
+#### Example Setup
+
+For a solar installation with panels facing East and West:
+
+1. Create an "East Panels" instance:
+   - Instance Type: **normal**
+   - Azimuth: **90** (East)
+   - Declination, Power, etc.: Configure for your east-facing panels
+   - **Include in cumulative forecast: ✓ Enabled**
+
+2. Create a "West Panels" instance:
+   - Instance Type: **normal**
+   - Azimuth: **270** (West)
+   - Declination, Power, etc.: Configure for your west-facing panels
+   - **Include in cumulative forecast: ✓ Enabled**
+
+3. Create a "Total Solar" instance:
+   - Instance Type: **cumulative**
+   - This will automatically sum forecasts from both East and West panels
+   - All sensors will show the combined production from all enabled orientations
+
+The cumulative instance provides the same sensors as normal instances, but with aggregated values from all orientations marked for cumulation.
+
 ## Common Mistakes
 
 ### API Key
