@@ -76,19 +76,20 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
 class CumulativeEstimate(Estimate):
     """Cumulative estimate that sums data from multiple instances."""
 
-    def __init__(self, estimates: list[Estimate]) -> None:
+    def __init__(self, estimates: list[Estimate], api_timezone: Any) -> None:
         """Initialize cumulative estimate from multiple estimates."""
         if not estimates:
-            # Create empty estimate
+            # Create empty estimate with provided timezone
             super().__init__(
                 watts={},
                 wh_days={},
                 wh_period={},
+                api_timezone=api_timezone,
             )
             return
 
-        # Use the first estimate as base
-        first = estimates[0]
+        # Use the first estimate's timezone
+        timezone = estimates[0].api_timezone
         
         # Sum up all watts
         all_watts: dict[datetime, int] = {}
@@ -96,7 +97,7 @@ class CumulativeEstimate(Estimate):
             for dt, value in estimate.watts.items():
                 all_watts[dt] = all_watts.get(dt, 0) + value
 
-        # Sum up all wh_days
+        # Sum up all wh_days (keys are date objects)
         all_wh_days: dict[Any, int] = {}
         for estimate in estimates:
             for day, value in estimate.wh_days.items():
@@ -113,6 +114,7 @@ class CumulativeEstimate(Estimate):
             watts=all_watts,
             wh_days=all_wh_days,
             wh_period=all_wh_period,
+            api_timezone=timezone,
         )
 
 
@@ -130,6 +132,8 @@ class OpenMeteoSolarForecastCumulativeCoordinator(DataUpdateCoordinator[Estimate
 
     async def _async_update_data(self) -> Estimate:
         """Aggregate data from all instances marked for cumulation."""
+        import datetime as dt
+        
         estimates: list[Estimate] = []
         
         # Find all instances marked for cumulation
@@ -147,4 +151,9 @@ class OpenMeteoSolarForecastCumulativeCoordinator(DataUpdateCoordinator[Estimate
                 if coordinator.data:
                     estimates.append(coordinator.data)
         
-        return CumulativeEstimate(estimates)
+        # Use the system timezone or UTC if no estimates available
+        api_timezone = dt.timezone.utc
+        if estimates:
+            api_timezone = estimates[0].api_timezone
+        
+        return CumulativeEstimate(estimates, api_timezone)

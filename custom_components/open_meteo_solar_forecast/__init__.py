@@ -17,7 +17,8 @@ PLATFORMS = [Platform.SENSOR]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solar Forecast from a config entry."""
-    instance_type = entry.data.get(CONF_INSTANCE_TYPE)
+    # Get instance type, defaulting to normal for backward compatibility
+    instance_type = entry.data.get(CONF_INSTANCE_TYPE, "normal")
     
     if instance_type == INSTANCE_TYPE_CUMULATIVE:
         coordinator = OpenMeteoSolarForecastCumulativeCoordinator(hass, entry)
