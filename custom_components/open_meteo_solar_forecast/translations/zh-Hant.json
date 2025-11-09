@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "選擇實例類型",
+        "description": "選擇要建立的太陽能預測實例類型。",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "實例類型"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**普通**：配置單個面板朝向（例如：東、南、西）\n**累積**：將多個朝向的預測匯總為單個總預測"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "配置單一朝向",
+        "description": "為單一朝向配置太陽能板。您可以標記此實例以包含在累積預測中。",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "名稱",
+          "latitude": "緯度",
+          "longitude": "經度",
+          "api_key": "API金鑰",
+          "base_url": "API基礎URL",
+          "azimuth": "方位角",
+          "declination": "傾斜角",
+          "modules_power": "總峰值功率（瓦特）",
+          "inverter_power": "逆變器容量",
+          "damping_morning": "早晨阻尼係數",
+          "damping_evening": "晚間阻尼係數",
+          "efficiency_factor": "直流效率係數",
+          "model": "天氣模型",
+          "include_in_cumulative": "包含在累積預測中"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = 北，90 = 東，180 = 南，270 = 西",
+          "declination": "0 = 水平，90 = 垂直",
+          "modules_power": "太陽能組件的總峰值功率（瓦特）",
+          "inverter_power": "逆變器容量（瓦特）（0表示無限制）",
+          "damping_morning": "調整早晨結果（0.0 = 無阻尼，1.0 = 最大阻尼）",
+          "damping_evening": "調整晚間結果（0.0 = 無阻尼，1.0 = 最大阻尼）",
+          "efficiency_factor": "直流佈線效率（0.0 = 100%損失，1.0 = 無損失）",
+          "include_in_cumulative": "啟用以將此朝向包含在累積預測計算中",
+          "name": "按朝向命名此實例（例如：東側面板、南側面板、西側面板）"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "配置累積預測",
+        "description": "此實例將匯總所有標記為累積的朝向的預測。它提供組合的生產預測。",
         "data": {
-          "name": "Name"
+          "name": "名稱"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "建議：總太陽能或組合太陽能生產"
         }
       }
     }
@@ -106,9 +106,14 @@
           "declination": "偏角（0 = 水平、90 = 垂直）",
           "inverter_size": "變流器尺寸（Watt）",
           "modules power": "太陽能模組總峰值功率",
-          "modules_power": "太陽能模組總峰值功率"
+          "modules_power": "太陽能模組總峰值功率",
+          "base_url": "API基礎URL",
+          "inverter_power": "逆變器容量",
+          "efficiency_factor": "直流效率係數",
+          "model": "天氣模型",
+          "include_in_cumulative": "包含在累積預測中"
         },
-        "description": "此些數值允許微調 Solar Forecast 結果。如果有不清楚的地方、請參考文件說明。"
+        "description": "更新此太陽能預測實例的設定。"
       }
     }
   }

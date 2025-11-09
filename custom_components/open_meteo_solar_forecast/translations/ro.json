@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "Selectați tipul de instanță",
+        "description": "Alegeți tipul de instanță de prognoză solară de creat.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "Tip de instanță"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**Normal**: Configurați o singură orientare de panou (de ex. est, sud, vest)\n**Cumulativ**: Agregați prognozele din mai multe orientări într-o singură prognoză totală"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "Configurare orientare unică",
+        "description": "Configurați panouri solare pentru o singură orientare. Puteți marca această instanță pentru includere într-o prognoză cumulativă.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "Nume",
+          "latitude": "Latitudine",
+          "longitude": "Longitudine",
+          "api_key": "Cheie API",
+          "base_url": "URL de bază API",
+          "azimuth": "Azimut",
+          "declination": "Declinare",
+          "modules_power": "Putere de vârf totală în wați",
+          "inverter_power": "Capacitatea invertorului",
+          "damping_morning": "Factor de amortizare dimineață",
+          "damping_evening": "Factor de amortizare seară",
+          "efficiency_factor": "Factor de eficiență DC",
+          "model": "Model meteorologic",
+          "include_in_cumulative": "Include în prognoza cumulativă"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = nord, 90 = est, 180 = sud, 270 = vest",
+          "declination": "0 = orizontal, 90 = vertical",
+          "modules_power": "Puterea de vârf totală a modulelor dvs. solare în wați",
+          "inverter_power": "Capacitatea invertorului dvs. în wați (0 pentru fără limită)",
+          "damping_morning": "Ajustează rezultatele dimineața (0.0 = fără amortizare, 1.0 = amortizare max.)",
+          "damping_evening": "Ajustează rezultatele seara (0.0 = fără amortizare, 1.0 = amortizare max.)",
+          "efficiency_factor": "Eficiența cablajului DC (0.0 = pierdere 100%, 1.0 = fără pierdere)",
+          "include_in_cumulative": "Activați pentru a include această orientare în calculele de prognoză cumulativă",
+          "name": "Numiți această instanță după orientare (de ex. 'Panouri est', 'Panouri sud', 'Panouri vest')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "Configurare prognoză cumulativă",
+        "description": "Această instanță va agrega prognozele din toate orientările marcate pentru cumulare. Oferă prognoze de producție combinate.",
         "data": {
-          "name": "Name"
+          "name": "Nume"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "Sugestie: 'Solar total' sau 'Producție solară combinată'"
         }
       }
     }
@@ -99,9 +99,14 @@
       "init": {
         "data": {
           "damping": "Factor de atenuare: ajustează rezultatele dimineața și seara",
-          "inverter_size": "Dimensiune invertor (Watt)"
+          "inverter_size": "Dimensiune invertor (Watt)",
+          "base_url": "URL de bază API",
+          "inverter_power": "Capacitatea invertorului",
+          "efficiency_factor": "Factor de eficiență DC",
+          "model": "Model meteorologic",
+          "include_in_cumulative": "Include în prognoza cumulativă"
         },
-        "description": "Aceste valori permit ajustarea rezultatului Solar Forecast. Te rugăm să consulți documentația daca vreun câmp este neclar."
+        "description": "Actualizați setările pentru această instanță de prognoză solară."
       }
     }
   }

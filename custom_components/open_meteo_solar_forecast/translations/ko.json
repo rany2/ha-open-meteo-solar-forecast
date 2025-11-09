@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "인스턴스 유형 선택",
+        "description": "생성할 태양광 예측 인스턴스 유형을 선택하세요.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "인스턴스 유형"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**일반**: 단일 패널 방향 구성(예: 동쪽, 남쪽, 서쪽)\n**누적**: 여러 방향의 예측을 단일 총 예측으로 집계"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "단일 방향 구성",
+        "description": "단일 방향에 대한 태양광 패널을 구성합니다. 이 인스턴스를 누적 예측에 포함하도록 표시할 수 있습니다.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "이름",
+          "latitude": "위도",
+          "longitude": "경도",
+          "api_key": "API 키",
+          "base_url": "API 기본 URL",
+          "azimuth": "방위각",
+          "declination": "경사각",
+          "modules_power": "총 피크 전력(와트)",
+          "inverter_power": "인버터 용량",
+          "damping_morning": "아침 감쇠 계수",
+          "damping_evening": "저녁 감쇠 계수",
+          "efficiency_factor": "DC 효율 계수",
+          "model": "기상 모델",
+          "include_in_cumulative": "누적 예측에 포함"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = 북쪽, 90 = 동쪽, 180 = 남쪽, 270 = 서쪽",
+          "declination": "0 = 수평, 90 = 수직",
+          "modules_power": "태양광 모듈의 총 피크 전력(와트)",
+          "inverter_power": "인버터 용량(와트, 제한 없음의 경우 0)",
+          "damping_morning": "아침 결과 조정(0.0 = 감쇠 없음, 1.0 = 최대 감쇠)",
+          "damping_evening": "저녁 결과 조정(0.0 = 감쇠 없음, 1.0 = 최대 감쇠)",
+          "efficiency_factor": "DC 배선 효율(0.0 = 100% 손실, 1.0 = 손실 없음)",
+          "include_in_cumulative": "이 방향을 누적 예측 계산에 포함하려면 활성화하세요",
+          "name": "방향별로 이 인스턴스 이름 지정(예: '동쪽 패널', '남쪽 패널', '서쪽 패널')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "누적 예측 구성",
+        "description": "이 인스턴스는 누적으로 표시된 모든 방향의 예측을 집계합니다. 결합된 생산 예측을 제공합니다.",
         "data": {
-          "name": "Name"
+          "name": "이름"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "제안: '전체 태양광' 또는 '통합 태양광 생산'"
         }
       }
     }
@@ -106,9 +106,14 @@
           "declination": "편각(0 = 수평, 90 = 수직)",
           "inverter_size": "인버터 크기(와트)",
           "modules power": "태양광 모듈의 총 와트 피크 전력",
-          "modules_power": "태양광 모듈의 총 와트 피크 전력"
+          "modules_power": "태양광 모듈의 총 와트 피크 전력",
+          "base_url": "API 기본 URL",
+          "inverter_power": "인버터 용량",
+          "efficiency_factor": "DC 효율 계수",
+          "model": "기상 모델",
+          "include_in_cumulative": "누적 예측에 포함"
         },
-        "description": "이 값을 사용하면 Solar Forecast 결과를 조정할 수 있습니다. 필드가 명확하지 않은 경우 설명서를 참조하십시오."
+        "description": "이 태양광 예측 인스턴스의 설정을 업데이트합니다."
       }
     }
   }

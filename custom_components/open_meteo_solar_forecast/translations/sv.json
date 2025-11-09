@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "Välj instanstyp",
+        "description": "Välj typ av solprognosinstans att skapa.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "Instanstyp"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**Normal**: Konfigurera en enda panelorientering (t.ex. Öst, Syd, Väst)\n**Kumulativ**: Aggregera prognoser från flera orienteringar till en enda total prognos"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "Konfigurera enskild orientering",
+        "description": "Konfigurera solpaneler för en enskild orientering. Du kan markera denna instans för att inkluderas i en kumulativ prognos.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "Namn",
+          "latitude": "Latitud",
+          "longitude": "Longitud",
+          "api_key": "API-nyckel",
+          "base_url": "API bas-URL",
+          "azimuth": "Azimut",
+          "declination": "Lutning",
+          "modules_power": "Total toppeffekt i watt",
+          "inverter_power": "Växelriktarkapacitet",
+          "damping_morning": "Dämpningsfaktor morgon",
+          "damping_evening": "Dämpningsfaktor kväll",
+          "efficiency_factor": "DC-effektivitetsfaktor",
+          "model": "Vädermodell",
+          "include_in_cumulative": "Inkludera i kumulativ prognos"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = Nord, 90 = Öst, 180 = Syd, 270 = Väst",
+          "declination": "0 = Horisontell, 90 = Vertikal",
+          "modules_power": "Total toppeffekt i watt för dina solpaneler",
+          "inverter_power": "Kapaciteten på din växelriktare i watt (0 för ingen gräns)",
+          "damping_morning": "Justerar resultat på morgonen (0.0 = ingen dämpning, 1.0 = max dämpning)",
+          "damping_evening": "Justerar resultat på kvällen (0.0 = ingen dämpning, 1.0 = max dämpning)",
+          "efficiency_factor": "DC-kablingeffektivitet (0.0 = 100% förlust, 1.0 = ingen förlust)",
+          "include_in_cumulative": "Aktivera för att inkludera denna orientering i kumulativa prognosberäkningar",
+          "name": "Namnge denna instans efter orientering (t.ex. 'Öst Paneler', 'Syd Paneler', 'Väst Paneler')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "Konfigurera kumulativ prognos",
+        "description": "Denna instans kommer att aggregera prognoser från alla orienteringar markerade för kumulering. Den ger kombinerade produktionsprognoser.",
         "data": {
-          "name": "Name"
+          "name": "Namn"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "Förslag: 'Total Sol' eller 'Kombinerad Solproduktion'"
         }
       }
     }
@@ -106,9 +106,14 @@
           "declination": "Deklination (0 = horisontell, 90 = vertikal)",
           "inverter_size": "Växelriktarens storlek (Watt)",
           "modules power": "Total maxeffekt (Watt) på dina solpaneler",
-          "modules_power": "Total maxeffekt (Watt) på dina solpaneler"
+          "modules_power": "Total maxeffekt (Watt) på dina solpaneler",
+          "base_url": "API bas-URL",
+          "inverter_power": "Växelriktarkapacitet",
+          "efficiency_factor": "DC-effektivitetsfaktor",
+          "model": "Vädermodell",
+          "include_in_cumulative": "Inkludera i kumulativ prognos"
         },
-        "description": "Dessa värden tillåter justering av Solar.Forecast-resultatet. Se dokumentationen om ett fält är otydligt."
+        "description": "Uppdatera inställningar för denna solprognosinstans."
       }
     }
   }

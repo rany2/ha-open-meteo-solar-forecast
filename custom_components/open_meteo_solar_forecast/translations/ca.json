@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "Selecciona el tipus d'instància",
+        "description": "Trieu el tipus d'instància de previsió solar que voleu crear.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "Tipus d'instància"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**Normal**: Configureu una orientació de panell única (p. ex. Est, Sud, Oest)\n**Acumulatiu**: Agrupeu previsions de diverses orientacions en una única previsió total"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "Configurar orientació única",
+        "description": "Configureu panells solars per a una orientació única. Podeu marcar aquesta instància per incloure-la en una previsió acumulativa.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "Nom",
+          "latitude": "Latitud",
+          "longitude": "Longitud",
+          "api_key": "Clau API",
+          "base_url": "URL base de l'API",
+          "azimuth": "Azimut",
+          "declination": "Inclinació",
+          "modules_power": "Potència pic total en watts",
+          "inverter_power": "Capacitat de l'inversor",
+          "damping_morning": "Factor d'amortiment matinal",
+          "damping_evening": "Factor d'amortiment vespral",
+          "efficiency_factor": "Factor d'eficiència DC",
+          "model": "Model meteorològic",
+          "include_in_cumulative": "Incloure en previsió acumulativa"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = Nord, 90 = Est, 180 = Sud, 270 = Oest",
+          "declination": "0 = Horitzontal, 90 = Vertical",
+          "modules_power": "Potència pic total dels teus mòduls solars en watts",
+          "inverter_power": "La capacitat del teu inversor en watts (0 per sense límit)",
+          "damping_morning": "Ajusta resultats al matí (0.0 = sense amortiment, 1.0 = amortiment màx.)",
+          "damping_evening": "Ajusta resultats al vespre (0.0 = sense amortiment, 1.0 = amortiment màx.)",
+          "efficiency_factor": "Eficiència del cablejat DC (0.0 = pèrdua del 100%, 1.0 = sense pèrdua)",
+          "include_in_cumulative": "Activa per incloure aquesta orientació en càlculs de previsió acumulatius",
+          "name": "Anomena aquesta instància per orientació (p. ex. 'Panells Est', 'Panells Sud', 'Panells Oest')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "Configurar previsió acumulativa",
+        "description": "Aquesta instància agregarà previsions de totes les orientacions marcades per acumulació. Proporciona previsions de producció combinades.",
         "data": {
-          "name": "Name"
+          "name": "Nom"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "Suggeriment: 'Solar Total' o 'Producció Solar Combinada'"
         }
       }
     }
@@ -105,9 +105,14 @@
           "damping_morning": "Factor d'amortiment: ajusta els resultats al matí",
           "declination": "Inclinació (0 = horitzontal, 90 = vertical)",
           "inverter_size": "Potència de l'inversor (Watts)",
-          "modules_power": "Potència màxima total dels panells solars"
+          "modules_power": "Potència màxima total dels panells solars",
+          "base_url": "URL base de l'API",
+          "inverter_power": "Capacitat de l'inversor",
+          "efficiency_factor": "Factor d'eficiència DC",
+          "model": "Model meteorològic",
+          "include_in_cumulative": "Incloure en previsió acumulativa"
         },
-        "description": "Aquests valors permeten ajustar els resultats de Solar Forecast. Consulta la documentació si tens dubtes sobre algun camp."
+        "description": "Actualitzar configuració d'aquesta instància de previsió solar."
       }
     }
   }
