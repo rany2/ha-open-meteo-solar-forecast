@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "Vyberte typ instance",
+        "description": "Vyberte typ instance solární předpovědi k vytvoření.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "Typ instance"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**Normální**: Nakonfigurujte jednu orientaci panelu (např. Východ, Jih, Západ)\n**Kumulativní**: Agregujte předpovědi z více orientací do jedné celkové předpovědi"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "Konfigurace jedné orientace",
+        "description": "Nakonfigurujte solární panely pro jednu orientaci. Můžete označit tuto instanci pro zahrnutí do kumulativní předpovědi.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "Název",
+          "latitude": "Zeměpisná šířka",
+          "longitude": "Zeměpisná délka",
+          "api_key": "API klíč",
+          "base_url": "Základní URL API",
+          "azimuth": "Azimut",
+          "declination": "Deklinace",
+          "modules_power": "Celkový špičkový výkon ve wattech",
+          "inverter_power": "Kapacita střídače",
+          "damping_morning": "Koeficient tlumení ráno",
+          "damping_evening": "Koeficient tlumení večer",
+          "efficiency_factor": "Faktor účinnosti DC",
+          "model": "Meteorologický model",
+          "include_in_cumulative": "Zahrnout do kumulativní předpovědi"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = Sever, 90 = Východ, 180 = Jih, 270 = Západ",
+          "declination": "0 = Horizontálně, 90 = Vertikálně",
+          "modules_power": "Celkový špičkový výkon vašich solárních modulů ve wattech",
+          "inverter_power": "Kapacita vašeho střídače ve wattech (0 pro žádný limit)",
+          "damping_morning": "Upravuje výsledky ráno (0.0 = žádné tlumení, 1.0 = max. tlumení)",
+          "damping_evening": "Upravuje výsledky večer (0.0 = žádné tlumení, 1.0 = max. tlumení)",
+          "efficiency_factor": "Účinnost DC kabeláže (0.0 = 100% ztráta, 1.0 = žádná ztráta)",
+          "include_in_cumulative": "Povolit zahrnutí této orientace do výpočtů kumulativní předpovědi",
+          "name": "Pojmenujte tuto instanci podle orientace (např. 'Východní panely', 'Jižní panely', 'Západní panely')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "Konfigurace kumulativní předpovědi",
+        "description": "Tato instance agreguje předpovědi ze všech orientací označených pro kumulaci. Poskytuje kombinované předpovědi výroby.",
         "data": {
-          "name": "Name"
+          "name": "Název"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "Návrh: 'Celková solární' nebo 'Kombinovaná solární výroba'"
         }
       }
     }
@@ -105,9 +105,14 @@
           "damping_morning": "Činitel tlumení: upravuje výsledky ráno",
           "declination": "Deklinace (0 = horizontální, 90 = vertikální)",
           "inverter_size": "Velikost měniče (W)",
-          "modules_power": "Celkový špičkový výkon solárních modulů ve Wattech"
+          "modules_power": "Celkový špičkový výkon solárních modulů ve Wattech",
+          "base_url": "Základní URL API",
+          "inverter_power": "Kapacita střídače",
+          "efficiency_factor": "Faktor účinnosti DC",
+          "model": "Meteorologický model",
+          "include_in_cumulative": "Zahrnout do kumulativní předpovědi"
         },
-        "description": "Tyto hodnoty umožňují vyladit výsledky Solar Forecast. Pokud některé pole není jasné, nahlédněte do dokumentace."
+        "description": "Aktualizovat nastavení pro tuto instanci solární předpovědi."
       }
     }
   }

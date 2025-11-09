@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "حدد نوع المثيل",
+        "description": "اختر نوع مثيل توقع الطاقة الشمسية المراد إنشاؤه.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "نوع المثيل"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**عادي**: تكوين اتجاه لوحة واحدة (على سبيل المثال الشرق، الجنوب، الغرب)\n**تراكمي**: دمج التوقعات من اتجاهات متعددة في توقع إجمالي واحد"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "تكوين اتجاه واحد",
+        "description": "تكوين الألواح الشمسية لاتجاه واحد. يمكنك وضع علامة على هذا المثيل ليتم تضمينه في التوقع التراكمي.",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "الاسم",
+          "latitude": "خط العرض",
+          "longitude": "خط الطول",
+          "api_key": "مفتاح API",
+          "base_url": "عنوان URL الأساسي لواجهة برمجة التطبيقات",
+          "azimuth": "السمت",
+          "declination": "الميل",
+          "modules_power": "إجمالي القدرة القصوى بالواط",
+          "inverter_power": "سعة المحول",
+          "damping_morning": "عامل التخميد الصباحي",
+          "damping_evening": "عامل التخميد المسائي",
+          "efficiency_factor": "عامل كفاءة التيار المستمر",
+          "model": "نموذج الطقس",
+          "include_in_cumulative": "تضمين في التوقع التراكمي"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = شمال، 90 = شرق، 180 = جنوب، 270 = غرب",
+          "declination": "0 = أفقي، 90 = عمودي",
+          "modules_power": "إجمالي القدرة القصوى للوحات الشمسية بالواط",
+          "inverter_power": "سعة المحول بالواط (0 بدون حد)",
+          "damping_morning": "يضبط النتائج في الصباح (0.0 = بدون تخميد، 1.0 = أقصى تخميد)",
+          "damping_evening": "يضبط النتائج في المساء (0.0 = بدون تخميد، 1.0 = أقصى تخميد)",
+          "efficiency_factor": "كفاءة الأسلاك للتيار المستمر (0.0 = فقدان 100%، 1.0 = بدون فقدان)",
+          "include_in_cumulative": "فعّل لتضمين هذا الاتجاه في حسابات التوقع التراكمي",
+          "name": "قم بتسمية هذا المثيل حسب الاتجاه (على سبيل المثال 'الألواح الشرقية'، 'الألواح الجنوبية'، 'الألواح الغربية')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "تكوين التوقع التراكمي",
+        "description": "سيجمع هذا المثيل التوقعات من جميع الاتجاهات المحددة للتراكم. يوفر توقعات إنتاج مدمجة.",
         "data": {
-          "name": "Name"
+          "name": "الاسم"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "اقتراح: 'الطاقة الشمسية الإجمالية' أو 'إنتاج الطاقة الشمسية المدمج'"
         }
       }
     }
@@ -121,19 +121,19 @@
     },
     "step": {
       "init": {
-        "description": "Update settings for this solar forecast instance.",
+        "description": "تحديث الإعدادات لمثيل توقع الطاقة الشمسية هذا.",
         "data": {
           "api_key": "API key",
-          "base_url": "API Base URL",
+          "base_url": "عنوان URL الأساسي لواجهة برمجة التطبيقات",
           "azimuth": "Azimuth",
           "declination": "Declination",
           "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
+          "inverter_power": "سعة المحول",
           "damping_morning": "Morning Damping Factor",
           "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "efficiency_factor": "عامل كفاءة التيار المستمر",
+          "model": "نموذج الطقس",
+          "include_in_cumulative": "تضمين في التوقع التراكمي"
         }
       }
     }

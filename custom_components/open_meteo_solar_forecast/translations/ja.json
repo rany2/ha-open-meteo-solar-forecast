@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "インスタンスタイプを選択",
+        "description": "作成する太陽光発電予測インスタンスのタイプを選択してください。",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "インスタンスタイプ"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**通常**：単一のパネル方位を設定します（例：東、南、西）\n**累積**：複数の方位からの予測を1つの合計予測に集約します"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "単一方位の設定",
+        "description": "単一方位の太陽光パネルを設定します。このインスタンスを累積予測に含めるようにマークできます。",
         "data": {
-          "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "name": "名前",
+          "latitude": "緯度",
+          "longitude": "経度",
+          "api_key": "APIキー",
+          "base_url": "APIベースURL",
+          "azimuth": "方位角",
+          "declination": "傾斜角",
+          "modules_power": "総ピーク電力（ワット）",
+          "inverter_power": "インバーター容量",
+          "damping_morning": "朝の減衰係数",
+          "damping_evening": "夕方の減衰係数",
+          "efficiency_factor": "DC効率係数",
+          "model": "気象モデル",
+          "include_in_cumulative": "累積予測に含める"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = 北、90 = 東、180 = 南、270 = 西",
+          "declination": "0 = 水平、90 = 垂直",
+          "modules_power": "太陽光モジュールの総ピーク電力（ワット）",
+          "inverter_power": "インバーターの容量（ワット）（制限なしの場合は0）",
+          "damping_morning": "朝の結果を調整します（0.0 = 減衰なし、1.0 = 最大減衰）",
+          "damping_evening": "夕方の結果を調整します（0.0 = 減衰なし、1.0 = 最大減衰）",
+          "efficiency_factor": "DC配線効率（0.0 = 100%損失、1.0 = 損失なし）",
+          "include_in_cumulative": "この方位を累積予測計算に含めるには有効にしてください",
+          "name": "このインスタンスを方位で名前付けします（例：「東パネル」、「南パネル」、「西パネル」）"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "累積予測の設定",
+        "description": "このインスタンスは、累積用にマークされたすべての方位からの予測を集約します。組み合わせた生産予測を提供します。",
         "data": {
-          "name": "Name"
+          "name": "名前"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "提案：「総合太陽光」または「統合太陽光発電」"
         }
       }
     }
@@ -106,9 +106,14 @@
           "declination": "偏角(0＝水平、90＝垂直)",
           "inverter_size": "インバーターのサイズ（ワット）",
           "modules power": "ソーラーモジュールの総ワットピーク電力",
-          "modules_power": "ソーラーモジュールの総ワットピーク電力"
+          "modules_power": "ソーラーモジュールの総ワットピーク電力",
+          "base_url": "APIベースURL",
+          "inverter_power": "インバーター容量",
+          "efficiency_factor": "DC効率係数",
+          "model": "気象モデル",
+          "include_in_cumulative": "累積予測に含める"
         },
-        "description": "これらの値により、Solar Forecast の結果を微調整できます。フィールドが不明な場合は、ドキュメントを参照してください。"
+        "description": "この太陽光発電予測インスタンスの設定を更新します。"
       }
     }
   }

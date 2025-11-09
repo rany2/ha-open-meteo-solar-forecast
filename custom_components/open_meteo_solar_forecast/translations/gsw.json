@@ -2,54 +2,54 @@
   "config": {
     "step": {
       "user": {
-        "title": "Select Instance Type",
-        "description": "Choose the type of solar forecast instance to create.",
+        "title": "Instanztyp uswähle",
+        "description": "Wählet de Typ vo de Solar-Prognose-Instanz us, wo Sie erstelle wönd.",
         "data": {
-          "instance_type": "Instance Type"
+          "instance_type": "Instanztyp"
         },
         "data_description": {
-          "instance_type": "**Normal**: Configure a single panel orientation (e.g., East, South, West)\n**Cumulative**: Aggregate forecasts from multiple orientations into a single total forecast"
+          "instance_type": "**Normal**: Konfiguriere Sie e einzelni Panel-Usrichtig (z.B. Oste, Süde, Weste)\n**Kumulativ**: Aggregiere Sie Prognose vo mehrere Usrichtige zu enere Gesamtprognose"
         }
       },
       "normal": {
-        "title": "Configure Single Orientation",
-        "description": "Configure solar panels for a single orientation. You can mark this instance to be included in a cumulative forecast.",
+        "title": "Einzelni Usrichtig konfiguriere",
+        "description": "Konfiguriere Sie Solarmodule für e einzelni Usrichtig. Sie chönd die Instanz markiere zum se i ere kumulativ Prognose ufnäh.",
         "data": {
           "name": "Name",
-          "latitude": "Latitude",
-          "longitude": "Longitude",
-          "api_key": "API key",
-          "base_url": "API Base URL",
-          "azimuth": "Azimuth",
-          "declination": "Declination",
-          "modules_power": "Total Watt Peak Power",
-          "inverter_power": "Inverter Capacity",
-          "damping_morning": "Morning Damping Factor",
-          "damping_evening": "Evening Damping Factor",
-          "efficiency_factor": "DC Efficiency Factor",
-          "model": "Weather Model",
-          "include_in_cumulative": "Include in Cumulative Forecast"
+          "latitude": "Breitegra d",
+          "longitude": "Längegrad",
+          "api_key": "API-Schlüssel",
+          "base_url": "API-Basis-URL",
+          "azimuth": "Azimut",
+          "declination": "Neidig",
+          "modules_power": "Gsamti Watt-Spitzeleischtig",
+          "inverter_power": "Wechselrichterkapazität",
+          "damping_morning": "Dämpfigsfaktor am Morge",
+          "damping_evening": "Dämpfigsfaktor am Abig",
+          "efficiency_factor": "DC-Wirkigsgrad",
+          "model": "Wättermodell",
+          "include_in_cumulative": "I kumulativer Prognose ufnäh"
         },
         "data_description": {
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West",
-          "declination": "0 = Horizontal, 90 = Vertical",
-          "modules_power": "Total Watt peak power of your solar modules",
-          "inverter_power": "The capacity of your inverter in Watt (0 for no limit)",
-          "damping_morning": "Adjusts results in morning (0.0 = no damping, 1.0 = max damping)",
-          "damping_evening": "Adjusts results in evening (0.0 = no damping, 1.0 = max damping)",
-          "efficiency_factor": "DC wiring efficiency (0.0 = 100% loss, 1.0 = no loss)",
-          "include_in_cumulative": "Enable to include this orientation in cumulative forecast calculations",
-          "name": "Name this instance by orientation (e.g., 'East Panels', 'South Panels', 'West Panels')"
+          "azimuth": "0 = Norde, 90 = Oste, 180 = Süde, 270 = Weste",
+          "declination": "0 = Horizontal, 90 = Vertikal",
+          "modules_power": "Gsamti Watt-Spitzeleischtig vo Ihne Solarmodule",
+          "inverter_power": "D Kapazität vo Ihrem Wechselrichter i Watt (0 für kei Begränzig)",
+          "damping_morning": "Passt d Ergebnis am Morge a (0.0 = kei Dämpfig, 1.0 = maximali Dämpfig)",
+          "damping_evening": "Passt d Ergebnis am Abig a (0.0 = kei Dämpfig, 1.0 = maximali Dämpfig)",
+          "efficiency_factor": "DC-Verdrahtigseffizienz (0.0 = 100% Verluscht, 1.0 = kei Verluscht)",
+          "include_in_cumulative": "Aktiviere zum die Usrichtig i kumulative Prognoseberechnige ufznäh",
+          "name": "Nenne Sie die Instanz nach Usrichtig (z.B. 'Ost-Module', 'Süd-Module', 'West-Module')"
         }
       },
       "cumulative": {
-        "title": "Configure Cumulative Forecast",
-        "description": "This instance will aggregate forecasts from all orientations marked for cumulation. It provides combined production forecasts.",
+        "title": "Kumulativi Prognose konfiguriere",
+        "description": "Die Instanz aggregiert Prognose vo allne Usrichtige wo für d Kumulierig markiert sin. Si bietet kombinierti Produktionsprognose.",
         "data": {
           "name": "Name"
         },
         "data_description": {
-          "name": "Suggested: 'Total Solar' or 'Combined Solar Production'"
+          "name": "Vorschlag: 'Gsamt-Solar' oder 'Kombinierti Solarproduktion'"
         }
       }
     }
@@ -94,6 +94,18 @@
   "options": {
     "error": {
       "invalid_api_key": "Ungüutige API-Schlüssu"
+    },
+    "step": {
+      "init": {
+        "description": "Istellige für die Solar-Prognose-Instanz aktualisiere.",
+        "data": {
+          "base_url": "API-Basis-URL",
+          "inverter_power": "Wechselrichterkapazität",
+          "efficiency_factor": "DC-Wirkigsgrad",
+          "model": "Wättermodell",
+          "include_in_cumulative": "I kumulativer Prognose ufnäh"
+        }
+      }
     }
   }
 }
