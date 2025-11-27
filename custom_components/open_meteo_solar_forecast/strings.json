@@ -16,6 +16,7 @@
           "inverter_power": "The capacity of your inverter in Watt",
           "name": "[%key:common::config_flow::data::name%]",
           "model": "The weather model to use"
+          "use_horizon": "If enabled, the horizon line defined in horizon.txt (see docs) is used to respect shading of the modules."
         }
       }
     }
@@ -37,6 +38,7 @@
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::modules_power%]",
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
           "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]"
+          "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::user::data::use_horizon%]"
         }
       }
     }

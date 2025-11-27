@@ -19,17 +19,24 @@ from .const import (
     CONF_DECLINATION,
     CONF_EFFICIENCY_FACTOR,
     CONF_INVERTER_POWER,
+    CONF_USE_HORIZON,
     CONF_MODEL,
     CONF_MODULES_POWER,
     DOMAIN,
     LOGGER,
 )
 
+import numpy
+
 
 class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate]):
     """The Solar Forecast Data Update Coordinator."""
 
     config_entry: ConfigEntry
+    
+    # Read horizon data from text file
+    horizon_data = numpy.genfromtxt("/config/custom_components/open_meteo_solar_forecast/horizon.txt", delimiter="\t", dtype=float)
+    hm = tuple([tuple(row) for row in horizon_data])
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         """Initialize the Solar Forecast coordinator."""
@@ -56,6 +63,8 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             efficiency_factor=entry.options[CONF_EFFICIENCY_FACTOR],
             damping_morning=entry.options.get(CONF_DAMPING_MORNING, 0.0),
             damping_evening=entry.options.get(CONF_DAMPING_EVENING, 0.0),
+            use_horizon=entry.options.get(CONF_USE_HORIZON),
+            horizon_map=self.hm,
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
         )
 

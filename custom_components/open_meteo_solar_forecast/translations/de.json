@@ -10,6 +10,7 @@
           "longitude": "Längengrad",
           "modules_power": "Gesamt-Watt-Spitzenleistung deiner Solarmodule",
           "name": "Name"
+          "use_horizon": "Wenn aktiviert, wird die in horizon.txt spezifizierte Horizontlinie für die Beschattung der Module berücksichtigt."
         },
         "description": "Gib die Daten deiner Solarmodule ein. Wenn ein Feld unklar ist, schlage bitte in der Dokumentation nach."
       }
@@ -91,6 +92,7 @@
           "declination": "Deklination (0 = Horizontal, 90 = Vertikal)",
           "inverter_size": "Wechselrichtergröße (Watt)",
           "modules_power": "Gesamt-Watt-Spitzenleistung deiner Solarmodule"
+          "use_horizon": "Berücksichtige Horizontline (horizon.txt)"
         },
         "description": "Mit diesen Werten kann das Ergebnis von Solar Forecast angepasst werden. Wenn ein Feld unklar ist, lies bitte in der Dokumentation nach."
       }
