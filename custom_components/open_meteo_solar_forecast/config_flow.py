@@ -20,6 +20,7 @@ from .const import (
     CONF_INVERTER_POWER,
     CONF_MODEL,
     CONF_USE_HORIZON,
+    CONF_HORIZON_FILEPATH,
     CONF_MODULES_POWER,
     DOMAIN,
 )
@@ -65,6 +66,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_INVERTER_POWER: user_input[CONF_INVERTER_POWER],
                     CONF_EFFICIENCY_FACTOR: user_input[CONF_EFFICIENCY_FACTOR],
                     CONF_USE_HORIZON: user_input[CONF_USE_HORIZON],
+                    CONF_HORIZON_FILEPATH: user_input[CONF_HORIZON_FILEPATH],
                     CONF_MODEL: user_input[CONF_MODEL],
                 },
             )
@@ -93,6 +95,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         vol.Coerce(int), vol.Range(min=0, max=360)
                     ),
                     vol.Required(CONF_USE_HORIZON, default=False): vol.Coerce(bool),
+                    vol.Optional(CONF_HORIZON_FILEPATH, default="/config/custom_components/open_meteo_solar_forecast/horizon.txt"): vol.Coerce(str),
                     vol.Required(CONF_MODULES_POWER): vol.All(
                         vol.Coerce(int), vol.Range(min=1)
                     ),
@@ -163,12 +166,18 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                             CONF_DAMPING_EVENING, 0.0
                         ),
                     ): vol.Coerce(float),
-                    vol.Optional(
+                    vol.Required(
                         CONF_USE_HORIZON,
                         default=self.config_entry.options.get(
                             CONF_USE_HORIZON, False
                         ),
                     ): vol.Coerce(bool),
+                    vol.Optional(
+                        CONF_HORIZON_FILEPATH,
+                        default=self.config_entry.options.get(
+                            CONF_HORIZON_FILEPATH, "/config/custom_components/open_meteo_solar_forecast/horizon.txt"
+                        ),
+                    ): vol.Coerce(str),
                     vol.Required(
                         CONF_INVERTER_POWER,
                         default=self.config_entry.options.get(CONF_INVERTER_POWER, 0),
