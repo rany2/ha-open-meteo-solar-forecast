@@ -20,6 +20,7 @@ from .const import (
     CONF_EFFICIENCY_FACTOR,
     CONF_INVERTER_POWER,
     CONF_USE_HORIZON,
+    CONF_PARTIAL_SHADING,
     CONF_HORIZON_FILEPATH,
     CONF_MODEL,
     CONF_MODULES_POWER,
@@ -65,6 +66,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             damping_morning=entry.options.get(CONF_DAMPING_MORNING, 0.0),
             damping_evening=entry.options.get(CONF_DAMPING_EVENING, 0.0),
             use_horizon=entry.options.get(CONF_USE_HORIZON),
+            partial_shading=entry.options.get(CONF_PARTIAL_SHADING),
             horizon_map=hm,
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
         )

@@ -16,6 +16,7 @@ CONF_DAMPING_EVENING = "damping_evening"
 CONF_INVERTER_POWER = "inverter_power"
 CONF_EFFICIENCY_FACTOR = "efficiency_factor"
 CONF_USE_HORIZON = "use_horizon"
+CONF_PARTIAL_SHADING = "partial_shading"
 CONF_HORIZON_FILEPATH = "horizon_filepath"
 CONF_MODEL = "model"
 
