@@ -52,7 +52,7 @@ If a damping factor is applied for damping_evening, the same happens in reverse 
 
 A horizon profile can be provided as a text file to take into account when direct sunlight is blocked out by surrounding obstacles (buildings, trees, ...). The file horizon.txt is located in the custom_components directory. It contains two columns (separated by tab) giving the azimuth (0° = north, 180° = south) and the angle of the obstacle contour. You can use as many lines as you want (minimum of two, the first azimuth 0°, and the last one 360°), however the azimuth angles have to be strictly increasing (no checks are made at this point!). See the Readme for https://github.com/rany2/open-meteo-solar-forecast on more information.
 
-In the integration settings, the checkbox use_horizon enables the feature. Enabling/disabling will have a effect on the forecast immediately. The horizon profile can be used together with the damping factors, if necessary.
+In the integration settings, the checkbox use_horizon enables the feature. Enabling/disabling will have a effect on the forecast immediately. The horizon profile can be used together with the damping factors, if necessary. It is also possible to treat the shading as partial (which will have a drastic effect during sunny conditions).
 
 ### Confusing Power Sensors with Energy Sensors
 
