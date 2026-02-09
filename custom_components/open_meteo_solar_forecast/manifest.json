@@ -3,10 +3,10 @@
   "name": "Open-Meteo Solar Forecast",
   "codeowners": ["@rany2"],
   "config_flow": true,
-  "documentation": "https://github.com/thomay86/ha-open-meteo-solar-forecast",
+  "documentation": "https://github.com/rany2/ha-open-meteo-solar-forecast",
   "integration_type": "service",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/thomay86/ha-open-meteo-solar-forecast/issues",
-  "requirements": ["git+https://github.com/thomay86/open-meteo-solar-forecast.git@v0.1.0-beta5"],
-  "version": "0.1.2"
+  "issue_tracker": "https://github.com/rany2/ha-open-meteo-solar-forecast/issues",
+  "requirements": ["open_meteo_solar_forecast==0.1.23"],
+  "version": "0.1.23"
 }
