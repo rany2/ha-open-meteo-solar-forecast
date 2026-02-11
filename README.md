@@ -48,6 +48,16 @@ A higher damping factor means lower power. At 1.0, damping is full and the power
 If a damping factor of 1.0 is applied for damping_morning, the power starts at 0 and increases steadily until midday `(sunrise + (sunset - sunrise) / 2)`.
 If a damping factor is applied for damping_evening, the same happens in reverse and power decreases steadily as the sun sets.
 
+### Horizon shading
+
+A horizon profile can be provided as a text file to take into account when direct sunlight is blocked out by surrounding obstacles (buildings, trees, ...). The file location can be specified, a default one is located in the custom_components directory. (It is recommended to use a location outside of the custom_component in order to avoid accidentally overwriting on subsequent updates.) It contains two columns of floats (decimal point, separated by tab) giving the azimuth (0° = north, 180° = south) and the elevation angle of the obstacle contour (0° = flat horizon, 90° = in the sky directly above). You can use as many lines as you want (minimum of two, the first azimuth 0°, and the last one 360°), and the azimuth angles have to be strictly increasing. Intermediate values are interpolated linearly. Some checks are run on the horizon file during initialisation; if errors are detected the integration will show an issue (see the logs for further details then).
+
+In the integration settings, the first checkbox use_horizon enables the feature. Enabling/disabling will have a effect on the forecast immediately. The horizon profile can be used together with the damping factors, if necessary.
+
+The second checkbox will enable/disable partial shading estimation. If partial_shading is disabled and a shadow is detected on the module, only the diffuse irradiation will be used to calculate the power output. This is useful if the shading is predominantly from far-away objects, which can be treated as shading the whole module at once or not. If partial_shading is enabled and a shadow is detected on the module, the shadow is treated as partial. This is useful if the shading arises from close-by objects, which cast 'hard' contoured shadows on the module. In this case, an experimental calculation is used taking into account the 'sunniness' of the conditions (inspired by [this](https://pvlib-python.readthedocs.io/en/stable/gallery/shading/plot_partial_module_shading_simple.html#calculating-shading-loss-across-shading-scenarios)). This is done via the ratio of diffuse and direct irradiation. A large share of diffuse irradiation (cloudy day) will let the module run as homogeneously shaded at diffuse power. A small share of diffuse irradiation (sunny) day will reduce the diffuse power even more, since hard partial shadows can shut down the module completely.
+
+Also see the Readme for https://github.com/rany2/open-meteo-solar-forecast on more information.
+
 ### Confusing Power Sensors with Energy Sensors
 
 The power sensors start with "Solar production forecast Estimated power" and the energy sensors start with "Solar production forecast Estimated energy". The power sensors show the power expected to be available at that time, and the energy sensors show the energy expected to be produced as an average over an hour.
