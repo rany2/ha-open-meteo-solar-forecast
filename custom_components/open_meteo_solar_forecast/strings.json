@@ -16,9 +16,9 @@
           "inverter_power": "The capacity of your inverter in Watt",
           "name": "[%key:common::config_flow::data::name%]",
           "model": "The weather model to use",
-          "use_horizon": "If enabled, the horizon line defined in horizon.txt (see docs) is used to respect shading of the modules.",
-		  "horizon_filepath": "Path to the horizon file",
-		  "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
+          "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
+          "horizon_filepath": "Path to the horizon file",
+          "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
         }
       }
     }
@@ -41,8 +41,8 @@
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
           "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]",
           "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::user::data::use_horizon%]",
-		  "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::user::data::horizon_filepath%]",
-		  "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]"
+          "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::user::data::horizon_filepath%]",
+          "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]"
         }
       }
     }
