@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.util import dt as dt_util
 from open_meteo_solar_forecast import Estimate, OpenMeteoSolarForecast
 
 from .const import (
@@ -18,12 +19,14 @@ from .const import (
     CONF_DAMPING_MORNING,
     CONF_DECLINATION,
     CONF_EFFICIENCY_FACTOR,
+    CONF_MAX_FORECAST_AGE_MINUTES,
     CONF_INVERTER_POWER,
     CONF_USE_HORIZON,
     CONF_PARTIAL_SHADING,
     CONF_HORIZON_FILEPATH,
     CONF_MODEL,
     CONF_MODULES_POWER,
+    CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
     DOMAIN,
     LOGGER,
 )
@@ -104,6 +107,16 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         # Handle new options that were added after the initial release
         ac_kwp = entry.options.get(CONF_INVERTER_POWER, 0)
         ac_kwp = ac_kwp / 1000 if ac_kwp else None
+        self._retain_latest_forecast_when_unavailable = entry.options.get(
+            CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE, True
+        )
+        max_forecast_age_minutes = entry.options.get(CONF_MAX_FORECAST_AGE_MINUTES, 0)
+        self._max_forecast_age = (
+            timedelta(minutes=max_forecast_age_minutes)
+            if max_forecast_age_minutes > 0
+            else None
+        )
+        self._last_successful_update: datetime | None = None
         
         self.forecast = OpenMeteoSolarForecast(
             api_key=api_key,
@@ -130,6 +143,32 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
 
     async def _async_update_data(self) -> Estimate:
         """Fetch Open-Meteo Solar Forecast estimates."""
-        return await self.forecast.estimate()
+        try:
+            estimate = await self.forecast.estimate()
+        except Exception as err:
+            if not self._retain_latest_forecast_when_unavailable or self.data is None:
+                raise UpdateFailed(f"Error communicating with API: {err}") from err
+
+            if self._max_forecast_age is not None:
+                if self._last_successful_update is None:
+                    raise UpdateFailed(
+                        "No successful forecast update timestamp available"
+                    ) from err
+
+                forecast_age = dt_util.utcnow() - self._last_successful_update
+                if forecast_age > self._max_forecast_age:
+                    raise UpdateFailed(
+                        "Retained forecast exceeded max age "
+                        f"({forecast_age} > {self._max_forecast_age})"
+                    ) from err
+
+            LOGGER.warning(
+                "Unable to refresh forecast data, using retained forecast",
+                exc_info=err,
+            )
+            return self.data
+
+        self._last_successful_update = dt_util.utcnow()
+        return estimate
     
     

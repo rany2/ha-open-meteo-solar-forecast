@@ -15,6 +15,8 @@
           "inverter_power": "The capacity of your inverter in Watt",
           "name": "Name",
           "model": "The weather model to use",
+          "retain_latest_forecast_when_unavailable": "Retain latest forecast when unavailable",
+          "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
           "horizon_filepath": "Path to the horizon file",
           "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
@@ -101,6 +103,8 @@
           "modules_power": "Total Watt peak power of your solar modules",
           "inverter_power": "The capacity of your inverter in Watt",
           "model": "The weather model to use",
+          "retain_latest_forecast_when_unavailable": "Retain latest forecast when unavailable",
+          "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "Use horizon line from horizon file",
           "horizon_filepath": "Path to the horizon file",
           "partial_shading": "Treat shadows as partial"

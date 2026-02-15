@@ -16,6 +16,8 @@
           "inverter_power": "The capacity of your inverter in Watt",
           "name": "[%key:common::config_flow::data::name%]",
           "model": "The weather model to use",
+          "retain_latest_forecast_when_unavailable": "Retain latest forecast when unavailable",
+          "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
           "horizon_filepath": "Path to the horizon file",
           "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
@@ -40,6 +42,8 @@
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::modules_power%]",
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
           "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]",
+          "retain_latest_forecast_when_unavailable": "[%key:component::open_meteo_solar_forecast::config::step::user::data::retain_latest_forecast_when_unavailable%]",
+          "max_forecast_age_minutes": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_forecast_age_minutes%]",
           "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::user::data::use_horizon%]",
           "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::user::data::horizon_filepath%]",
           "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]"
