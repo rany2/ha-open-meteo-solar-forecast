@@ -24,6 +24,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.event import async_track_utc_time_change
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.util import slugify
 
 from open_meteo_solar_forecast.models import Estimate
 
@@ -257,7 +258,8 @@ class OpenMeteoSolarForecastSensorEntity(
         """Initialize Open-Meteo Solar sensor."""
         super().__init__(coordinator=coordinator)
         self.entity_description = entity_description
-        self.entity_id = f"{SENSOR_DOMAIN}.{entity_description.key}"
+        service_slug = slugify(coordinator.config_entry.title) or coordinator.config_entry.entry_id
+        self.entity_id = f"{SENSOR_DOMAIN}.{service_slug}_{entity_description.key}"
         self._attr_unique_id = f"{entry_id}_{entity_description.key}"
 
         self._attr_device_info = DeviceInfo(
