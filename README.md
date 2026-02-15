@@ -24,7 +24,7 @@ This custom component integrates the [open-meteo-solar-forecast](https://github.
 
 To use this integration in your installation, head to "Settings" in the Home Assistant UI, then "Integrations". Click on the plus button and search for "Open-Meteo Solar Forecast" and follow the instructions.
 
-### Multiple PV arrays
+### Multiple PV Arrays
 
 The integration supports multiple PV arrays. For array-capable fields, you can enter either:
 
@@ -72,7 +72,7 @@ The damping factor is a number between 0.0 and 1.0, where:
 For `damping_morning`, a factor of 1.0 causes power to start at 0 and increase steadily until midday `(sunrise + (sunset - sunrise) / 2)`.
 For `damping_evening`, the same effect occurs in reverse, with power decreasing as the sun sets.
 
-### Horizon shading
+### Horizon Shading
 
 A horizon profile text file accounts for direct sunlight blockage from obstacles (buildings, trees, etc.). The file contains two tab-separated columns of floats: azimuth (0° = north, 180° = south) and elevation angle (0° = flat horizon, 90° = directly overhead). Use a minimum of two lines with azimuth values strictly increasing from 0° to 360°; intermediate values are interpolated linearly.
 
