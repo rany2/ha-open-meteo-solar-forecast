@@ -31,20 +31,14 @@ The integration supports multiple PV arrays. For array-capable fields, you can e
 - a single scalar value (applied to all arrays), or
 - a comma-separated list of values (one value per array).
 
-Required per-array fields are:
+All numeric parameter values must use a decimal point (`.`), even in locales that commonly use a decimal comma (for example German).
 
-- `latitude`
-- `longitude`
-- `declination`
-- `azimuth`
-- `modules_power`
+Using decimal commas can break parsing in multi-array configurations. For example:
 
-Optional per-array fields are:
+- `damping_factor`: `0,4,0,5` is interpreted as four list items, not two decimals (`0.4,0.5`).
+- `dc_efficiency`: `0,9` is interpreted as two arrays (`0` and `9`) instead of a single value (`0.9`).
 
-- `efficiency_factor`
-- `use_horizon`
-- `partial_shading`
-- `horizon_filepath`
+Use `.` for decimals and `,` only as the list separator between arrays.
 
 Examples:
 
