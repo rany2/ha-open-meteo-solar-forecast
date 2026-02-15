@@ -57,7 +57,7 @@ When mixed with list inputs, single scalar values are automatically expanded to 
 
 ### Azimuth
 
-The azimuth range for this integration is 0 to 360 degrees, with 0 being North, 90 being East, 180 being South, and 270 being West. If you have a negative azimuth, add 360 to it to get the correct value. For example, -90 degrees should be entered as 270 degrees.
+Azimuth ranges from 0° to 360°: North (0°), East (90°), South (180°), West (270°). For negative values, add 360° (e.g., -90° becomes 270°).
 
 ### DC Efficiency
 
