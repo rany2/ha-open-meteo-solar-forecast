@@ -274,6 +274,9 @@ class OpenMeteoSolarForecastSensorEntity(
         This is required for the power_production_* sensors to update
         as they take data in 15-minute intervals and the update interval
         is 30 minutes."""
+        if not self.enabled:
+            return
+
         self.async_write_ha_state()
 
     async def async_added_to_hass(self) -> None:
@@ -282,10 +285,12 @@ class OpenMeteoSolarForecastSensorEntity(
 
         # Update the state of the sensor every minute without
         # fetching new data from the server.
-        async_track_utc_time_change(
-            self.hass,
-            self._update_callback,
-            second=0,
+        self.async_on_remove(
+            async_track_utc_time_change(
+                self.hass,
+                self._update_callback,
+                second=0,
+            )
         )
 
     @property
