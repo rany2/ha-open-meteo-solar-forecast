@@ -55,12 +55,6 @@ Examples:
 
 When mixed with list inputs, single scalar values are automatically expanded to all arrays.
 
-## Common Mistakes
-
-### API Key
-
-This should be left blank as the Open-Meteo API does not require an API key. An API key is required for commercial use only per-Open-Meteo's [terms of service](https://open-meteo.com/en/terms).
-
 ### Azimuth
 
 The azimuth range for this integration is 0 to 360 degrees, with 0 being North, 90 being East, 180 being South, and 270 being West. If you have a negative azimuth, add 360 to it to get the correct value. For example, -90 degrees should be entered as 270 degrees.
@@ -81,42 +75,17 @@ If a damping factor is applied for damping_evening, the same happens in reverse 
 
 ### Horizon shading
 
-A horizon profile can be provided as a text file to take into account when direct sunlight is blocked out by surrounding obstacles (buildings, trees, ...). The file location can be specified, a default one is located in the custom_components directory. (It is recommended to use a location outside of the custom_component in order to avoid accidentally overwriting on subsequent updates.) It contains two columns of floats (decimal point, separated by tab) giving the azimuth (0° = north, 180° = south) and the elevation angle of the obstacle contour (0° = flat horizon, 90° = in the sky directly above). You can use as many lines as you want (minimum of two, the first azimuth 0°, and the last one 360°), and the azimuth angles have to be strictly increasing. Intermediate values are interpolated linearly. Some checks are run on the horizon file during initialisation; if errors are detected the integration will show an issue (see the logs for further details then).
+A horizon profile text file accounts for direct sunlight blockage from obstacles (buildings, trees, etc.). The file contains two tab-separated columns of floats: azimuth (0° = north, 180° = south) and elevation angle (0° = flat horizon, 90° = directly overhead). Use a minimum of two lines with azimuth values strictly increasing from 0° to 360°; intermediate values are interpolated linearly.
 
-In the integration settings, the first checkbox use_horizon enables the feature. Enabling/disabling will have a effect on the forecast immediately. The horizon profile can be used together with the damping factors, if necessary.
+**Note:** Store the file outside the custom_component directory to avoid overwriting during updates.
 
-The second checkbox will enable/disable partial shading estimation. If partial_shading is disabled and a shadow is detected on the module, only the diffuse irradiation will be used to calculate the power output. This is useful if the shading is predominantly from far-away objects, which can be treated as shading the whole module at once or not. If partial_shading is enabled and a shadow is detected on the module, the shadow is treated as partial. This is useful if the shading arises from close-by objects, which cast 'hard' contoured shadows on the module. In this case, an experimental calculation is used taking into account the 'sunniness' of the conditions (inspired by [this](https://pvlib-python.readthedocs.io/en/stable/gallery/shading/plot_partial_module_shading_simple.html#calculating-shading-loss-across-shading-scenarios)). This is done via the ratio of diffuse and direct irradiation. A large share of diffuse irradiation (cloudy day) will let the module run as homogeneously shaded at diffuse power. A small share of diffuse irradiation (sunny) day will reduce the diffuse power even more, since hard partial shadows can shut down the module completely.
+Use horizon enables/disables shading and takes effect immediately. It can be combined with damping factors.
 
-Also see the Readme for https://github.com/rany2/open-meteo-solar-forecast on more information.
+Partial shading controls shadow estimation:
+- **Disabled:** Only diffuse irradiation is used when a shadow is detected (suitable for far-away objects)
+- **Enabled:** Shadows are treated as partial (suitable for close-by objects). An experimental calculation accounts for conditions by comparing diffuse/direct irradiation ratios; cloudy days behave as homogeneously shaded, while sunny days apply additional reductions.
 
-### Confusing Power Sensors with Energy Sensors
-
-The power sensors start with "Solar production forecast Estimated power" and the energy sensors start with "Solar production forecast Estimated energy". The power sensors show the power expected to be available at that time, and the energy sensors show the energy expected to be produced as an average over an hour.
-
-### Confusion between "Open-Meteo" and "Open-Meteo Solar Forecast" Integrations
-
-The "Open-Meteo" integration is for weather data, and the "Open-Meteo Solar Forecast" integration is for solar production data. They are separate integrations and should not be confused with each other.
-
-### Disabled Sensors
-
-Some sensors are disabled by default to reduce load on the recorder database. If you want one of these sensors, you can enable it and wait about a minute for sensor data to appear.
-
-### Power Sensor Update Frequency
-
-The power sensors update every 15 minutes, so you may not see immediate changes in the power sensors. They are not interpolated every minute. For example, consider that the integration knows that the power values will be as follows for the given instants:
-
-- `12:00`: `100` W
-- `12:15`: `200` W
-- `12:30`: `300` W
-
-If you check the "Power Now" sensor at:
-
-- `12:00`, it will show `100` W (data taken from `12:00`)
-- `12:15`, it will show `200` W (data taken from `12:15`)
-- `12:22`, it will show `200` W (data taken from `12:15`)
-- `12:37`, it will show `300` W (data taken from `12:30`)
-
-Notice that the power sensor picks the last known value until the next update, not necessarily the closest value. Also, the power sensors are not interpolated, so the "Power Now" sensor will not show ~`150` W at `12:07`.
+For more information, see the [open-meteo-solar-forecast repository](https://github.com/rany2/open-meteo-solar-forecast).
 
 ## Credits
 
