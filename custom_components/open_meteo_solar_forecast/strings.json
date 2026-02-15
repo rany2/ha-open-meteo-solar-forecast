@@ -39,6 +39,8 @@
           "damping_morning": "[%key:component::open_meteo_solar_forecast::config::step::user::data::damping_morning%]",
           "damping_evening": "[%key:component::open_meteo_solar_forecast::config::step::user::data::damping_evening%]",
           "declination": "[%key:component::open_meteo_solar_forecast::config::step::user::data::declination%]",
+          "latitude": "[%key:common::config_flow::data::latitude%]",
+          "longitude": "[%key:common::config_flow::data::longitude%]",
           "efficiency_factor": "[%key:component::open_meteo_solar_forecast::config::step::user::data::efficiency_factor%]",
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::modules_power%]",
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",

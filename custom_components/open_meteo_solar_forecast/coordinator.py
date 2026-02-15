@@ -77,6 +77,11 @@ def _resolve_array_count(*values: Any) -> int:
 
     return array_count
 
+
+def _entry_value(entry: ConfigEntry, key: str) -> Any:
+    """Get config value from options with fallback to entry data."""
+    return entry.options.get(key, entry.data.get(key))
+
 def checkHorizonFile(horizon_filepath):
     horizon_data_valid = True
     message = ""
@@ -163,8 +168,8 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         self._last_successful_update: datetime | None = None
 
         array_count = _resolve_array_count(
-            entry.data[CONF_LATITUDE],
-            entry.data[CONF_LONGITUDE],
+            _entry_value(entry, CONF_LATITUDE),
+            _entry_value(entry, CONF_LONGITUDE),
             entry.options[CONF_DECLINATION],
             entry.options[CONF_AZIMUTH],
             entry.options[CONF_MODULES_POWER],
@@ -173,8 +178,12 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             entry.options.get(CONF_PARTIAL_SHADING, False),
         )
 
-        latitude = _normalize_array_value(entry.data[CONF_LATITUDE], array_count)
-        longitude = _normalize_array_value(entry.data[CONF_LONGITUDE], array_count)
+        latitude = _normalize_array_value(
+            _entry_value(entry, CONF_LATITUDE), array_count
+        )
+        longitude = _normalize_array_value(
+            _entry_value(entry, CONF_LONGITUDE), array_count
+        )
         azimuth = _normalize_array_value(
             entry.options[CONF_AZIMUTH],
             array_count,

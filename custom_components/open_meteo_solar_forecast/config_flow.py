@@ -279,6 +279,16 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
 class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
     """Handle options."""
 
+    def _current_latitude(self) -> Any:
+        return self.config_entry.options.get(
+            CONF_LATITUDE, self.config_entry.data[CONF_LATITUDE]
+        )
+
+    def _current_longitude(self) -> Any:
+        return self.config_entry.options.get(
+            CONF_LONGITUDE, self.config_entry.data[CONF_LONGITUDE]
+        )
+
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
@@ -286,18 +296,10 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
         errors = {}
         if user_input is not None:
             try:
-                normalized_input = _normalize_flow_values(
-                    user_input
-                    | {
-                        CONF_LATITUDE: self.config_entry.data[CONF_LATITUDE],
-                        CONF_LONGITUDE: self.config_entry.data[CONF_LONGITUDE],
-                    }
-                )
+                normalized_input = _normalize_flow_values(user_input)
             except vol.Invalid:
                 errors["base"] = "invalid_multi_value"
             else:
-                normalized_input.pop(CONF_LATITUDE, None)
-                normalized_input.pop(CONF_LONGITUDE, None)
                 return self.async_create_entry(
                     title="",
                     data=normalized_input
@@ -319,6 +321,14 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                     vol.Required(
                         CONF_BASE_URL,
                         default=self.config_entry.options[CONF_BASE_URL],
+                    ): str,
+                    vol.Required(
+                        CONF_LATITUDE,
+                        default=_text_default(self._current_latitude()),
+                    ): str,
+                    vol.Required(
+                        CONF_LONGITUDE,
+                        default=_text_default(self._current_longitude()),
                     ): str,
                     vol.Required(
                         CONF_DECLINATION,

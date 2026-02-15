@@ -31,11 +31,16 @@ def _is_sequence(value: Any) -> bool:
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes))
 
 
+def _entry_value(entry: ConfigEntry, key: str) -> Any:
+    """Get config value from options with fallback to entry data."""
+    return entry.options.get(key, entry.data.get(key))
+
+
 def _resolve_array_count(entry: ConfigEntry) -> int:
     """Determine number of arrays from all array-capable values."""
     candidates = (
-        entry.data.get(CONF_LATITUDE),
-        entry.data.get(CONF_LONGITUDE),
+        _entry_value(entry, CONF_LATITUDE),
+        _entry_value(entry, CONF_LONGITUDE),
         entry.options.get(CONF_DECLINATION),
         entry.options.get(CONF_AZIMUTH),
         entry.options.get(CONF_MODULES_POWER),
