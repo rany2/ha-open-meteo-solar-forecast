@@ -63,15 +63,14 @@ Azimuth ranges from 0° to 360°: North (0°), East (90°), South (180°), West 
 
 The DC efficiency is the efficiency of the DC wiring and should not be confused with the cell efficiency. The DC efficiency is typically around 0.93. The cell efficiency is accounted for in the cell temperature calculation and is assumed to be 0.12.
 
-### Dampening of Values
+### Damping Factor
 
-The damping factor is a number between 0.0 and 1.0.
+The damping factor is a number between 0.0 and 1.0, where:
+- **0.0:** No damping; panels produce maximum power
+- **1.0:** Full damping; power is at minimum
 
-A lower damping factor means higher solar panel power. At 0.0, there’s no damping and the panels produce maximum power.
-A higher damping factor means lower power. At 1.0, damping is full and the power is at its minimum.
-
-If a damping factor of 1.0 is applied for damping_morning, the power starts at 0 and increases steadily until midday `(sunrise + (sunset - sunrise) / 2)`.
-If a damping factor is applied for damping_evening, the same happens in reverse and power decreases steadily as the sun sets.
+For `damping_morning`, a factor of 1.0 causes power to start at 0 and increase steadily until midday `(sunrise + (sunset - sunrise) / 2)`.
+For `damping_evening`, the same effect occurs in reverse, with power decreasing as the sun sets.
 
 ### Horizon shading
 
