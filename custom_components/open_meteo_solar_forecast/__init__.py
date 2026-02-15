@@ -6,15 +6,29 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
-from .const import DOMAIN
-from .coordinator import OpenMeteoSolarForecastDataUpdateCoordinator
+from .const import CONF_HORIZON_FILEPATH, CONF_USE_HORIZON, DOMAIN
+from .coordinator import (
+    OpenMeteoSolarForecastDataUpdateCoordinator,
+    checkHorizonFile,
+)
 
 PLATFORMS = [Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solar Forecast from a config entry."""
-    coordinator = OpenMeteoSolarForecastDataUpdateCoordinator(hass, entry)
+    horizon_map: tuple[tuple[float, float], ...] = ((0.0, 0.0), (360.0, 0.0))
+    if entry.options.get(CONF_USE_HORIZON):
+        horizon_filepath = entry.options.get(CONF_HORIZON_FILEPATH)
+        horizon_map, message = await hass.async_add_executor_job(
+            checkHorizonFile, horizon_filepath
+        )
+        if horizon_map is None:
+            raise ValueError(message)
+
+    coordinator = OpenMeteoSolarForecastDataUpdateCoordinator(
+        hass, entry, horizon_map
+    )
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator

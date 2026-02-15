@@ -88,7 +88,12 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
 
     config_entry: ConfigEntry
     
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        horizon_map: tuple[tuple[float, float], ...],
+    ) -> None:
         """Initialize the Solar Forecast coordinator."""
         self.config_entry = entry
 
@@ -100,18 +105,6 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         ac_kwp = entry.options.get(CONF_INVERTER_POWER, 0)
         ac_kwp = ac_kwp / 1000 if ac_kwp else None
         
-        # Read horizon data from text file and check for integrity
-        if entry.options.get(CONF_USE_HORIZON) == True:
-            horizon_filepath = entry.options.get(CONF_HORIZON_FILEPATH)
-            hm, message = checkHorizonFile(horizon_filepath)
-            if hm == None:
-                raise ValueError(message)
-        else:
-            hm = ((0.0,0.0),(360.0,0.0))
-        
-        #horizon_data = numpy.genfromtxt(entry.options.get(CONF_HORIZON_FILEPATH) , delimiter="\t", dtype=float)
-        #hm = tuple([tuple(row) for row in horizon_data])
-
         self.forecast = OpenMeteoSolarForecast(
             api_key=api_key,
             session=async_get_clientsession(hass),
@@ -127,7 +120,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             damping_evening=entry.options.get(CONF_DAMPING_EVENING, 0.0),
             use_horizon=entry.options.get(CONF_USE_HORIZON),
             partial_shading=entry.options.get(CONF_PARTIAL_SHADING),
-            horizon_map=hm,
+            horizon_map=horizon_map,
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
         )
 
