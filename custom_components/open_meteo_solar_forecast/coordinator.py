@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from datetime import datetime, timedelta
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE
@@ -23,7 +25,6 @@ from .const import (
     CONF_INVERTER_POWER,
     CONF_USE_HORIZON,
     CONF_PARTIAL_SHADING,
-    CONF_HORIZON_FILEPATH,
     CONF_MODEL,
     CONF_MODULES_POWER,
     CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
@@ -32,6 +33,49 @@ from .const import (
 )
 
 import numpy
+
+
+def _is_sequence(value: Any) -> bool:
+    return isinstance(value, Sequence) and not isinstance(value, (str, bytes))
+
+
+def _normalize_array_value(value: Any, array_count: int, transform: Any = None) -> Any:
+    """Normalize scalar or sequence values to scalar or list for the forecast API."""
+    if _is_sequence(value):
+        normalized = list(value)
+        if len(normalized) == 1 and array_count > 1:
+            normalized = normalized * array_count
+        elif len(normalized) != array_count:
+            raise ValueError(
+                "Multi-array configuration has inconsistent list lengths "
+                f"({len(normalized)} vs {array_count})."
+            )
+        if transform is not None:
+            normalized = [transform(item) for item in normalized]
+        return normalized
+
+    if transform is not None:
+        value = transform(value)
+
+    if array_count > 1:
+        return [value] * array_count
+    return value
+
+
+def _resolve_array_count(*values: Any) -> int:
+    lengths = [len(value) for value in values if _is_sequence(value)]
+    if not lengths:
+        return 1
+
+    array_count = max(lengths)
+    for length in lengths:
+        if length not in (1, array_count):
+            raise ValueError(
+                "Multi-array configuration has inconsistent list lengths "
+                f"({length} vs {array_count})."
+            )
+
+    return array_count
 
 def checkHorizonFile(horizon_filepath):
     horizon_data_valid = True
@@ -95,7 +139,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         self,
         hass: HomeAssistant,
         entry: ConfigEntry,
-        horizon_map: tuple[tuple[float, float], ...],
+        horizon_map: tuple[tuple[float, float], ...] | list[tuple[tuple[float, float], ...]],
     ) -> None:
         """Initialize the Solar Forecast coordinator."""
         self.config_entry = entry
@@ -117,22 +161,62 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             else None
         )
         self._last_successful_update: datetime | None = None
-        
+
+        array_count = _resolve_array_count(
+            entry.data[CONF_LATITUDE],
+            entry.data[CONF_LONGITUDE],
+            entry.options[CONF_DECLINATION],
+            entry.options[CONF_AZIMUTH],
+            entry.options[CONF_MODULES_POWER],
+            entry.options.get(CONF_EFFICIENCY_FACTOR, 1.0),
+            entry.options.get(CONF_USE_HORIZON, False),
+            entry.options.get(CONF_PARTIAL_SHADING, False),
+        )
+
+        latitude = _normalize_array_value(entry.data[CONF_LATITUDE], array_count)
+        longitude = _normalize_array_value(entry.data[CONF_LONGITUDE], array_count)
+        azimuth = _normalize_array_value(
+            entry.options[CONF_AZIMUTH],
+            array_count,
+            transform=lambda value: value - 180,
+        )
+        dc_kwp = _normalize_array_value(
+            entry.options[CONF_MODULES_POWER],
+            array_count,
+            transform=lambda value: value / 1000,
+        )
+        declination = _normalize_array_value(
+            entry.options[CONF_DECLINATION],
+            array_count,
+        )
+        efficiency_factor = _normalize_array_value(
+            entry.options.get(CONF_EFFICIENCY_FACTOR, 1.0),
+            array_count,
+        )
+        use_horizon = _normalize_array_value(
+            entry.options.get(CONF_USE_HORIZON, False),
+            array_count,
+        )
+        partial_shading = _normalize_array_value(
+            entry.options.get(CONF_PARTIAL_SHADING, False),
+            array_count,
+        )
+
         self.forecast = OpenMeteoSolarForecast(
             api_key=api_key,
             session=async_get_clientsession(hass),
-            latitude=entry.data[CONF_LATITUDE],
-            longitude=entry.data[CONF_LONGITUDE],
-            azimuth=entry.options[CONF_AZIMUTH] - 180,
+            latitude=latitude,
+            longitude=longitude,
+            azimuth=azimuth,
             base_url=entry.options[CONF_BASE_URL],
             ac_kwp=ac_kwp,
-            dc_kwp=(entry.options[CONF_MODULES_POWER] / 1000),
-            declination=entry.options[CONF_DECLINATION],
-            efficiency_factor=entry.options[CONF_EFFICIENCY_FACTOR],
+            dc_kwp=dc_kwp,
+            declination=declination,
+            efficiency_factor=efficiency_factor,
             damping_morning=entry.options.get(CONF_DAMPING_MORNING, 0.0),
             damping_evening=entry.options.get(CONF_DAMPING_EVENING, 0.0),
-            use_horizon=entry.options.get(CONF_USE_HORIZON),
-            partial_shading=entry.options.get(CONF_PARTIAL_SHADING),
+            use_horizon=use_horizon,
+            partial_shading=partial_shading,
             horizon_map=horizon_map,
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
         )

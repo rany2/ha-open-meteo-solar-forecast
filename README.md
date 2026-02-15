@@ -24,6 +24,43 @@ This custom component integrates the [open-meteo-solar-forecast](https://github.
 
 To use this integration in your installation, head to "Settings" in the Home Assistant UI, then "Integrations". Click on the plus button and search for "Open-Meteo Solar Forecast" and follow the instructions.
 
+### Multiple PV arrays
+
+The integration supports multiple PV arrays. For array-capable fields, you can enter either:
+
+- a single scalar value (applied to all arrays), or
+- a comma-separated list of values (one value per array).
+
+Required per-array fields are:
+
+- `latitude`
+- `longitude`
+- `declination`
+- `azimuth`
+- `modules_power`
+
+Optional per-array fields are:
+
+- `efficiency_factor`
+- `use_horizon`
+- `partial_shading`
+- `horizon_filepath`
+
+Examples:
+
+- Two arrays with different orientations:
+   - `latitude`: `52.16, 52.16`
+   - `longitude`: `4.47, 4.47`
+   - `declination`: `20, 35`
+   - `azimuth`: `90, 270`
+   - `modules_power`: `2400, 1800`
+
+- Per-array horizon usage:
+   - `use_horizon`: `false, true`
+   - `horizon_filepath`: `/config/www/horizon_a.txt, /config/www/horizon_b.txt`
+
+When mixed with list inputs, single scalar values are automatically expanded to all arrays.
+
 ## Common Mistakes
 
 ### API Key
