@@ -1,0 +1,5 @@
+update_array_location:
+  name: Update Array Location to Home
+  description: >
+    Update the array location to match that of the current GPS coordinates of zone.home
+  fields: {}

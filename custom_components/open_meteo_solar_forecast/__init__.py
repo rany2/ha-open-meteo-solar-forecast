@@ -7,7 +7,7 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, Platform
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, ServiceCall
 
 from .const import (
     CONF_AZIMUTH,
@@ -130,6 +130,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+
+    async def async_update_array_location(call: ServiceCall | None = None):
+        new_lat = hass.config.latitude
+        new_lon = hass.config.longitude
+
+        # Updating config entry will automatically update the coordinator
+        hass.config_entries.async_update_entry(
+            entry,
+            data={**entry.data, CONF_LATITUDE: new_lat, CONF_LONGITUDE: new_lon},
+            options={**entry.options, CONF_LATITUDE: new_lat, CONF_LONGITUDE: new_lon},
+        )
+
+    hass.services.async_register(DOMAIN, "update_array_location", async_update_array_location)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
