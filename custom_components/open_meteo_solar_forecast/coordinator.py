@@ -249,10 +249,13 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
                     ) from err
 
                 forecast_age = dt_util.utcnow() - self._last_successful_update
-                if forecast_age > self._max_forecast_age:
+                forecast_age_minutes = int(forecast_age.total_seconds() // 60)
+                configured_age_minutes = int(self._max_forecast_age.total_seconds() // 60)
+                if forecast_age_minutes > configured_age_minutes:
                     raise UpdateFailed(
                         "Retained forecast exceeded max age "
-                        f"({forecast_age} > {self._max_forecast_age})"
+                        f"({forecast_age_minutes} minutes > "
+                        f"{configured_age_minutes} minutes)"
                     ) from err
 
             LOGGER.warning(
