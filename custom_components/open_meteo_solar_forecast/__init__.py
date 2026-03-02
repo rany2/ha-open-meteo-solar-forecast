@@ -132,14 +132,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
     async def async_update_array_location(call: ServiceCall | None = None):
-        new_lat = hass.config.latitude
-        new_lon = hass.config.longitude
+        new_location = call.data.get("location_override", {
+                "latitude": hass.config.latitude,
+                "longitude": hass.config.longitude,
+        })  # Optional location override defaults to current Home Assistant location
 
         # Updating config entry will automatically update the coordinator
         hass.config_entries.async_update_entry(
             entry,
-            data={**entry.data, CONF_LATITUDE: new_lat, CONF_LONGITUDE: new_lon},
-            options={**entry.options, CONF_LATITUDE: new_lat, CONF_LONGITUDE: new_lon},
+            data={**entry.data, CONF_LATITUDE: new_location["latitude"], CONF_LONGITUDE: new_location["longitude"]},
+            options={**entry.options, CONF_LATITUDE: new_location["latitude"], CONF_LONGITUDE: new_location["longitude"]},
         )
 
     hass.services.async_register(DOMAIN, "update_array_location", async_update_array_location)
