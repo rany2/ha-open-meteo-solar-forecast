@@ -20,7 +20,8 @@
           "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
           "horizon_filepath": "Path to the horizon file (optional, leave empty for default path)",
-          "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
+          "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial.",
+          "max_snowcover_depth_cm": "If > 0, the snow cover depth (in cm) which results in zero module power."
         }
       }
     }
@@ -49,7 +50,8 @@
           "max_forecast_age_minutes": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_forecast_age_minutes%]",
           "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::user::data::use_horizon%]",
           "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::user::data::horizon_filepath%]",
-          "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]"
+          "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]",
+		  "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_snowcover_depth_cm%]"
         }
       }
     }

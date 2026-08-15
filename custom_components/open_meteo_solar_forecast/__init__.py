@@ -17,6 +17,7 @@ from .const import (
     CONF_MODULES_POWER,
     CONF_PARTIAL_SHADING,
     CONF_USE_HORIZON,
+    CONF_MAX_SNOWCOVER_DEPTH_CM,
     DOMAIN,
 )
 from .coordinator import (
@@ -48,6 +49,7 @@ def _resolve_array_count(entry: ConfigEntry) -> int:
         entry.options.get(CONF_USE_HORIZON, False),
         entry.options.get(CONF_PARTIAL_SHADING, False),
         entry.options.get(CONF_HORIZON_FILEPATH),
+        entry.options.get(CONF_MAX_SNOWCOVER_DEPTH_CM),
     )
     lengths = [len(value) for value in candidates if _is_sequence(value)]
     if not lengths:

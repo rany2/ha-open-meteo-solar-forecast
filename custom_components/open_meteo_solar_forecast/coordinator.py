@@ -25,6 +25,7 @@ from .const import (
     CONF_INVERTER_POWER,
     CONF_USE_HORIZON,
     CONF_PARTIAL_SHADING,
+    CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODEL,
     CONF_MODULES_POWER,
     CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
@@ -227,6 +228,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             use_horizon=use_horizon,
             partial_shading=partial_shading,
             horizon_map=horizon_map,
+            max_snowcover_depth_cm=entry.options.get(CONF_MAX_SNOWCOVER_DEPTH_CM, 0.0),
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
         )
 

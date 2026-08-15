@@ -19,7 +19,8 @@
           "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
           "horizon_filepath": "Path to the horizon file (optional, leave empty for default path)",
-          "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial."
+          "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial.",
+		  "max_snowcover_depth_cm": "If > 0, the snow cover depth (in cm) which results in zero module power."
         },
         "description": "Fill in your solar panel data. For multi-array setups, enter comma-separated values in array-capable fields (example: `20, 35`). Single values are applied to all arrays."
       }
@@ -108,7 +109,8 @@
           "max_forecast_age_minutes": "Max retained forecast age in minutes (0 = no limit)",
           "use_horizon": "Use horizon line from horizon file",
           "horizon_filepath": "Path to the horizon file",
-          "partial_shading": "Treat shadows as partial"
+          "partial_shading": "Treat shadows as partial",
+		  "max_snowcover_depth_cm": "Critical snow cover depth (cm)"
         },
         "description": "These values allow tweaking the Solar Forecast result. Please refer to the documentation if a field is unclear."
       }

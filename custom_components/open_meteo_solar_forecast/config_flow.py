@@ -24,6 +24,7 @@ from .const import (
     CONF_USE_HORIZON,
     CONF_PARTIAL_SHADING,
     CONF_HORIZON_FILEPATH,
+    CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODULES_POWER,
     CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
     DOMAIN,
@@ -173,6 +174,7 @@ def _normalize_flow_values(user_input: dict[str, Any]) -> dict[str, Any]:
         CONF_USE_HORIZON: _parse_bool(use_horizon_value),
         CONF_PARTIAL_SHADING: _parse_bool(partial_shading_value),
         CONF_HORIZON_FILEPATH: _parse_non_empty_str(horizon_filepath_value),
+        CONF_MAX_SNOWCOVER_DEPTH_CM: _parse_int(min_value=1)(user_input[CONF_MAX_SNOWCOVER_DEPTH_CM]),
     }
 
 
@@ -219,6 +221,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         CONF_USE_HORIZON: normalized_input[CONF_USE_HORIZON],
                         CONF_PARTIAL_SHADING: normalized_input[CONF_PARTIAL_SHADING],
                         CONF_HORIZON_FILEPATH: normalized_input[CONF_HORIZON_FILEPATH],
+                        CONF_MAX_SNOWCOVER_DEPTH_CM: normalized_input[CONF_MAX_SNOWCOVER_DEPTH_CM],
                         CONF_MODEL: normalized_input[CONF_MODEL],
                         CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE: normalized_input[
                             CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE
@@ -254,6 +257,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         CONF_HORIZON_FILEPATH,
                         default="/config/custom_components/open_meteo_solar_forecast/horizon.txt",
                     ): str,
+                    vol.Required(CONF_MAX_SNOWCOVER_DEPTH_CM, default="0.0"): str,
                     vol.Required(CONF_MODULES_POWER): str,
                     vol.Required(CONF_INVERTER_POWER, default=0): vol.All(
                         vol.Coerce(int), vol.Range(min=0)
@@ -379,6 +383,12 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                                 CONF_HORIZON_FILEPATH,
                                 "/config/custom_components/open_meteo_solar_forecast/horizon.txt",
                             )
+                        ),
+                    ): str,
+                    vol.Required(
+                        CONF_MAX_SNOWCOVER_DEPTH_CM,
+                        default=_text_default(
+                            self.config_entry.options.get(CONF_MAX_SNOWCOVER_DEPTH_CM, 0.0)
                         ),
                     ): str,
                     vol.Required(
