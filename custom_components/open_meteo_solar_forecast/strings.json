@@ -116,5 +116,17 @@
         "name": "Estimated energy production - next hour"
       }
     }
+  },
+  "services": {
+    "update_array_location": {
+      "name": "Update Array Location",
+      "description": "Update the array location to match that of the provided coordinates, or to the configured HA home location if no coordinates are provided.",
+      "fields": {
+        "location_override": {
+          "name": "Location Override",
+          "description": "Optional location to set the array to, if omitted the array will be set to the HA home location."
+        }
+      }
+    }
   }
 }
