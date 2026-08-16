@@ -1,5 +1,8 @@
 {
   "config": {
+    "error": {
+      "invalid_multi_value": "Invalid value in one or more fields: {error}. For multi-array setups, use comma-separated values without empty items (example: `90, 270`)."
+    },
     "step": {
       "user": {
         "description": "Fill in your solar panel data. For multi-array setups, enter comma-separated values in array-capable fields (example: `20, 35`). Single values are applied to all arrays.",
@@ -29,7 +32,7 @@
   "options": {
     "error": {
       "invalid_api_key": "[%key:common::config_flow::error::invalid_api_key%]",
-      "invalid_multi_value": "One or more multi-array fields contain invalid values. Use comma-separated values without empty items (example: `90, 270`)."
+      "invalid_multi_value": "Invalid value in one or more fields: {error}. For multi-array setups, use comma-separated values without empty items (example: `90, 270`)."
     },
     "step": {
       "init": {
@@ -51,7 +54,7 @@
           "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::user::data::use_horizon%]",
           "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::user::data::horizon_filepath%]",
           "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::user::data::partial_shading%]",
-		  "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_snowcover_depth_cm%]"
+          "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_snowcover_depth_cm%]"
         }
       }
     }

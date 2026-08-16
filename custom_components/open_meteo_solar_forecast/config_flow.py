@@ -153,28 +153,64 @@ def _normalize_flow_values(user_input: dict[str, Any]) -> dict[str, Any]:
         "/config/custom_components/open_meteo_solar_forecast/horizon.txt",
     )
 
+    def _parse_field(field: str, parser: Any, value: Any) -> Any:
+        try:
+            return parser(value)
+        except vol.Invalid as err:
+            raise vol.Invalid(f"{field}: {err.error_message}") from err
+
     return {
         **user_input,
-        CONF_LATITUDE: _parse_latitude(user_input[CONF_LATITUDE]),
-        CONF_LONGITUDE: _parse_longitude(user_input[CONF_LONGITUDE]),
-        CONF_DECLINATION: _parse_int(min_value=0, max_value=90)(
-            user_input[CONF_DECLINATION]
+        CONF_LATITUDE: _parse_field(
+            CONF_LATITUDE, _parse_latitude, user_input[CONF_LATITUDE]
         ),
-        CONF_AZIMUTH: _parse_int(min_value=0, max_value=360)(user_input[CONF_AZIMUTH]),
-        CONF_MODULES_POWER: _parse_int(min_value=1)(user_input[CONF_MODULES_POWER]),
-        CONF_EFFICIENCY_FACTOR: _parse_float(min_value=0, max_value=1)(
-            _default_if_empty(user_input.get(CONF_EFFICIENCY_FACTOR), 1.0)
+        CONF_LONGITUDE: _parse_field(
+            CONF_LONGITUDE, _parse_longitude, user_input[CONF_LONGITUDE]
         ),
-        CONF_DAMPING_MORNING: _parse_float(min_value=0, max_value=1)(
-            _default_if_empty(user_input.get(CONF_DAMPING_MORNING), 0.0)
+        CONF_DECLINATION: _parse_field(
+            CONF_DECLINATION,
+            _parse_int(min_value=0, max_value=90),
+            user_input[CONF_DECLINATION],
         ),
-        CONF_DAMPING_EVENING: _parse_float(min_value=0, max_value=1)(
-            _default_if_empty(user_input.get(CONF_DAMPING_EVENING), 0.0)
+        CONF_AZIMUTH: _parse_field(
+            CONF_AZIMUTH,
+            _parse_int(min_value=0, max_value=360),
+            user_input[CONF_AZIMUTH],
         ),
-        CONF_USE_HORIZON: _parse_bool(use_horizon_value),
-        CONF_PARTIAL_SHADING: _parse_bool(partial_shading_value),
-        CONF_HORIZON_FILEPATH: _parse_non_empty_str(horizon_filepath_value),
-        CONF_MAX_SNOWCOVER_DEPTH_CM: _parse_int(min_value=1)(user_input[CONF_MAX_SNOWCOVER_DEPTH_CM]),
+        CONF_MODULES_POWER: _parse_field(
+            CONF_MODULES_POWER,
+            _parse_int(min_value=1),
+            user_input[CONF_MODULES_POWER],
+        ),
+        CONF_EFFICIENCY_FACTOR: _parse_field(
+            CONF_EFFICIENCY_FACTOR,
+            _parse_float(min_value=0, max_value=1),
+            _default_if_empty(user_input.get(CONF_EFFICIENCY_FACTOR), 1.0),
+        ),
+        CONF_DAMPING_MORNING: _parse_field(
+            CONF_DAMPING_MORNING,
+            _parse_float(min_value=0, max_value=1),
+            _default_if_empty(user_input.get(CONF_DAMPING_MORNING), 0.0),
+        ),
+        CONF_DAMPING_EVENING: _parse_field(
+            CONF_DAMPING_EVENING,
+            _parse_float(min_value=0, max_value=1),
+            _default_if_empty(user_input.get(CONF_DAMPING_EVENING), 0.0),
+        ),
+        CONF_USE_HORIZON: _parse_field(
+            CONF_USE_HORIZON, _parse_bool, use_horizon_value
+        ),
+        CONF_PARTIAL_SHADING: _parse_field(
+            CONF_PARTIAL_SHADING, _parse_bool, partial_shading_value
+        ),
+        CONF_HORIZON_FILEPATH: _parse_field(
+            CONF_HORIZON_FILEPATH, _parse_non_empty_str, horizon_filepath_value
+        ),
+        CONF_MAX_SNOWCOVER_DEPTH_CM: _parse_field(
+            CONF_MAX_SNOWCOVER_DEPTH_CM,
+            _parse_float(min_value=0),
+            _default_if_empty(user_input.get(CONF_MAX_SNOWCOVER_DEPTH_CM), 0.0),
+        ),
     }
 
 
@@ -196,11 +232,13 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle a flow initiated by the user."""
         errors = {}
+        description_placeholders = {}
         if user_input is not None:
             try:
                 normalized_input = _normalize_flow_values(user_input)
-            except vol.Invalid:
+            except vol.Invalid as err:
                 errors["base"] = "invalid_multi_value"
+                description_placeholders["error"] = str(err)
             else:
                 return self.async_create_entry(
                     title=normalized_input[CONF_NAME],
@@ -277,6 +315,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                 }
             ),
             errors=errors,
+            description_placeholders=description_placeholders,
         )
 
 
@@ -298,11 +337,13 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
     ) -> ConfigFlowResult:
         """Manage the options."""
         errors = {}
+        description_placeholders = {}
         if user_input is not None:
             try:
                 normalized_input = _normalize_flow_values(user_input)
-            except vol.Invalid:
+            except vol.Invalid as err:
                 errors["base"] = "invalid_multi_value"
+                description_placeholders["error"] = str(err)
             else:
                 return self.async_create_entry(
                     title="",
@@ -420,4 +461,5 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                 }
             ),
             errors=errors,
+            description_placeholders=description_placeholders,
         )
