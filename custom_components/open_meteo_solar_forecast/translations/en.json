@@ -1,5 +1,8 @@
 {
   "config": {
+    "error": {
+      "invalid_multi_value": "Invalid value in one or more fields: {error}. For multi-array setups, use comma-separated values without empty items (example: `90, 270`)."
+    },
     "step": {
       "user": {
         "data": {
@@ -20,7 +23,7 @@
           "use_horizon": "If enabled, the horizon line defined in the horizon file (see docs) is used to respect shading of the modules.",
           "horizon_filepath": "Path to the horizon file (optional, leave empty for default path)",
           "partial_shading": "(Only if horizon is enabled:) If enabled, shadows are treated as partial.",
-		  "max_snowcover_depth_cm": "If > 0, the snow cover depth (in cm) which results in zero module power."
+          "max_snowcover_depth_cm": "If > 0, the snow cover depth (in cm) which results in zero module power."
         },
         "description": "Fill in your solar panel data. For multi-array setups, enter comma-separated values in array-capable fields (example: `20, 35`). Single values are applied to all arrays."
       }
@@ -90,7 +93,7 @@
   "options": {
     "error": {
       "invalid_api_key": "Invalid API key",
-      "invalid_multi_value": "One or more multi-array fields contain invalid values. Use comma-separated values without empty items (example: `90, 270`)."
+      "invalid_multi_value": "Invalid value in one or more fields: {error}. For multi-array setups, use comma-separated values without empty items (example: `90, 270`)."
     },
     "step": {
       "init": {
@@ -110,7 +113,7 @@
           "use_horizon": "Use horizon line from horizon file",
           "horizon_filepath": "Path to the horizon file",
           "partial_shading": "Treat shadows as partial",
-		  "max_snowcover_depth_cm": "Critical snow cover depth (cm)"
+          "max_snowcover_depth_cm": "Critical snow cover depth (cm)"
         },
         "description": "These values allow tweaking the Solar Forecast result. Please refer to the documentation if a field is unclear."
       }
