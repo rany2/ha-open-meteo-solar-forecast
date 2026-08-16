@@ -167,12 +167,12 @@ def _normalize_flow_values(user_input: dict[str, Any]) -> dict[str, Any]:
         ),
         CONF_DECLINATION: _parse_field(
             CONF_DECLINATION,
-            _parse_int(min_value=0, max_value=90),
+            _parse_float(min_value=0, max_value=90),
             user_input[CONF_DECLINATION],
         ),
         CONF_AZIMUTH: _parse_field(
             CONF_AZIMUTH,
-            _parse_int(min_value=0, max_value=360),
+            _parse_float(min_value=0, max_value=360),
             user_input[CONF_AZIMUTH],
         ),
         CONF_MODULES_POWER: _parse_field(
