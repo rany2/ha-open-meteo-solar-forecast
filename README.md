@@ -61,6 +61,17 @@ When mixed with list inputs, single scalar values are automatically expanded to 
 
 Azimuth ranges from 0° to 360°: North (0°), East (90°), South (180°), West (270°). For negative values, add 360° (e.g., -90° becomes 270°).
 
+### Solar Tracking
+
+The `tracking` option models panels that follow the sun instead of being fixed:
+
+- `none` (default): fixed panels
+- `azimuth`: vertical-axis (east-west) tracker; the configured azimuth is ignored
+- `tilt`: tilt-axis tracker; the configured declination is ignored
+- `dual`: dual-axis tracker; both azimuth and declination are ignored
+
+Like other array-capable fields, it accepts comma-separated values for multi-array setups (e.g. `none, dual`).
+
 ### DC Efficiency
 
 The DC efficiency is the efficiency of the DC wiring and should not be confused with the cell efficiency. The DC efficiency is typically around 0.93. The cell efficiency is accounted for in the cell temperature calculation and is assumed to be 0.12.

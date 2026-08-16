@@ -25,7 +25,9 @@ from .const import (
     CONF_HORIZON_FILEPATH,
     CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODULES_POWER,
+    CONF_TRACKING,
     DOMAIN,
+    TRACKING_OPTIONS,
 )
 
 try:
@@ -123,6 +125,19 @@ def _parse_non_empty_str(value: Any) -> str | list[str]:
     return _parse_scalar_or_list(value, _parse_item)
 
 
+def _parse_tracking(value: Any) -> str | list[str]:
+    def _parse_item(item: Any) -> str:
+        parsed = str(item).strip().lower()
+        if parsed not in TRACKING_OPTIONS:
+            raise vol.Invalid(
+                f"Invalid tracking value: {item}. "
+                f"Must be one of: {', '.join(TRACKING_OPTIONS)}"
+            )
+        return parsed
+
+    return _parse_scalar_or_list(value, _parse_item)
+
+
 def _parse_latitude(value: Any) -> float | list[float]:
     return _parse_scalar_or_list(value, cv.latitude)
 
@@ -184,6 +199,11 @@ def _normalize_flow_values(user_input: dict[str, Any]) -> dict[str, Any]:
             CONF_EFFICIENCY_FACTOR,
             _parse_float(min_value=0, max_value=1),
             _default_if_empty(user_input.get(CONF_EFFICIENCY_FACTOR), 1.0),
+        ),
+        CONF_TRACKING: _parse_field(
+            CONF_TRACKING,
+            _parse_tracking,
+            _default_if_empty(user_input.get(CONF_TRACKING), "none"),
         ),
         CONF_DAMPING_MORNING: _parse_field(
             CONF_DAMPING_MORNING,
@@ -254,6 +274,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         CONF_MODULES_POWER: normalized_input[CONF_MODULES_POWER],
                         CONF_INVERTER_POWER: normalized_input[CONF_INVERTER_POWER],
                         CONF_EFFICIENCY_FACTOR: normalized_input[CONF_EFFICIENCY_FACTOR],
+                        CONF_TRACKING: normalized_input[CONF_TRACKING],
                         CONF_USE_HORIZON: normalized_input[CONF_USE_HORIZON],
                         CONF_PARTIAL_SHADING: normalized_input[CONF_PARTIAL_SHADING],
                         CONF_HORIZON_FILEPATH: normalized_input[CONF_HORIZON_FILEPATH],
@@ -281,6 +302,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     ): str,
                     vol.Required(CONF_DECLINATION, default="25"): str,
                     vol.Required(CONF_AZIMUTH, default="180"): str,
+                    vol.Optional(CONF_TRACKING, default="none"): str,
                     vol.Required(CONF_USE_HORIZON, default="false"): str,
                     vol.Required(CONF_PARTIAL_SHADING, default="false"): str,
                     vol.Optional(
@@ -369,6 +391,12 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                         CONF_AZIMUTH,
                         default=_text_default(
                             self.config_entry.options.get(CONF_AZIMUTH)
+                        ),
+                    ): str,
+                    vol.Optional(
+                        CONF_TRACKING,
+                        default=_text_default(
+                            self.config_entry.options.get(CONF_TRACKING, "none")
                         ),
                     ): str,
                     vol.Required(
