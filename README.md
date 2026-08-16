@@ -26,36 +26,11 @@ To use this integration in your installation, head to "Settings" in the Home Ass
 
 ### Multiple PV Arrays
 
-The integration supports multiple PV arrays. For array-capable fields, you can enter either:
+The setup wizard first asks for general settings (name, API details, inverter capacity), then shows one page per PV array with its location, orientation, power, tracking and shading settings. Tick "Add another array" to configure an additional array; repeat for as many arrays as you have.
 
-- a single scalar value (applied to all arrays), or
-- a comma-separated list of values (one value per array).
-
-All numeric parameter values must use a decimal point (`.`), even in locales that commonly use a decimal comma (for example German).
-
-Using decimal commas can break parsing in multi-array configurations. For example:
-
-- `damping_factor`: `0,4,0,5` is interpreted as four list items, not two decimals (`0.4,0.5`).
-- `dc_efficiency`: `0,9` is interpreted as two arrays (`0` and `9`) instead of a single value (`0.9`).
-
-Use `.` for decimals and `,` only as the list separator between arrays.
+To change the configuration later, open the integration's options: after the general settings you are walked through each configured array. Untick "Add another array" on an array page to drop the arrays after it.
 
 Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`).
-
-Examples:
-
-- Two arrays with different orientations:
-   - `latitude`: `52.16, 52.16`
-   - `longitude`: `4.47, 4.47`
-   - `declination`: `20, 35`
-   - `azimuth`: `90, 270`
-   - `modules_power`: `2400, 1800`
-
-- Per-array horizon usage:
-   - `use_horizon`: `false, true`
-   - `horizon_filepath`: `/config/www/horizon_a.txt, /config/www/horizon_b.txt`
-
-When mixed with list inputs, single scalar values are automatically expanded to all arrays.
 
 ### Azimuth
 
@@ -70,7 +45,7 @@ The `tracking` option models panels that follow the sun instead of being fixed:
 - `tilt`: tilt-axis tracker; the configured declination is ignored
 - `dual`: dual-axis tracker; both azimuth and declination are ignored
 
-Like other array-capable fields, it accepts comma-separated values for multi-array setups (e.g. `none, dual`).
+The tracker type is set per array.
 
 ### DC Efficiency
 
