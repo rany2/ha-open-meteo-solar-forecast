@@ -40,6 +40,8 @@ Using decimal commas can break parsing in multi-array configurations. For exampl
 
 Use `.` for decimals and `,` only as the list separator between arrays.
 
+Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`).
+
 Examples:
 
 - Two arrays with different orientations:
