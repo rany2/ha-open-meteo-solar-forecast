@@ -26,3 +26,4 @@ CONF_MODEL = "model"
 
 ATTR_WATTS = "watts"
 ATTR_WH_PERIOD = "wh_period"
+ATTR_WH_PERIOD_15M = "wh_period_15m"

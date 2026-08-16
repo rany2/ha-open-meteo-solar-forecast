@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 from collections.abc import Sequence
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -37,7 +37,16 @@ from .const import (
 
 import numpy
 
-STORAGE_VERSION = 1
+STORAGE_VERSION = 2
+
+
+class RetainedForecastStore(Store[dict[str, Any]]):
+    """Store that discards retained forecasts from older storage versions."""
+
+    async def _async_migrate_func(
+        self, old_major_version: int, old_minor_version: int, old_data: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        return None
 
 # The upstream library performs the API request without any timeout, so an
 # unreachable API can hang a refresh (and config entry setup) indefinitely.
@@ -65,6 +74,10 @@ def _datetime_dict_to_json(data: dict[datetime, int]) -> dict[str, int]:
 
 def _datetime_dict_from_json(data: dict[str, int]) -> dict[datetime, int]:
     return {datetime.fromisoformat(timestamp): value for timestamp, value in data.items()}
+
+
+def _date_dict_from_json(data: dict[str, int]) -> dict[date, int]:
+    return {date.fromisoformat(day): value for day, value in data.items()}
 
 
 def _is_sequence(value: Any) -> bool:
@@ -189,7 +202,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         ac_kwp = entry.options.get(CONF_INVERTER_POWER, 0)
         ac_kwp = ac_kwp / 1000 if ac_kwp else None
         self._last_successful_update: datetime | None = None
-        self._store: Store[dict[str, Any]] = Store(
+        self._store: Store[dict[str, Any]] = RetainedForecastStore(
             hass, STORAGE_VERSION, storage_key(entry.entry_id)
         )
         self._config_fingerprint = _config_fingerprint(entry)
@@ -284,8 +297,9 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             last_update = stored["last_successful_update"]
             estimate = Estimate(
                 watts=_datetime_dict_from_json(stored["watts"]),
+                wh_period_15m=_datetime_dict_from_json(stored["wh_period_15m"]),
                 wh_period=_datetime_dict_from_json(stored["wh_period"]),
-                wh_days=_datetime_dict_from_json(stored["wh_days"]),
+                wh_days=_date_dict_from_json(stored["wh_days"]),
                 api_timezone=timezone(
                     timedelta(seconds=stored["api_timezone_offset"])
                 ),
@@ -305,6 +319,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             "watts": _datetime_dict_to_json(estimate.watts),
             "wh_period": _datetime_dict_to_json(estimate.wh_period),
             "wh_days": _datetime_dict_to_json(estimate.wh_days),
+            "wh_period_15m": _datetime_dict_to_json(estimate.wh_period_15m),
             "api_timezone_offset": estimate.api_timezone.utcoffset(
                 None
             ).total_seconds(),
