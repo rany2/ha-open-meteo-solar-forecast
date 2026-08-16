@@ -18,7 +18,6 @@ from .const import (
     CONF_DAMPING_MORNING,
     CONF_DECLINATION,
     CONF_EFFICIENCY_FACTOR,
-    CONF_MAX_FORECAST_AGE_MINUTES,
     CONF_INVERTER_POWER,
     CONF_MODEL,
     CONF_USE_HORIZON,
@@ -26,7 +25,6 @@ from .const import (
     CONF_HORIZON_FILEPATH,
     CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODULES_POWER,
-    CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
     DOMAIN,
 )
 
@@ -261,12 +259,6 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         CONF_HORIZON_FILEPATH: normalized_input[CONF_HORIZON_FILEPATH],
                         CONF_MAX_SNOWCOVER_DEPTH_CM: normalized_input[CONF_MAX_SNOWCOVER_DEPTH_CM],
                         CONF_MODEL: normalized_input[CONF_MODEL],
-                        CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE: normalized_input[
-                            CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE
-                        ],
-                        CONF_MAX_FORECAST_AGE_MINUTES: normalized_input[
-                            CONF_MAX_FORECAST_AGE_MINUTES
-                        ],
                     },
                 )
 
@@ -304,14 +296,6 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     vol.Optional(CONF_DAMPING_EVENING, default="0.0"): str,
                     vol.Optional(CONF_EFFICIENCY_FACTOR, default="1.0"): str,
                     vol.Optional(CONF_MODEL, default="best_match"): str,
-                    vol.Required(
-                        CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
-                        default=True,
-                    ): bool,
-                    vol.Required(
-                        CONF_MAX_FORECAST_AGE_MINUTES,
-                        default=0,
-                    ): vol.All(vol.Coerce(int), vol.Range(min=0)),
                 }
             ),
             errors=errors,
@@ -446,18 +430,6 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                         CONF_MODEL,
                         default=self.config_entry.options.get(CONF_MODEL, "best_match"),
                     ): str,
-                    vol.Required(
-                        CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE,
-                        default=self.config_entry.options.get(
-                            CONF_RETAIN_LATEST_FORECAST_WHEN_UNAVAILABLE, True
-                        ),
-                    ): bool,
-                    vol.Required(
-                        CONF_MAX_FORECAST_AGE_MINUTES,
-                        default=self.config_entry.options.get(
-                            CONF_MAX_FORECAST_AGE_MINUTES, 0
-                        ),
-                    ): vol.All(vol.Coerce(int), vol.Range(min=0)),
                 }
             ),
             errors=errors,
