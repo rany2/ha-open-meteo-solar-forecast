@@ -30,6 +30,7 @@ from .const import (
     CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODEL,
     CONF_MODULES_POWER,
+    CONF_TRACKING,
     DOMAIN,
     LOGGER,
 )
@@ -200,6 +201,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             entry.options[CONF_AZIMUTH],
             entry.options[CONF_MODULES_POWER],
             entry.options.get(CONF_EFFICIENCY_FACTOR, 1.0),
+            entry.options.get(CONF_TRACKING, "none"),
             entry.options.get(CONF_USE_HORIZON, False),
             entry.options.get(CONF_PARTIAL_SHADING, False),
         )
@@ -228,6 +230,10 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             entry.options.get(CONF_EFFICIENCY_FACTOR, 1.0),
             array_count,
         )
+        tracking = _normalize_array_value(
+            entry.options.get(CONF_TRACKING, "none"),
+            array_count,
+        )
         use_horizon = _normalize_array_value(
             entry.options.get(CONF_USE_HORIZON, False),
             array_count,
@@ -248,6 +254,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             dc_kwp=dc_kwp,
             declination=declination,
             efficiency_factor=efficiency_factor,
+            tracking=tracking,
             damping_morning=entry.options.get(CONF_DAMPING_MORNING, 0.0),
             damping_evening=entry.options.get(CONF_DAMPING_EVENING, 0.0),
             use_horizon=use_horizon,

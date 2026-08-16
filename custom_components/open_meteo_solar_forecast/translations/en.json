@@ -8,6 +8,7 @@
         "data": {
           "api_key": "API key",
           "azimuth": "Azimuth (360 degrees, 0 = North, 90 = East, 180 = South, 270 = West)",
+          "tracking": "Solar tracker type: none, azimuth (vertical-axis), tilt (tilt-axis) or dual (dual-axis)",
           "damping_morning": "Damping factor for morning (0.0-1.0).",
           "damping_evening": "Damping factor for evening (0.0-1.0).",
           "declination": "Declination (0 = Horizontal, 90 = Vertical)",
@@ -98,6 +99,7 @@
         "data": {
           "api_key": "API key",
           "azimuth": "Azimuth (360 degrees, 0 = North, 90 = East, 180 = South, 270 = West)",
+          "tracking": "Solar tracker type: none, azimuth (vertical-axis), tilt (tilt-axis) or dual (dual-axis)",
           "damping_morning": "Damping factor: adjusts the results in the morning",
           "damping_evening": "Damping factor: adjusts the results in the evening",
           "declination": "Declination (0 = Horizontal, 90 = Vertical)",
