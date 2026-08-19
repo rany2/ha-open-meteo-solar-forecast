@@ -12,7 +12,7 @@
           "max_snowcover_depth_cm": "Maximum snow cover depth"
         },
         "data_description": {
-          "inverter_power": "The AC capacity of your inverter in Watt (0 = no limit).",
+          "inverter_power": "The AC capacity of a single inverter shared by all arrays in Watt (0 = no limit). Ignored if any array has its own inverter capacity set on the array pages.",
           "max_snowcover_depth_cm": "If greater than 0, the snow cover depth which results in zero module power."
         },
         "submit": "Next"
@@ -126,7 +126,7 @@
           "max_snowcover_depth_cm": "Maximum snow cover depth"
         },
         "data_description": {
-          "inverter_power": "The AC capacity of your inverter in Watt (0 = no limit).",
+          "inverter_power": "The AC capacity of a single inverter shared by all arrays in Watt (0 = no limit). Ignored if any array has its own inverter capacity set on the array pages.",
           "max_snowcover_depth_cm": "If greater than 0, the snow cover depth which results in zero module power."
         },
         "submit": "Next"
