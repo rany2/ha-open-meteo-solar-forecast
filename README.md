@@ -47,6 +47,12 @@ The `tracking` option models panels that follow the sun instead of being fixed:
 
 The tracker type is set per array.
 
+### Multiple Inverters
+
+The "Inverter capacity" field in the general settings models a single inverter shared by all arrays: the combined output of all arrays is clamped to it (0 = no limit).
+
+If each array is connected to its own inverter, set the "Array inverter capacity" field on the corresponding array pages instead. Each array's output is then clamped to its own inverter before the outputs are combined. Use 0 for arrays without a dedicated inverter (no limit for that array). As soon as any array has its own inverter capacity set, the shared inverter capacity from the general settings is ignored.
+
 ### DC Efficiency
 
 The DC efficiency is the efficiency of the DC wiring and should not be confused with the cell efficiency. The DC efficiency is typically around 0.93. The cell efficiency is accounted for in the cell temperature calculation and is assumed to be 0.12.
