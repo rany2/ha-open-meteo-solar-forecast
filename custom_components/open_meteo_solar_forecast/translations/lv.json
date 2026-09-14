@@ -1,7 +1,8 @@
 {
   "config": {
     "step": {
-      "user": {
+      "user": {},
+      "array": {
         "data": {
           "longitude": "Garums"
         }

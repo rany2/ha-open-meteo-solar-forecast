@@ -3,14 +3,16 @@
     "step": {
       "user": {
         "data": {
+          "name": "Naziv"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 stopinj, 0 = sever, 90 = vzhod, 180 = jug, 270 = zahod)",
           "declination": "Odstopanja (0 = vodoravno, 90 = navpično)",
           "latitude": "Zemljepisna širina",
-          "longitude": "Zemljepisna dolžina",
-          "modules power": "Skupna konična moč v vatih vaših solarnih modulov",
-          "name": "Naziv"
-        },
-        "description": "Vnesite podatke o svojih sončnih kolektorjih. Če vam podatek ni jasen, si oglejte dokumentacijo."
+          "longitude": "Zemljepisna dolžina"
+        }
       }
     }
   },
@@ -19,13 +21,8 @@
       "invalid_api_key": "Neveljaven API ključ"
     },
     "step": {
-      "init": {
-        "data": {
-          "damping": "Dušilni faktor: prilagoditev rezultatov zjutraj in zvečer",
-          "inverter_size": "Velikost pretvornika (Watt)"
-        },
-        "description": "Te vrednosti omogočajo prilagoditev rezultata Solar Forecast. Če vam podatek ni jasen, si oglejte dokumentacijo."
-      }
+      "init": {},
+      "array": {}
     }
   }
 }

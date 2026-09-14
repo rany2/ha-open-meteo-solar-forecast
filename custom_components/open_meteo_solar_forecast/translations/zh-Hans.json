@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "名称"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "方位角（360 度，以 0 为北，90 为东，180 为南，270 为西）",
           "declination": "倾斜（以 0 为水平，90 为垂直）",
           "latitude": "纬度",
           "longitude": "经度",
-          "modules power": "光伏发电模组的总峰值功率(W)",
-          "modules_power": "您的太阳能模块的总瓦特峰值功率",
-          "name": "名称"
-        },
-        "description": "请填写您的太阳能板的参数。对于不清楚的字段，请参阅有关文档。"
+          "modules_power": "您的太阳能模块的总瓦特峰值功率"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API 密钥",
+          "api_key": "API 密钥"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "方位角（360 度，以 0 为北，90 为东，180 为南，270 为西）",
-          "damping": "阻尼系数：调节早间和晚间的结果",
           "damping_evening": "阻尼系数：调节晚间的结果",
           "damping_morning": "阻尼系数：调节早间的结果",
           "declination": "倾斜（以 0 为水平，90 为垂直）",
-          "inverter_size": "逆变器尺寸（瓦特）",
-          "modules power": "您的太阳能模块的总瓦特峰值功率",
           "modules_power": "您的太阳能模块的总瓦特峰值功率"
-        },
-        "description": "这些值用于调节 Solar Forecast 结果。对于不清楚的字段，请参阅文档。"
+        }
       }
     }
   }

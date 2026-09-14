@@ -3,9 +3,13 @@
     "step": {
       "user": {
         "data": {
-          "latitude": "Breddegrad",
-          "longitude": "Længdegrad",
           "name": "Navn"
+        }
+      },
+      "array": {
+        "data": {
+          "latitude": "Breddegrad",
+          "longitude": "Længdegrad"
         }
       }
     }

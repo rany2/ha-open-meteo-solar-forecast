@@ -1,7 +1,8 @@
 {
   "config": {
     "step": {
-      "user": {
+      "user": {},
+      "array": {
         "data": {
           "modules_power": "Total Watt peak power of your solar modules"
         }

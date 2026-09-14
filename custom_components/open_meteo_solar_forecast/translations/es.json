@@ -3,14 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Nombre"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 grados, 0 = Norte, 90 = Este, 180 = Sur, 270 = Oeste)",
           "declination": "Declinación (0 = Horizontal, 90 = Vertical)",
           "latitude": "Latitud",
           "longitude": "Longitud",
-          "modules_power": "Potencia pico total en vatios de tus módulos solares",
-          "name": "Nombre"
-        },
-        "description": "Rellena los datos de tus placas solares. Por favor, consulta la documentación si un campo no está claro."
+          "modules_power": "Potencia pico total en vatios de tus módulos solares"
+        }
       }
     }
   },
@@ -58,16 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "Clave API",
+          "api_key": "Clave API"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 grados, 0 = Norte, 90 = Este, 180 = Sur, 270 = Oeste)",
-          "damping": "Factor de amortiguación: ajusta los resultados por la mañana y por la noche",
           "damping_evening": "Factor de amortiguación: ajusta los resultados por la noche.",
           "damping_morning": "Factor de amortiguación: ajusta los resultados por la mañana.",
           "declination": "Declinación (0 = Horizontal, 90 = Vertical)",
-          "inverter_size": "Tamaño del inversor (vatios)",
           "modules_power": "Potencia pico total en vatios de tus módulos solares"
-        },
-        "description": "Estos valores permiten modificar el resultado de Solar Forecast. Por favor, consulta la documentación si un campo no está claro."
+        }
       }
     }
   }

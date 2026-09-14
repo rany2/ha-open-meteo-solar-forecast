@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Naam"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 graden, 0 = Noord, 90 = Oost, 180 = Zuid, 270 = West)",
           "declination": "Declinatie (0 = Horizontaal, 90 = Verticaal)",
           "latitude": "Breedtegraad",
           "longitude": "Lengtegraad",
-          "modules power": "Totaal Watt piekvermogen van je zonnepanelen",
-          "modules_power": "Totaal Watt piekvermogen van je zonnepanelen",
-          "name": "Naam"
-        },
-        "description": "Vul de gegevens van je zonnepanelen in. Raadpleeg de documentatie als een veld niet duidelijk is."
+          "modules_power": "Totaal Watt piekvermogen van je zonnepanelen"
+        }
       }
     }
   },
@@ -59,14 +61,15 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API-sleutel",
+          "api_key": "API-sleutel"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 graden, 0 = Noord, 90 = Oost, 180 = Zuid, 270 = West)",
-          "damping": "Dempingsfactor: past de resultaten 's ochtends en 's avonds aan",
           "damping_evening": "Dempingsfactor: pas de resultaten aan in de avond",
           "damping_morning": "Dempingsfactor: pas de resultaten aan in de morgen",
           "declination": "Declinatie (0 = Horizontaal, 90 = Verticaal)",
-          "inverter_size": "Omvormer grootte (Watt)",
-          "modules power": "Totaal Watt piekvermogen van je zonnepanelen",
           "modules_power": "Totaal Watt piekvermogen van je zonnepanelen"
         }
       }

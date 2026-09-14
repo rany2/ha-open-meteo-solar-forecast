@@ -3,9 +3,13 @@
     "step": {
       "user": {
         "data": {
-          "latitude": "קו רוחב",
-          "longitude": "קו אורך",
           "name": "שם"
+        }
+      },
+      "array": {
+        "data": {
+          "latitude": "קו רוחב",
+          "longitude": "קו אורך"
         }
       }
     }
@@ -19,7 +23,8 @@
         "data": {
           "api_key": "מפתח API"
         }
-      }
+      },
+      "array": {}
     }
   }
 }

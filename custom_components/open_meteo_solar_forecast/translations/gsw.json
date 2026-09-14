@@ -3,14 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Name"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 grad, 0=Nord, 90=Ost, 180=Süd, 270=West)",
           "declination": "Deklination (0=horizontau, 90=vertikau)",
           "latitude": "Breitegrad",
           "longitude": "Längegrad",
-          "modules_power": "Totau Wattspitze vo dine Solarmodul (Watt peak)",
-          "name": "Name"
-        },
-        "description": "Füu d Date vo dine Solarpanel yy. Lueg ir Dokumentation nache, we der es Fäud unklar isch."
+          "modules_power": "Totau Wattspitze vo dine Solarmodul (Watt peak)"
+        }
       }
     }
   },

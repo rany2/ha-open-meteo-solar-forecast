@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Názov"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)",
           "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
           "latitude": "Zemepisná šírka",
           "longitude": "Zemepisná dĺžka",
-          "modules power": "Celkový špičkový výkon solárnych modulov",
-          "modules_power": "Celkový špičkový výkon solárnych modulov",
-          "name": "Názov"
-        },
-        "description": "Vyplňte údaje o svojich solárnych paneloch. Ak je niektoré pole nejasné, pozrite si dokumentáciu."
+          "modules_power": "Celkový špičkový výkon solárnych modulov"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API kľúč",
+          "api_key": "API kľúč"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)",
-          "damping": "Činiteľ tlmenia: upravuje výsledky ráno a večer",
           "damping_evening": "Tlmiaci faktor: upravuje výsledky vo večerných hodinách",
           "damping_morning": "Tlmiaci faktor: upravuje výsledky ráno",
           "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
-          "inverter_size": "Veľkosť meniča (Watt)",
-          "modules power": "Celkový špičkový výkon solárnych modulov",
           "modules_power": "Celkový špičkový výkon solárnych modulov"
-        },
-        "description": "Tieto hodnoty umožňujú upraviť výsledné hodnoty Solar.Forecast. Ak je niektoré pole nejasné, pozrite si dokumentáciu."
+        }
       }
     }
   }

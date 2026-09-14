@@ -14,8 +14,7 @@
         "data_description": {
           "inverter_power": "The AC capacity of a single inverter shared by all arrays in Watt (0 = no limit). Ignored if any array has its own inverter capacity set on the array pages.",
           "max_snowcover_depth_cm": "If greater than 0, the snow cover depth which results in zero module power."
-        },
-        "submit": "Next"
+        }
       },
       "array": {
         "description": "Settings for PV array {array_number}. Enable “Add another array” to configure an additional array with its own orientation and power.",
@@ -67,8 +66,7 @@
         "data_description": {
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data_description::inverter_power%]",
           "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data_description::max_snowcover_depth_cm%]"
-        },
-        "submit": "[%key:component::open_meteo_solar_forecast::config::step::user::submit%]"
+        }
       },
       "array": {
         "description": "[%key:component::open_meteo_solar_forecast::config::step::array::description%]",

@@ -3,14 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Nom"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)",
           "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
           "latitude": "Latitude",
           "longitude": "Longitude",
-          "modules_power": "Puissance de crête totale en watts de vos modules solaires",
-          "name": "Nom"
-        },
-        "description": "Remplissez les données de vos panneaux solaires. Veuillez vous référer à la documentation si un champ n'est pas clair."
+          "modules_power": "Puissance de crête totale en watts de vos modules solaires"
+        }
       }
     }
   },
@@ -58,16 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "Clé d'API",
+          "api_key": "Clé d'API"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)",
-          "damping": "Facteur d'amortissement : ajuste les résultats matin et soir",
           "damping_evening": "Facteur d'amortissement : ajuste les résultats le soir",
           "damping_morning": "Facteur d'amortissement : ajuste les résultats le matin",
           "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
-          "inverter_size": "Taille de l'onduleur (en watts)",
           "modules_power": "Puissance de crête totale en watts de vos modules solaires"
-        },
-        "description": "Ces valeurs permettent de peaufiner le résultat Solar Forecast. Veuillez vous référer à la documentation si un champ n'est pas clair."
+        }
       }
     }
   }

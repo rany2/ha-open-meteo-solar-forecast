@@ -258,6 +258,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
+            last_step=False,
             data_schema=vol.Schema(
                 {
                     vol.Required(
@@ -354,6 +355,7 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
         options = self.config_entry.options
         return self.async_show_form(
             step_id="init",
+            last_step=False,
             data_schema=vol.Schema(
                 {
                     vol.Optional(
