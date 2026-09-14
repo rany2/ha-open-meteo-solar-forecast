@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Nome"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 gradi, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ovest)",
           "declination": "Declinazione (0 = Orizzontale, 90 = Verticale)",
           "latitude": "Latitudine",
           "longitude": "Logitudine",
-          "modules power": "Potenza di picco totale in Watt dei tuoi moduli solari",
-          "modules_power": "Picco totale di potenza dei tuoi moduli solari",
-          "name": "Nome"
-        },
-        "description": "Compila i dati dei tuoi pannelli solari. Fare riferimento alla documentazione se un campo non è chiaro."
+          "modules_power": "Picco totale di potenza dei tuoi moduli solari"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "Chiave API",
+          "api_key": "Chiave API"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 gradi, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ovest)",
-          "damping": "Fattore di smorzamento: regola i risultati al mattino e alla sera",
           "damping_evening": "Fattore di smorzamento: regola i risultati la sera",
           "damping_morning": "Fattore di smorzamento: regola i risultati al mattino",
           "declination": "Declinazione (0 = Orizzontale, 90 = Verticale)",
-          "inverter_size": "Dimensioni inverter (Watt)",
-          "modules power": "Potenza di picco totale in Watt dei tuoi moduli solari",
           "modules_power": "Picco totale di potenza dei tuoi moduli solari"
-        },
-        "description": "Questi valori consentono di modificare il risultato di Solar Forecast. Se un campo non è chiaro, consultare la documentazione."
+        }
       }
     }
   }

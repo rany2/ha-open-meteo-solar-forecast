@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Ad"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)",
           "declination": "Sapma (0 = Yatay, 90 = Dikey)",
           "latitude": "Enlem",
           "longitude": "Boylam",
-          "modules power": "Solar modüllerinizin toplam en yüksek Watt gücü",
-          "modules_power": "Solar modüllerinizin toplam en yüksek Watt gücü",
-          "name": "Ad"
-        },
-        "description": "Güneş panellerinizin verilerini doldurun. Bir alan net değilse lütfen belgelere bakın."
+          "modules_power": "Solar modüllerinizin toplam en yüksek Watt gücü"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API Anahtarı",
+          "api_key": "API Anahtarı"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)",
-          "damping": "Sönümleme faktörü: sonuçları sabah ve akşam ayarlar",
           "damping_evening": "Sönümleme faktörü: akşam sonuçları ayarlar",
           "damping_morning": "Sönümleme faktörü: sabah sonuçları ayarlar",
           "declination": "Sapma (0 = Yatay, 90 = Dikey)",
-          "inverter_size": "İnverter boyutu (Watt)",
-          "modules power": "Solar modüllerinizin toplam en yüksek Watt gücü",
           "modules_power": "Solar modüllerinizin toplam en yüksek Watt gücü"
-        },
-        "description": "Bu değerler, Solar Forecast sonucunun değiştirilmesine izin verir. Bir alan net değilse lütfen belgelere bakın."
+        }
       }
     }
   }

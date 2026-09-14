@@ -1,7 +1,8 @@
 {
   "config": {
     "step": {
-      "user": {
+      "user": {},
+      "array": {
         "data": {
           "modules_power": "आपके सौर मॉड्यूल की कुल वाट पीक पावर"
         }

@@ -28,7 +28,7 @@ To use this integration in your installation, head to "Settings" in the Home Ass
 
 The setup wizard first asks for general settings (name, API details, inverter capacity), then shows one page per PV array with its location, orientation, power, tracking and shading settings. Tick "Add another array" to configure an additional array; repeat for as many arrays as you have.
 
-To change the configuration later, open the integration's options: after the general settings you are walked through each configured array. Untick "Add another array" on an array page to drop the arrays after it.
+To change the configuration later, open the integration's options and click "Next" after the general settings to edit each configured array. Location, orientation, module power, tracking and shading settings are on the array pages. Untick "Add another array" on an array page to drop the arrays after it.
 
 Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`).
 

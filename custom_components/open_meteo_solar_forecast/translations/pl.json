@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Nazwa"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)",
           "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
           "latitude": "Szerokość geograficzna",
           "longitude": "Długość geograficzna",
-          "modules power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach",
-          "modules_power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach",
-          "name": "Nazwa"
-        },
-        "description": "Wpisz dane swoich paneli słonecznych. Proszę zapoznać się z dokumentacją, jeśli pole jest niejasne."
+          "modules_power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach"
+        }
       }
     }
   },
@@ -22,15 +24,15 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "Klucz API",
+          "api_key": "Klucz API"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)",
-          "damping": "Współczynnik tłumienia: dostosowuje wyniki rano i wieczorem",
           "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
-          "inverter_size": "Rozmiar falownika (Wat)",
-          "modules power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach",
           "modules_power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach"
-        },
-        "description": "Te wartości pozwalają dostosować wyniki dla Solar Forecast. Proszę zapoznać się z dokumentacją, jeśli pole jest niejasne."
+        }
       }
     }
   }

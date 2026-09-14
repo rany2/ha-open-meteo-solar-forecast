@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "名稱"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）",
           "declination": "偏角（0 = 水平、90 = 垂直）",
           "latitude": "緯度",
           "longitude": "經度",
-          "modules power": "太陽能模組總峰值功率",
-          "modules_power": "太陽能模組總峰值功率",
-          "name": "名稱"
-        },
-        "description": "填寫太陽能板資料。如果有不清楚的地方，請參考文件說明。"
+          "modules_power": "太陽能模組總峰值功率"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API 金鑰",
+          "api_key": "API 金鑰"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）",
-          "damping": "阻尼因素：調整清晨與傍晚結果",
           "damping_evening": "阻尼因素：調整傍晚結果",
           "damping_morning": "阻尼因素：調整清晨結果",
           "declination": "偏角（0 = 水平、90 = 垂直）",
-          "inverter_size": "變流器尺寸（Watt）",
-          "modules power": "太陽能模組總峰值功率",
           "modules_power": "太陽能模組總峰值功率"
-        },
-        "description": "此些數值允許微調 Solar Forecast 結果。如果有不清楚的地方、請參考文件說明。"
+        }
       }
     }
   }

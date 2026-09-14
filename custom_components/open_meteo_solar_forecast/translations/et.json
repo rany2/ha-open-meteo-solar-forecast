@@ -3,14 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Nimi"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)",
           "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
           "latitude": "Laiuskraad",
           "longitude": "Pikkuskraad",
-          "modules_power": "Päikesemoodulite koguvõimsus vattides",
-          "name": "Nimi"
-        },
-        "description": "Sisesta oma päikesepaneelide andmed. Kui väli on ebaselge, loe dokumentatsiooni."
+          "modules_power": "Päikesemoodulite koguvõimsus vattides"
+        }
       }
     }
   },
@@ -58,16 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API võti",
+          "api_key": "API võti"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)",
-          "damping": "Summutustegur: reguleerib tulemusi hommikul ja õhtul",
           "damping_evening": "Summutustegur: korrigeerib tulemusi õhtul",
           "damping_morning": "Summutustegur: korrigeerib tulemusi hommikul",
           "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
-          "inverter_size": "Inverteri võimsus (vatti)",
           "modules_power": "Päikesemoodulite koguvõimsus vattides"
-        },
-        "description": "Need väärtused võimaldavad muuta Solar.Forecast tulemust. Vaata dokumentatsiooni kui see väli on ebaselge."
+        }
       }
     }
   }

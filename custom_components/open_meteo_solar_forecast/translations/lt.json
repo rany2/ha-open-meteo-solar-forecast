@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Vardas"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)",
           "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
           "latitude": "Platuma",
           "longitude": "Ilguma",
-          "modules power": "Bendra jūsų saulės modulių didžiausia galia vatais",
-          "modules_power": "Bendra jūsų saulės modulių didžiausia galia vatais",
-          "name": "Vardas"
-        },
-        "description": "Užpildykite savo saulės kolektorių duomenis. Jei laukas neaiškus, žr. dokumentaciją."
+          "modules_power": "Bendra jūsų saulės modulių didžiausia galia vatais"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API raktas",
+          "api_key": "API raktas"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)",
-          "damping": "Slopinimo koeficientas: koreguoja rezultatus ryte ir vakare",
           "damping_evening": "Slopinimo koeficientas: koreguoja rezultatus vakare",
           "damping_morning": "Slopinimo koeficientas: koreguoja rezultatus ryte",
           "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
-          "inverter_size": "Inverterio dydis (vatai)",
-          "modules power": "Bendra jūsų saulės modulių didžiausia galia vatais",
           "modules_power": "Bendra jūsų saulės modulių didžiausia galia vatais"
-        },
-        "description": "Šios vertės leidžia koreguoti prognozę. Saulės rezultatas. Jei laukas neaiškus, žr. dokumentaciją."
+        }
       }
     }
   }

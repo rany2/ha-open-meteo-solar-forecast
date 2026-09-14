@@ -3,15 +3,17 @@
     "step": {
       "user": {
         "data": {
+          "name": "Elnevezés"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)",
           "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
           "latitude": "Szélesség",
           "longitude": "Hosszúság",
-          "modules power": "A napelemmodulok teljes Watt csúcsteljesítménye",
-          "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye",
-          "name": "Elnevezés"
-        },
-        "description": "Töltse ki a napelemek adatait. Kérem, olvassa el a dokumentációt, ha egy mező nem egyértelmű."
+          "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye"
+        }
       }
     }
   },
@@ -59,17 +61,17 @@
     "step": {
       "init": {
         "data": {
-          "api_key": "API kulcs",
+          "api_key": "API kulcs"
+        }
+      },
+      "array": {
+        "data": {
           "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)",
-          "damping": "Csillapítási tényező: beállítja az eredményeket reggelre és estére",
           "damping_evening": "Csillapítási tényező: korrigálja az esti eredményeket",
           "damping_morning": "Csillapítási tényező: korrigálja a reggeli eredményeket",
           "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
-          "inverter_size": "Inverter teljesítménye (Watt)",
-          "modules power": "A napelemmodulok teljes Watt csúcsteljesítménye",
           "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye"
-        },
-        "description": "Ezek az értékek lehetővé teszik a Solar Forecast eredményének finomhangolását. Ha egy mező nem egyértelmű, kérem, olvassa el a dokumentációt."
+        }
       }
     }
   }
