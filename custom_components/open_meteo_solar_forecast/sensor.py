@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -248,6 +248,20 @@ class OpenMeteoSolarForecastSensorEntity(
     entity_description: OpenMeteoSolarForecastSensorEntityDescription
     _attr_has_entity_name = True
 
+    _TIME_DEPENDENT_KEYS = frozenset(
+        {
+            "energy_production_today_remaining",
+            "power_production_now",
+            "power_production_next_15minutes",
+            "power_production_next_30minutes",
+            "power_production_next_hour",
+            "power_production_next_12hours",
+            "power_production_next_24hours",
+            "energy_current_hour",
+            "energy_next_hour",
+        }
+    )
+
     def __init__(
         self,
         *,
@@ -261,6 +275,7 @@ class OpenMeteoSolarForecastSensorEntity(
         service_slug = slugify(coordinator.config_entry.title) or coordinator.config_entry.entry_id
         self.entity_id = f"{SENSOR_DOMAIN}.{service_slug}_{entity_description.key}"
         self._attr_unique_id = f"{entry_id}_{entity_description.key}"
+        self._last_forecast_date: date | None = None
 
         self._attr_device_info = DeviceInfo(
             entry_type=DeviceEntryType.SERVICE,
@@ -276,8 +291,14 @@ class OpenMeteoSolarForecastSensorEntity(
         This is required for the power_production_* sensors to update
         as they take data in 15-minute intervals and the update interval
         is 30 minutes."""
-        if not self.enabled:
+        if not self.enabled or self.coordinator.data is None:
             return
+
+        if self.entity_description.key not in self._TIME_DEPENDENT_KEYS:
+            forecast_date = self.coordinator.data.now().date()
+            if forecast_date == self._last_forecast_date:
+                return
+            self._last_forecast_date = forecast_date
 
         self.async_write_ha_state()
 
@@ -285,14 +306,13 @@ class OpenMeteoSolarForecastSensorEntity(
         """Register callbacks."""
         await super().async_added_to_hass()
 
-        # Update the state of the sensor every minute without
-        # fetching new data from the server.
+        # Use the API forecast timezone for date rollover. Only rolling values
+        # need a state write every minute; daily series change on a new fetch
+        # or when the API's calendar date changes.
+        if self.coordinator.data is not None:
+            self._last_forecast_date = self.coordinator.data.now().date()
         self.async_on_remove(
-            async_track_utc_time_change(
-                self.hass,
-                self._update_callback,
-                second=0,
-            )
+            async_track_utc_time_change(self.hass, self._update_callback, second=0)
         )
 
     @property
