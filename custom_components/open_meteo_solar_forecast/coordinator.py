@@ -371,11 +371,14 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             if retained is None:
                 retained = await self._async_load_retained_estimate()
             if retained is None:
-                raise UpdateFailed(f"Error communicating with API: {err}") from err
+                # HTTP errors can include API keys and coordinates in their URL.
+                raise UpdateFailed(
+                    f"Error communicating with API ({type(err).__name__})"
+                ) from None
 
             LOGGER.warning(
-                "Unable to refresh forecast data, using retained forecast",
-                exc_info=err,
+                "Unable to refresh forecast data (%s), using retained forecast",
+                type(err).__name__,
             )
             return retained
 
