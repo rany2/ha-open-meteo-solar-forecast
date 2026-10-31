@@ -74,7 +74,6 @@ def forecast_covers_time(estimate: Estimate, at: datetime | None = None) -> bool
     return interval_start in estimate.watts
 
 
-
 def _config_fingerprint(entry: ConfigEntry) -> str:
     """Fingerprint the settings that affect forecast values.
 

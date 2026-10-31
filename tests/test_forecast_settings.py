@@ -91,6 +91,18 @@ class ForecastSettingsTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["data"]["update_interval"], 180)
         self.assertEqual(result["data"]["forecast_days"], 5)
 
+    async def test_legacy_options_keep_implicit_defaults(self):
+        flow = OpenMeteoSolarForecastOptionFlowHandler()
+        flow.hass = self.hass
+        with patch.object(
+            type(flow), "config_entry", new_callable=PropertyMock, return_value=self.entry
+        ):
+            form = await flow.async_step_init()
+            array = await flow.async_step_init(form["data_schema"]({}))
+            result = await flow.async_step_array(array["data_schema"]({}))
+        self.assertNotIn("update_interval", result["data"])
+        self.assertNotIn("forecast_days", result["data"])
+
     async def test_defaults_and_bounds(self):
         flow = OpenMeteoSolarForecastFlowHandler()
         flow.hass = self.hass

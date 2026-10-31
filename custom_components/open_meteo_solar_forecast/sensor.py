@@ -43,7 +43,6 @@ POWER_FORECAST_OFFSETS = {
 }
 
 
-
 @dataclass(frozen=True)
 class OpenMeteoSolarForecastSensorEntityDescription(SensorEntityDescription):
     """Describes a Solar Forecast Sensor."""
@@ -341,7 +340,6 @@ class OpenMeteoSolarForecastSensorEntity(
                 hour += timedelta(hours=1)
             return hour in estimate.wh_period
         return True
-
 
     @property
     def native_value(self) -> datetime | StateType:

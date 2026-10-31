@@ -104,6 +104,20 @@ def _forecast_settings_schema(options: dict[str, Any]) -> dict[vol.Marker, Any]:
     }
 
 
+def _forecast_settings_options(
+    common: dict[str, Any], stored: dict[str, Any]
+) -> dict[str, Any]:
+    """Keep implicit defaults unchanged when editing an older entry."""
+    return {
+        key: common.get(key, default)
+        for key, default in (
+            (CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL),
+            (CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS),
+        )
+        if key in stored or common.get(key, default) != default
+    }
+
+
 def _is_sequence(value: Any) -> bool:
     return isinstance(value, Sequence) and not isinstance(value, (str, bytes))
 
@@ -459,13 +473,8 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                 data={
                     CONF_API_KEY: self._common.get(CONF_API_KEY),
                     CONF_BASE_URL: self._common[CONF_BASE_URL],
-                CONF_MODEL: self._common[CONF_MODEL],
-                CONF_UPDATE_INTERVAL: self._common.get(
-                    CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL
-                ),
-                CONF_FORECAST_DAYS: self._common.get(
-                    CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS
-                ),
+                    CONF_MODEL: self._common[CONF_MODEL],
+                    **_forecast_settings_options(self._common, self.config_entry.options),
                     CONF_INVERTER_POWER: self._common[CONF_INVERTER_POWER],
                     CONF_MAX_SNOWCOVER_DEPTH_CM: self._common[
                         CONF_MAX_SNOWCOVER_DEPTH_CM
