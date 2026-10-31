@@ -33,6 +33,7 @@ class PrivateApiErrorTests(unittest.IsolatedAsyncioTestCase):
             update_interval=timedelta(minutes=30),
         )
         coordinator.data = retained
+        coordinator._last_successful_update = None
         coordinator.forecast = Mock(estimate=AsyncMock(side_effect=error))
         coordinator._store = Mock(async_load=AsyncMock(return_value=None))
         return coordinator
