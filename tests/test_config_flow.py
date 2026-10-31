@@ -87,6 +87,7 @@ class WizardTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_changing_tracker_type_preserves_existing_array_angles(self):
         entry = SimpleNamespace(
+            update_listeners=[object()],
             data={"latitude": 50.0, "longitude": 10.0},
             options={
                 "base_url": "https://api.open-meteo.com",
