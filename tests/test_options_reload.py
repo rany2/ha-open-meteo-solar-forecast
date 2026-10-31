@@ -93,6 +93,8 @@ class OptionsReloadTests(unittest.IsolatedAsyncioTestCase):
         for change in changes or ({}, {}):
             self.reload.assert_not_awaited()
             array = await flow.async_step_array(array["data_schema"](change))
+            if array.get("step_id") == "orientation":
+                array = await flow.async_step_orientation(array["data_schema"]({}))
         self.assertEqual(array["type"], "create_entry")
         await self.hass.config_entries.options.async_finish_flow(flow, array)
         await self.hass.async_block_till_done()
