@@ -21,8 +21,6 @@
         "data": {
           "latitude": "[%key:common::config_flow::data::latitude%]",
           "longitude": "[%key:common::config_flow::data::longitude%]",
-          "declination": "Declination",
-          "azimuth": "Azimuth",
           "modules_power": "Modules peak power",
           "array_inverter_power": "Array inverter capacity",
           "tracking": "Solar tracker type",
@@ -35,18 +33,28 @@
           "add_another": "Add another array"
         },
         "data_description": {
-          "declination": "0 = horizontal, 90 = vertical. Ignored for tilt-axis and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel tilt.",
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West. Ignored for azimuth and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel heading.",
           "modules_power": "Total Watt peak power of the solar modules in this array.",
           "array_inverter_power": "The AC capacity of this array's own inverter in Watt (0 = no dedicated inverter). If any array has its own inverter, each array is clamped individually and the shared inverter capacity is ignored.",
-          "efficiency_factor": "0.0 = 100% loss, 1.0 = no loss.",
+          "efficiency_factor": "Electrical DC efficiency (1 = no electrical loss). The library also applies a separate temperature correction.",
           "damping_morning": "0.0 = no damping, 1.0 = full damping in the morning.",
           "damping_evening": "0.0 = no damping, 1.0 = full damping in the evening.",
           "use_horizon": "Use the horizon line defined in the horizon file (see docs) to respect shading of the modules.",
           "partial_shading": "Only if horizon is enabled: treat shadows as partial.",
           "horizon_filepath": "Path to the horizon file (leave empty for the default path).",
-          "tracking": "Select the axes that follow the sun. Dual-axis tracking ignores both angle fields; fixed panels use both. Omitted angles keep their displayed defaults."
+          "tracking": "Select the axes that follow the sun. The next page asks only for fixed angles; dual-axis trackers skip angle entry entirely."
         }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declination",
+          "azimuth": "Azimuth"
+        },
+        "data_description": {
+          "declination": "Actual panel tilt: 0° = horizontal, 90° = vertical.",
+          "azimuth": "Actual panel heading: 0° = north, 90° = east, 180° = south, 270° = west."
+        },
+        "title": "Fixed panel angles",
+        "description": "Fixed angles for array {array_number}. Axes that track the sun do not need an angle."
       }
     }
   },
@@ -74,8 +82,6 @@
         "data": {
           "latitude": "[%key:common::config_flow::data::latitude%]",
           "longitude": "[%key:common::config_flow::data::longitude%]",
-          "declination": "[%key:component::open_meteo_solar_forecast::config::step::array::data::declination%]",
-          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::array::data::azimuth%]",
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::array::data::modules_power%]",
           "array_inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::array::data::array_inverter_power%]",
           "tracking": "[%key:component::open_meteo_solar_forecast::config::step::array::data::tracking%]",
@@ -88,8 +94,6 @@
           "add_another": "[%key:component::open_meteo_solar_forecast::config::step::array::data::add_another%]"
         },
         "data_description": {
-          "declination": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::declination%]",
-          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::azimuth%]",
           "modules_power": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::modules_power%]",
           "array_inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::array_inverter_power%]",
           "efficiency_factor": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::efficiency_factor%]",
@@ -100,6 +104,18 @@
           "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::horizon_filepath%]",
           "tracking": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::tracking%]"
         }
+      },
+      "orientation": {
+        "data": {
+          "declination": "[%key:component::open_meteo_solar_forecast::config::step::orientation::data::declination%]",
+          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::orientation::data::azimuth%]"
+        },
+        "data_description": {
+          "declination": "[%key:component::open_meteo_solar_forecast::config::step::orientation::data_description::declination%]",
+          "azimuth": "[%key:component::open_meteo_solar_forecast::config::step::orientation::data_description::azimuth%]"
+        },
+        "title": "Fixed panel angles",
+        "description": "Fixed angles for array {array_number}. Axes that track the sun do not need an angle."
       }
     }
   },

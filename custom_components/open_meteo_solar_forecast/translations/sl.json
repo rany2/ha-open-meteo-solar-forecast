@@ -8,10 +8,14 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 stopinj, 0 = sever, 90 = vzhod, 180 = jug, 270 = zahod)",
-          "declination": "Odstopanja (0 = vodoravno, 90 = navpično)",
           "latitude": "Zemljepisna širina",
           "longitude": "Zemljepisna dolžina"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Odstopanja (0 = vodoravno, 90 = navpično)",
+          "azimuth": "Azimut (360 stopinj, 0 = sever, 90 = vzhod, 180 = jug, 270 = zahod)"
         }
       }
     }

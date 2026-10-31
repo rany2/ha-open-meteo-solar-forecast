@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimute (360º, 0º = Norte, 90º = Leste, 180º = Sul, 270º = Oeste)",
-          "declination": "Declinação (0 = Horizontal, 90 = Vertical)",
           "latitude": "Latitude",
           "longitude": "Longitude",
           "modules_power": "Potência de pico total em Watts de seus módulos solares"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declinação (0 = Horizontal, 90 = Vertical)",
+          "azimuth": "Azimute (360º, 0º = Norte, 90º = Leste, 180º = Sul, 270º = Oeste)"
         }
       }
     }
@@ -66,9 +70,13 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimute (360º, 0º = Norte, 90º = Leste, 180º = Sul, 270º = Oeste)",
-          "declination": "Declinação (0 = Horizontal, 90 = Vertical)",
           "modules_power": "Potência de pico total em Watts de seus módulos solares"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declinação (0 = Horizontal, 90 = Vertical)",
+          "azimuth": "Azimute (360º, 0º = Norte, 90º = Leste, 180º = Sul, 270º = Oeste)"
         }
       }
     }

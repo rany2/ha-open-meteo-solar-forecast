@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)",
-          "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
           "latitude": "Zemepisná šírka",
           "longitude": "Zemepisná dĺžka",
           "modules_power": "Celkový špičkový výkon solárnych modulov"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
+          "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)",
           "damping_evening": "Tlmiaci faktor: upravuje výsledky vo večerných hodinách",
           "damping_morning": "Tlmiaci faktor: upravuje výsledky ráno",
-          "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
           "modules_power": "Celkový špičkový výkon solárnych modulov"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinácia (0 = horizontálna, 90 = vertikálna)",
+          "azimuth": "Azimut (360˚, 0 = sever, 90 = východ, 180 = juh, 270 = západ)"
         }
       }
     }

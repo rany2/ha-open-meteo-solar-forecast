@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 grad, 0=Nord, 90=Ost, 180=Süd, 270=West)",
-          "declination": "Deklination (0=horizontau, 90=vertikau)",
           "latitude": "Breitegrad",
           "longitude": "Längegrad",
           "modules_power": "Totau Wattspitze vo dine Solarmodul (Watt peak)"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklination (0=horizontau, 90=vertikau)",
+          "azimuth": "Azimut (360 grad, 0=Nord, 90=Ost, 180=Süd, 270=West)"
         }
       }
     }

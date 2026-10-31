@@ -26,9 +26,9 @@ To use this integration in your installation, head to "Settings" in the Home Ass
 
 ### Multiple PV Arrays
 
-The setup wizard first asks for general settings (name, API details, inverter capacity), then shows one page per PV array with its location, orientation, power, tracking and shading settings. Tick "Add another array" to configure an additional array; repeat for as many arrays as you have.
+The setup wizard first asks for general settings (name, API details, inverter capacity), then shows each PV array's location, power, tracking and shading settings. A following page asks for any fixed orientation angles. Tick "Add another array" to configure an additional array; repeat for as many arrays as you have.
 
-To change the configuration later, open the integration's options and click "Next" after the general settings to edit each configured array. Location, orientation, module power, tracking and shading settings are on the array pages. Untick "Add another array" on an array page to drop the arrays after it.
+To change the configuration later, open the integration's options and click "Next" after the general settings to edit each configured array and its fixed angles. Untick "Add another array" on an array page to drop the arrays after it.
 
 Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`).
 
@@ -47,12 +47,11 @@ The `tracking` option models panels that follow the sun instead of being fixed:
 
 The tracker type is set per array.
 
-Azimuth and declination are optional fields so trackers do not require unused
-angles. Omitted values keep the displayed defaults (25° declination and 180°
-azimuth for a new array, or the existing angles when editing). Set the actual
-angle for each axis that is not tracked: both for fixed panels, declination for
-an azimuth tracker, and azimuth for a tilt-axis tracker. A dual-axis tracker uses
-neither angle; changing those fields does not change its forecast.
+Select the tracker type on the array page. The next page asks only for fixed
+angles: both for fixed panels, declination for an azimuth tracker, and azimuth
+for a tilt-axis tracker. Dual-axis trackers skip angle entry entirely. Previously
+saved angles are retained when switching tracker type, so they remain available
+if you switch back to fixed panels.
 
 ### Multiple Inverters
 
@@ -62,7 +61,27 @@ If each array is connected to its own inverter, set the "Array inverter capacity
 
 ### DC Efficiency
 
-The DC efficiency is the efficiency of the DC wiring and should not be confused with the cell efficiency. The DC efficiency is typically around 0.93. The cell efficiency is accounted for in the cell temperature calculation and is assumed to be 0.12.
+The DC efficiency factor models electrical DC losses: `1.0` means no electrical
+loss, and `0.93` means a 7% reduction. The library separately applies a cell
+temperature correction, including when this factor is `1.0` and shading and
+damping are disabled. Its current model uses a fixed Ross cooling coefficient
+of `0.0342` and a power temperature coefficient of `-0.004/°C` relative to 25°C.
+The tracker setting changes panel orientation; it does not change that thermal
+model.
+
+### Comparing a tracker forecast with production
+
+The power sensors are weather-based estimates, not readings from the inverter.
+Compare power in W/kW at matching timestamps and daily energy in Wh/kWh for the
+same complete day. Confirm each array's tracker type, actual module peak power,
+and shared or per-array inverter limit. Inflating those capacities to match one
+observation can hide the source of a discrepancy.
+
+For a reproducible report, include the integration/library versions, weather
+model, per-array settings without coordinates or credentials, and a dated power
+curve or daily energy comparison. A dual-axis forecast ignores both stored
+angles, so changing them cannot correct a low forecast. Differences may require
+checking the weather input and thermal assumptions against measurements.
 
 ### Damping Factor
 

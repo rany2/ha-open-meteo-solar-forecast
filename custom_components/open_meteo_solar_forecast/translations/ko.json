@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "방위각(360도, 0 = 북쪽, 90 = 동쪽, 180 = 남쪽, 270 = 서쪽)",
-          "declination": "편각(0 = 수평, 90 = 수직)",
           "latitude": "위도",
           "longitude": "경도",
           "modules_power": "태양광 모듈의 총 와트 피크 전력"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "편각(0 = 수평, 90 = 수직)",
+          "azimuth": "방위각(360도, 0 = 북쪽, 90 = 동쪽, 180 = 남쪽, 270 = 서쪽)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "방위각(360도, 0 = 북쪽, 90 = 동쪽, 180 = 남쪽, 270 = 서쪽)",
           "damping_evening": "댐핑 팩터: 저녁에 결과를 조정합니다.",
           "damping_morning": "댐핑 팩터: 아침에 결과를 조정합니다.",
-          "declination": "편각(0 = 수평, 90 = 수직)",
           "modules_power": "태양광 모듈의 총 와트 피크 전력"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "편각(0 = 수평, 90 = 수직)",
+          "azimuth": "방위각(360도, 0 = 북쪽, 90 = 동쪽, 180 = 남쪽, 270 = 서쪽)"
         }
       }
     }

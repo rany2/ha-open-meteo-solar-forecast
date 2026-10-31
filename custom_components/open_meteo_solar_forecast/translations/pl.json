@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)",
-          "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
           "latitude": "Szerokość geograficzna",
           "longitude": "Długość geograficzna",
           "modules_power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
+          "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)"
         }
       }
     }
@@ -29,9 +33,13 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)",
-          "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
           "modules_power": "Całkowita moc szczytowa modułów fotowoltaicznych w watach"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinacja (0 = Poziomo, 90 = Pionowo)",
+          "azimuth": "Azymut (360 stopni, 0 = Północ, 90 = Wschód, 180 = Południe, 270 = Zachód)"
         }
       }
     }

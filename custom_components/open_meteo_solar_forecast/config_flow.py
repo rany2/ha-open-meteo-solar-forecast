@@ -111,26 +111,6 @@ def _array_schema(defaults: dict[str, Any], add_another_default: bool) -> vol.Sc
                     min=-180, max=180, step="any", mode=NumberSelectorMode.BOX
                 )
             ),
-            vol.Optional(
-                CONF_DECLINATION, default=defaults[CONF_DECLINATION]
-            ): NumberSelector(
-                NumberSelectorConfig(
-                    min=0,
-                    max=90,
-                    step="any",
-                    mode=NumberSelectorMode.BOX,
-                    unit_of_measurement="°",
-                )
-            ),
-            vol.Optional(CONF_AZIMUTH, default=defaults[CONF_AZIMUTH]): NumberSelector(
-                NumberSelectorConfig(
-                    min=0,
-                    max=360,
-                    step="any",
-                    mode=NumberSelectorMode.BOX,
-                    unit_of_measurement="°",
-                )
-            ),
             _field(CONF_MODULES_POWER): vol.All(
                 NumberSelector(
                     NumberSelectorConfig(
@@ -184,6 +164,28 @@ def _array_schema(defaults: dict[str, Any], add_another_default: bool) -> vol.Sc
             vol.Optional(CONF_ADD_ANOTHER, default=add_another_default): BooleanSelector(),
         }
     )
+
+
+def _orientation_schema(array: dict[str, Any]) -> vol.Schema:
+    """Ask only for axes that are not controlled by the tracker."""
+    fields = {}
+    tracking = array[CONF_TRACKING]
+    for key, maximum, tracked_modes in (
+        (CONF_DECLINATION, 90, ("tilt", "dual")),
+        (CONF_AZIMUTH, 360, ("azimuth", "dual")),
+    ):
+        if tracking in tracked_modes:
+            continue
+        fields[vol.Required(key, default=array[key])] = NumberSelector(
+            NumberSelectorConfig(
+                min=0,
+                max=maximum,
+                step="any",
+                mode=NumberSelectorMode.BOX,
+                unit_of_measurement="°",
+            )
+        )
+    return vol.Schema(fields)
 
 
 def _normalize_array_input(user_input: dict[str, Any]) -> dict[str, Any]:
@@ -240,6 +242,8 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
         """Initialize the flow."""
         self._common: dict[str, Any] = {}
         self._arrays: list[dict[str, Any]] = []
+        self._pending_array: dict[str, Any] = {}
+        self._add_another = False
 
     @staticmethod
     @callback
@@ -297,11 +301,29 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
     async def async_step_array(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Handle the settings of one PV array."""
+        """Collect array settings before asking for its fixed angles."""
+        defaults = _array_defaults(
+            self.hass.config.latitude, self.hass.config.longitude
+        )
+        if self._arrays:
+            defaults = dict(self._arrays[-1])
         if user_input is not None:
-            add_another = user_input.get(CONF_ADD_ANOTHER, False)
-            self._arrays.append(_normalize_array_input(user_input))
-            if add_another:
+            self._pending_array = _normalize_array_input({**defaults, **user_input})
+            self._add_another = user_input.get(CONF_ADD_ANOTHER, False)
+            return await self.async_step_orientation()
+        return self.async_show_form(
+            step_id="array",
+            data_schema=_array_schema(defaults, add_another_default=False),
+            description_placeholders={"array_number": str(len(self._arrays) + 1)},
+        )
+
+    async def async_step_orientation(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Skip angle inputs entirely for dual-axis trackers."""
+        if user_input is not None or self._pending_array[CONF_TRACKING] == "dual":
+            self._arrays.append({**self._pending_array, **(user_input or {})})
+            if self._add_another:
                 return await self.async_step_array()
 
             per_array = _collapse_arrays(self._arrays)
@@ -323,14 +345,9 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                 },
             )
 
-        defaults = _array_defaults(
-            self.hass.config.latitude, self.hass.config.longitude
-        )
-        if self._arrays:
-            defaults = dict(self._arrays[-1])
         return self.async_show_form(
-            step_id="array",
-            data_schema=_array_schema(defaults, add_another_default=False),
+            step_id="orientation",
+            data_schema=_orientation_schema(self._pending_array),
             description_placeholders={"array_number": str(len(self._arrays) + 1)},
         )
 
@@ -342,6 +359,8 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
         """Initialize the options flow."""
         self._common: dict[str, Any] = {}
         self._arrays: list[dict[str, Any]] = []
+        self._pending_array: dict[str, Any] = {}
+        self._add_another = False
         self._stored_arrays: list[dict[str, Any]] = []
 
     async def async_step_init(
@@ -406,11 +425,31 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
     async def async_step_array(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Handle the settings of one PV array."""
+        """Collect array settings while retaining previously stored angles."""
+        index = len(self._arrays)
+        if index < len(self._stored_arrays):
+            defaults = self._stored_arrays[index]
+        else:
+            defaults = dict(self._arrays[-1])
         if user_input is not None:
-            add_another = user_input.get(CONF_ADD_ANOTHER, False)
-            self._arrays.append(_normalize_array_input(user_input))
-            if add_another:
+            self._pending_array = _normalize_array_input({**defaults, **user_input})
+            self._add_another = user_input.get(CONF_ADD_ANOTHER, False)
+            return await self.async_step_orientation()
+        # Unticking the box drops arrays after this one, once its angles are saved.
+        add_another_default = index + 1 < len(self._stored_arrays)
+        return self.async_show_form(
+            step_id="array",
+            data_schema=_array_schema(defaults, add_another_default),
+            description_placeholders={"array_number": str(index + 1)},
+        )
+
+    async def async_step_orientation(
+        self, user_input: dict[str, Any] | None = None
+    ) -> ConfigFlowResult:
+        """Edit fixed axes, preserving the angles ignored by the selected tracker."""
+        if user_input is not None or self._pending_array[CONF_TRACKING] == "dual":
+            self._arrays.append({**self._pending_array, **(user_input or {})})
+            if self._add_another:
                 return await self.async_step_array()
 
             per_array = _collapse_arrays(self._arrays)
@@ -428,16 +467,8 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                 },
             )
 
-        index = len(self._arrays)
-        if index < len(self._stored_arrays):
-            defaults = self._stored_arrays[index]
-        else:
-            defaults = dict(self._arrays[-1])
-        # Default to walking through all previously configured arrays;
-        # unchecking the box early drops the remaining arrays.
-        add_another_default = index + 1 < len(self._stored_arrays)
         return self.async_show_form(
-            step_id="array",
-            data_schema=_array_schema(defaults, add_another_default),
-            description_placeholders={"array_number": str(index + 1)},
+            step_id="orientation",
+            data_schema=_orientation_schema(self._pending_array),
+            description_placeholders={"array_number": str(len(self._arrays) + 1)},
         )

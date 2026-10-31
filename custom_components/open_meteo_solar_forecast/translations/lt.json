@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)",
-          "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
           "latitude": "Platuma",
           "longitude": "Ilguma",
           "modules_power": "Bendra jūsų saulės modulių didžiausia galia vatais"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
+          "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)",
           "damping_evening": "Slopinimo koeficientas: koreguoja rezultatus vakare",
           "damping_morning": "Slopinimo koeficientas: koreguoja rezultatus ryte",
-          "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
           "modules_power": "Bendra jūsų saulės modulių didžiausia galia vatais"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinacija (0 = horizontali, 90 = vertikali)",
+          "azimuth": "Azimutas (360 laipsnių, 0 = šiaurė, 90 = rytai, 180 = pietai, 270 = vakarai)"
         }
       }
     }
