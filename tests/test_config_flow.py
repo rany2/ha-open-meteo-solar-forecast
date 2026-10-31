@@ -59,6 +59,59 @@ class WizardTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result["type"], "create_entry")
         self.assertEqual(result["options"]["modules_power"], 800)
 
+    async def test_tracker_setup_can_omit_angles_without_storing_missing_values(self):
+        for tracking in ("none", "azimuth", "tilt", "dual"):
+            with self.subTest(tracking=tracking):
+                flow = OpenMeteoSolarForecastFlowHandler()
+                flow.hass = SimpleNamespace(
+                    config=SimpleNamespace(
+                        location_name="Home", latitude=50.0, longitude=10.0
+                    )
+                )
+                first = await flow.async_step_user()
+                array = await flow.async_step_user(first["data_schema"]({}))
+                fields = {
+                    field["name"]: field
+                    for field in to_field_list(
+                        array["data_schema"], custom_serializer=custom_serializer
+                    )
+                }
+                for angle in ("azimuth", "declination"):
+                    self.assertFalse(fields[angle]["required"])
+                result = await flow.async_step_array(
+                    array["data_schema"]({"modules_power": 800, "tracking": tracking})
+                )
+                self.assertEqual(result["options"]["tracking"], tracking)
+                self.assertEqual(result["options"]["azimuth"], 180)
+                self.assertEqual(result["options"]["declination"], 25)
+
+    async def test_changing_tracker_type_preserves_existing_array_angles(self):
+        entry = SimpleNamespace(
+            data={"latitude": 50.0, "longitude": 10.0},
+            options={
+                "base_url": "https://api.open-meteo.com",
+                "modules_power": [800, 1200],
+                "azimuth": [90.5, 270.5],
+                "declination": [22.5, 35.5],
+                "tracking": ["none", "dual"],
+            },
+        )
+        flow = OpenMeteoSolarForecastOptionFlowHandler()
+        with patch.object(
+            type(flow), "config_entry", new_callable=PropertyMock, return_value=entry
+        ):
+            first = await flow.async_step_init()
+            array = await flow.async_step_init(first["data_schema"]({}))
+            array = await flow.async_step_array(
+                array["data_schema"]({"tracking": "dual"})
+            )
+            result = await flow.async_step_array(
+                array["data_schema"]({"tracking": "none"})
+            )
+        self.assertEqual(result["data"]["tracking"], ["dual", "none"])
+        self.assertEqual(result["data"]["azimuth"], [90.5, 270.5])
+        self.assertEqual(result["data"]["declination"], [22.5, 35.5])
+
     async def test_options_next_preserves_and_edits_existing_arrays(self):
         entry = SimpleNamespace(
             data={"latitude": 50.0, "longitude": 10.0},

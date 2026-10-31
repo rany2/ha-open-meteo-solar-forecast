@@ -35,8 +35,8 @@
           "add_another": "Add another array"
         },
         "data_description": {
-          "declination": "0 = horizontal, 90 = vertical.",
-          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West.",
+          "declination": "0 = horizontal, 90 = vertical. Ignored for tilt-axis and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel tilt.",
+          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West. Ignored for azimuth and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel heading.",
           "modules_power": "Total Watt peak power of the solar modules in this array.",
           "array_inverter_power": "The AC capacity of this array's own inverter in Watt (0 = no dedicated inverter). If any array has its own inverter, each array is clamped individually and the shared inverter capacity is ignored.",
           "efficiency_factor": "0.0 = 100% loss, 1.0 = no loss.",
@@ -44,7 +44,8 @@
           "damping_evening": "0.0 = no damping, 1.0 = full damping in the evening.",
           "use_horizon": "Use the horizon line defined in the horizon file (see docs) to respect shading of the modules.",
           "partial_shading": "Only if horizon is enabled: treat shadows as partial.",
-          "horizon_filepath": "Path to the horizon file (leave empty for the default path)."
+          "horizon_filepath": "Path to the horizon file (leave empty for the default path).",
+          "tracking": "Select the axes that follow the sun. Dual-axis tracking ignores both angle fields; fixed panels use both. Omitted angles keep their displayed defaults."
         }
       }
     }
@@ -96,7 +97,8 @@
           "damping_evening": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::damping_evening%]",
           "use_horizon": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::use_horizon%]",
           "partial_shading": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::partial_shading%]",
-          "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::horizon_filepath%]"
+          "horizon_filepath": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::horizon_filepath%]",
+          "tracking": "[%key:component::open_meteo_solar_forecast::config::step::array::data_description::tracking%]"
         }
       }
     }

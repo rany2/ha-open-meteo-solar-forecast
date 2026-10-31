@@ -22,7 +22,12 @@
           "partial_shading": "(Nur zusammen mit Horizontlinie:) Wenn aktiviert, werden Schatten als partiell behandelt.",
           "add_another": "Weitere Anlage hinzufügen"
         },
-        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren."
+        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren.",
+        "data_description": {
+          "declination": "0 = horizontal, 90 = vertikal. Bei Neigungsachsen- und zweiachsigen Trackern wird dieser Wert ignoriert; der Vorgabewert kann bleiben. Sonst die tatsächliche Modulneigung eintragen.",
+          "azimuth": "0 = Norden, 90 = Osten, 180 = Süden, 270 = Westen. Bei Azimut- und zweiachsigen Trackern wird dieser Wert ignoriert; der Vorgabewert kann bleiben. Sonst die tatsächliche Modulausrichtung eintragen.",
+          "tracking": "Wähle die Achsen, die der Sonne folgen. Zweiachsige Tracker ignorieren beide Winkelfelder; feste Module nutzen beide. Ausgelassene Winkel behalten die angezeigten Vorgabewerte."
+        }
       }
     }
   },
@@ -112,7 +117,12 @@
           "partial_shading": "Behandle Schatten als partiell",
           "add_another": "Weitere Anlage hinzufügen"
         },
-        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren."
+        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren.",
+        "data_description": {
+          "declination": "0 = horizontal, 90 = vertikal. Bei Neigungsachsen- und zweiachsigen Trackern wird dieser Wert ignoriert; der Vorgabewert kann bleiben. Sonst die tatsächliche Modulneigung eintragen.",
+          "azimuth": "0 = Norden, 90 = Osten, 180 = Süden, 270 = Westen. Bei Azimut- und zweiachsigen Trackern wird dieser Wert ignoriert; der Vorgabewert kann bleiben. Sonst die tatsächliche Modulausrichtung eintragen.",
+          "tracking": "Wähle die Achsen, die der Sonne folgen. Zweiachsige Tracker ignorieren beide Winkelfelder; feste Module nutzen beide. Ausgelassene Winkel behalten die angezeigten Vorgabewerte."
+        }
       }
     }
   }

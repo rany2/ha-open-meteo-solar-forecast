@@ -47,6 +47,13 @@ The `tracking` option models panels that follow the sun instead of being fixed:
 
 The tracker type is set per array.
 
+Azimuth and declination are optional fields so trackers do not require unused
+angles. Omitted values keep the displayed defaults (25° declination and 180°
+azimuth for a new array, or the existing angles when editing). Set the actual
+angle for each axis that is not tracked: both for fixed panels, declination for
+an azimuth tracker, and azimuth for a tilt-axis tracker. A dual-axis tracker uses
+neither angle; changing those fields does not change its forecast.
+
 ### Multiple Inverters
 
 The "Inverter capacity" field in the general settings models a single inverter shared by all arrays: the combined output of all arrays is clamped to it (0 = no limit).

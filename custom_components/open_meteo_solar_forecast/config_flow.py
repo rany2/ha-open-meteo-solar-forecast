@@ -111,7 +111,9 @@ def _array_schema(defaults: dict[str, Any], add_another_default: bool) -> vol.Sc
                     min=-180, max=180, step="any", mode=NumberSelectorMode.BOX
                 )
             ),
-            _field(CONF_DECLINATION): NumberSelector(
+            vol.Optional(
+                CONF_DECLINATION, default=defaults[CONF_DECLINATION]
+            ): NumberSelector(
                 NumberSelectorConfig(
                     min=0,
                     max=90,
@@ -120,7 +122,7 @@ def _array_schema(defaults: dict[str, Any], add_another_default: bool) -> vol.Sc
                     unit_of_measurement="°",
                 )
             ),
-            _field(CONF_AZIMUTH): NumberSelector(
+            vol.Optional(CONF_AZIMUTH, default=defaults[CONF_AZIMUTH]): NumberSelector(
                 NumberSelectorConfig(
                     min=0,
                     max=360,

@@ -5,6 +5,11 @@
       "array": {
         "data": {
           "modules_power": "Total Watt peak power of your solar modules"
+        },
+        "data_description": {
+          "declination": "0 = horizontal, 90 = vertical. Ignored for tilt-axis and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel tilt.",
+          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West. Ignored for azimuth and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel heading.",
+          "tracking": "Select the axes that follow the sun. Dual-axis tracking ignores both angle fields; fixed panels use both. Omitted angles keep their displayed defaults."
         }
       }
     }
@@ -43,6 +48,17 @@
       },
       "power_production_now": {
         "name": "Estimated power production - now"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "array": {
+        "data_description": {
+          "declination": "0 = horizontal, 90 = vertical. Ignored for tilt-axis and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel tilt.",
+          "azimuth": "0 = North, 90 = East, 180 = South, 270 = West. Ignored for azimuth and dual-axis trackers; you can leave the default value. Otherwise enter the actual panel heading.",
+          "tracking": "Select the axes that follow the sun. Dual-axis tracking ignores both angle fields; fixed panels use both. Omitted angles keep their displayed defaults."
+        }
       }
     }
   }
