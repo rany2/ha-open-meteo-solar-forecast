@@ -80,6 +80,99 @@ Partial shading controls shadow estimation:
 
 For more information, see the [open-meteo-solar-forecast repository](https://github.com/rany2/open-meteo-solar-forecast).
 
+## ApexCharts dashboard
+
+Install [ApexCharts Card](https://github.com/RomRider/apexcharts-card#installation)
+and add a **Manual** card to your dashboard. The example below plots today's
+and tomorrow's forecast power in watts, with a red marker for the current time.
+
+Replace these example entity IDs with your integration's entities. Find them
+under **Settings → Devices & services → Open-Meteo Solar Forecast → Entities**;
+the IDs depend on the name you chose during setup.
+
+| Example entity ID | Entity to use |
+| --- | --- |
+| `sensor.solar_energy_production_today` | Estimated energy production - today |
+| `sensor.solar_energy_production_tomorrow` | Estimated energy production - tomorrow |
+
+These energy sensors expose a `watts` attribute containing forecast power.
+The chart reads that attribute, not the sensor's energy state. Use `watts` for
+a power chart; `wh_period` and `wh_period_15m` contain energy in Wh.
+
+```yaml
+type: custom:apexcharts-card
+header:
+  show: true
+  title: Solar power forecast
+graph_span: 2d
+span:
+  start: day
+update_interval: 1min
+now:
+  show: true
+  label: Now
+  color: red
+yaxis:
+  - min: 0
+    apex_config:
+      title:
+        text: Power (W)
+series:
+  - entity: sensor.solar_energy_production_today
+    name: Forecast today
+    type: line
+    unit: W
+    extend_to: false
+    show:
+      legend_value: false
+    data_generator: |
+      return Object.entries(entity.attributes.watts || {})
+        .map(([timestamp, watts]) => [Date.parse(timestamp), watts])
+        .filter(([time, watts]) => Number.isFinite(time) && Number.isFinite(watts))
+        .sort((a, b) => a[0] - b[0]);
+  - entity: sensor.solar_energy_production_tomorrow
+    name: Forecast tomorrow
+    type: line
+    unit: W
+    extend_to: false
+    show:
+      legend_value: false
+    data_generator: |
+      return Object.entries(entity.attributes.watts || {})
+        .map(([timestamp, watts]) => [Date.parse(timestamp), watts])
+        .filter(([time, watts]) => Number.isFinite(time) && Number.isFinite(watts))
+        .sort((a, b) => a[0] - b[0]);
+```
+
+To compare the forecast with measured production, append this item to `series`
+and replace `sensor.inverter_power` with your inverter's **current PV power**
+sensor in **W**. That entity comes from your inverter integration; Open-Meteo
+does not provide measured production. It needs recorded history to draw the
+past curve. If its unit is kW, add `transform: "return x * 1000;"` to this item.
+
+```yaml
+  - entity: sensor.inverter_power
+    name: Measured PV power
+    type: area
+    unit: W
+    color: orange
+    extend_to: now
+    group_by:
+      duration: 5min
+      func: avg
+      fill: 'null'
+```
+
+A sensor named “PV Today” in other examples is the inverter's **energy produced
+today** (Wh or kWh), not its current power. It is optional and should be displayed
+separately from the power curves, for example in a Tile card. Neither
+`sensor.pv_power` nor `sensor.solar_goodwe` from the original community example
+is created by this integration.
+
+Based on [elRadix's community example](https://community.home-assistant.io/t/open-meteo-solar-forecast/733073/133),
+with the current-time marker suggested by
+[andreas-bulling](https://community.home-assistant.io/t/open-meteo-solar-forecast/733073/136).
+
 ## Credits
 
 The [forecast_solar component code](https://github.com/home-assistant/core/tree/dev/homeassistant/components/forecast_solar) was used as a base for this integration. Thanks for such a clean starting point!
