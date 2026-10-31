@@ -61,6 +61,7 @@ class WizardTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_options_next_preserves_and_edits_existing_arrays(self):
         entry = SimpleNamespace(
+            update_listeners=[object()],
             data={"latitude": 50.0, "longitude": 10.0},
             options={
                 "base_url": "https://api.open-meteo.com",

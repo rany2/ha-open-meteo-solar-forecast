@@ -412,19 +412,24 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                 return await self.async_step_array()
 
             per_array = _collapse_arrays(self._arrays)
-            return self.async_create_entry(
-                title="",
-                data={
-                    CONF_API_KEY: self._common.get(CONF_API_KEY),
-                    CONF_BASE_URL: self._common[CONF_BASE_URL],
-                    CONF_MODEL: self._common[CONF_MODEL],
-                    CONF_INVERTER_POWER: self._common[CONF_INVERTER_POWER],
-                    CONF_MAX_SNOWCOVER_DEPTH_CM: self._common[
-                        CONF_MAX_SNOWCOVER_DEPTH_CM
-                    ],
-                    **{key: per_array[key] for key in PER_ARRAY_KEYS},
-                },
-            )
+            options = {
+                CONF_API_KEY: self._common.get(CONF_API_KEY),
+                CONF_BASE_URL: self._common[CONF_BASE_URL],
+                CONF_MODEL: self._common[CONF_MODEL],
+                CONF_INVERTER_POWER: self._common[CONF_INVERTER_POWER],
+                CONF_MAX_SNOWCOVER_DEPTH_CM: self._common[
+                    CONF_MAX_SNOWCOVER_DEPTH_CM
+                ],
+                **{key: per_array[key] for key in PER_ARRAY_KEYS},
+            }
+            entry = self.config_entry
+            # Failed setup leaves no listener to reload corrected options.
+            if (
+                not entry.update_listeners
+                and self.hass.config_entries.async_update_entry(entry, options=options)
+            ):
+                self.hass.config_entries.async_schedule_reload(entry.entry_id)
+            return self.async_create_entry(title="", data=options)
 
         index = len(self._arrays)
         if index < len(self._stored_arrays):
