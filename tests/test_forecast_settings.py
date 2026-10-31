@@ -69,6 +69,8 @@ class ForecastSettingsTests(unittest.IsolatedAsyncioTestCase):
         result = await flow.async_step_array(
             array["data_schema"]({"modules_power": 1000})
         )
+        if result.get("step_id") == "orientation":
+            result = await flow.async_step_orientation(result["data_schema"]({}))
         self.assertEqual(result["options"]["update_interval"], 120)
         self.assertEqual(result["options"]["forecast_days"], 7)
 
@@ -88,6 +90,8 @@ class ForecastSettingsTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(common["forecast_days"], 5)
             array = await flow.async_step_init(common)
             result = await flow.async_step_array(array["data_schema"]({}))
+            if result.get("step_id") == "orientation":
+                result = await flow.async_step_orientation(result["data_schema"]({}))
         self.assertEqual(result["data"]["update_interval"], 180)
         self.assertEqual(result["data"]["forecast_days"], 5)
 
@@ -100,6 +104,8 @@ class ForecastSettingsTests(unittest.IsolatedAsyncioTestCase):
             form = await flow.async_step_init()
             array = await flow.async_step_init(form["data_schema"]({}))
             result = await flow.async_step_array(array["data_schema"]({}))
+            if result.get("step_id") == "orientation":
+                result = await flow.async_step_orientation(result["data_schema"]({}))
         self.assertNotIn("update_interval", result["data"])
         self.assertNotIn("forecast_days", result["data"])
 
