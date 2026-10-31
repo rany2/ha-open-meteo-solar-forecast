@@ -1,3 +1,34 @@
+update_array_azimuth:
+  name: Update array azimuth
+  description: Queue an array heading change. Rapid calls are combined, and entry reloads are limited to once per 30 minutes or the longer configured update interval.
+  fields:
+    config_entry_id:
+      name: Integration entry
+      required: true
+      selector:
+        config_entry:
+          integration: open_meteo_solar_forecast
+    array_number:
+      name: Array number
+      description: Position in the configuration wizard, starting at 1. Required for entries with multiple arrays.
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
+    azimuth:
+      name: Azimuth
+      description: Compass heading. North is 0, east is 90, south is 180 and west is 270 degrees.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 360
+          step: any
+          mode: box
+          unit_of_measurement: "°"
+
 update_array_location:
   fields:
     location_override:

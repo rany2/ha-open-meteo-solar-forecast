@@ -115,5 +115,25 @@
         "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren."
       }
     }
+  },
+  "services": {
+    "update_array_azimuth": {
+      "name": "Azimut einer PV-Fläche aktualisieren",
+      "description": "Richtungsänderungen vormerken und bündeln. Höchstens ein Neuladen pro 30 Minuten oder nach dem längeren eingestellten Aktualisierungsintervall.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integrationseintrag",
+          "description": "Der geladene Open-Meteo-Solar-Forecast-Eintrag, der aktualisiert werden soll."
+        },
+        "array_number": {
+          "name": "Nummer der PV-Fläche",
+          "description": "Position im Einrichtungsassistenten, beginnend mit 1. Bei mehreren PV-Flächen erforderlich."
+        },
+        "azimuth": {
+          "name": "Azimut",
+          "description": "Kompassrichtung: 0 = Norden, 90 = Osten, 180 = Süden, 270 = Westen."
+        }
+      }
+    }
   }
 }

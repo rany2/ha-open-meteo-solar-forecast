@@ -36,6 +36,46 @@ Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`)
 
 Azimuth ranges from 0° to 360°: North (0°), East (90°), South (180°), West (270°). For negative values, add 360° (e.g., -90° becomes 270°).
 
+### Automated azimuth updates
+
+Use the `open_meteo_solar_forecast.update_array_azimuth` action to follow a
+changing panel heading, for example on a boat. Select the integration entry and,
+for multiple arrays, its array number in wizard order (starting at 1). Angles use
+the compass convention above. The action supports fixed panels and tilt-axis
+trackers; azimuth and dual-axis trackers already ignore the configured azimuth.
+
+The first change is applied after a five-second batching window. Later changes
+are combined and applied at most once per 30 minutes per entry, or the longer
+configured update interval. The latest angle for each array wins, and changes
+to multiple arrays share one reload. Unchanged angles cause no reload.
+Normal scheduled forecast updates continue separately.
+
+In the action editor, choose the integration entry to obtain its
+`config_entry_id`. Replace that ID and the example heading sensor below with
+your own values. The sensor must report the panel's compass heading in degrees;
+include any fixed offset between the compass and the panel direction.
+
+```yaml
+alias: Update solar panel heading
+triggers:
+  - trigger: state
+    entity_id: sensor.panel_compass_heading
+conditions:
+  - condition: template
+    value_template: "{{ is_number(states('sensor.panel_compass_heading')) }}"
+actions:
+  - action: open_meteo_solar_forecast.update_array_azimuth
+    data:
+      config_entry_id: REPLACE_WITH_CONFIG_ENTRY_ID
+      array_number: 1
+      azimuth: "{{ states('sensor.panel_compass_heading') | float }}"
+mode: restart
+```
+
+The action requires an administrator or automation context. Applied angles are
+saved in the integration options. Pending changes are discarded when those
+settings are edited manually or Home Assistant restarts.
+
 ### Solar Tracking
 
 The `tracking` option models panels that follow the sun instead of being fixed:
