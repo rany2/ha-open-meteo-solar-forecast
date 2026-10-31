@@ -129,7 +129,24 @@ class ForecastHistoryTests(unittest.IsolatedAsyncioTestCase):
                 self.now += timedelta(minutes=30)
                 updated = await self.coordinator._async_update_data()
                 self.assertEqual(self.requests, [92, 1])
-                self.assertEqual(updated.watts, initial.watts)
+                # The library may omit instantaneous power at the first raw
+                # timestamp because it also needs a preceding temperature.
+                # Check the interior and older history independently of that edge.
+                edge = self.now.replace(
+                    hour=0, minute=0, second=0, microsecond=0
+                ) - timedelta(days=1)
+                self.assertEqual(
+                    {
+                        time: power
+                        for time, power in updated.watts.items()
+                        if time != edge
+                    },
+                    {
+                        time: power
+                        for time, power in initial.watts.items()
+                        if time != edge
+                    },
+                )
                 self.assertEqual(updated.wh_period, initial.wh_period)
                 self.assertEqual(updated.wh_days, initial.wh_days)
                 self.assertEqual(updated.wh_period_15m, initial.wh_period_15m)
