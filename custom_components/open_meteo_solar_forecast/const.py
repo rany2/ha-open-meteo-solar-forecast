@@ -24,6 +24,10 @@ CONF_PARTIAL_SHADING = "partial_shading"
 CONF_HORIZON_FILEPATH = "horizon_filepath"
 CONF_MAX_SNOWCOVER_DEPTH_CM = "max_snowcover_depth_cm"
 CONF_MODEL = "model"
+CONF_UPDATE_INTERVAL = "update_interval"
+CONF_FORECAST_DAYS = "forecast_days"
+DEFAULT_UPDATE_INTERVAL = 30
+DEFAULT_FORECAST_DAYS = 16
 
 ATTR_WATTS = "watts"
 ATTR_WH_PERIOD = "wh_period"

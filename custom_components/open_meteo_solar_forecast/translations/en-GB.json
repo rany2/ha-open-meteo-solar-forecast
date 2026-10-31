@@ -1,7 +1,16 @@
 {
   "config": {
     "step": {
-      "user": {},
+      "user": {
+        "data": {
+          "update_interval": "Update interval",
+          "forecast_days": "Forecast days"
+        },
+        "data_description": {
+          "update_interval": "Minutes between API requests (30–1440). Sensor values still update locally every minute.",
+          "forecast_days": "Calendar days to request, including today (2–16). Sensors beyond the available forecast are unavailable."
+        }
+      },
       "array": {
         "data": {
           "modules_power": "Total Watt peak power of your solar modules"
@@ -43,6 +52,20 @@
       },
       "power_production_now": {
         "name": "Estimated power production - now"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "update_interval": "Update interval",
+          "forecast_days": "Forecast days"
+        },
+        "data_description": {
+          "update_interval": "Minutes between API requests (30–1440). Sensor values still update locally every minute.",
+          "forecast_days": "Calendar days to request, including today (2–16). Sensors beyond the available forecast are unavailable."
+        }
       }
     }
   }

@@ -35,6 +35,10 @@ from .const import (
     CONF_MAX_SNOWCOVER_DEPTH_CM,
     CONF_MODULES_POWER,
     CONF_TRACKING,
+    CONF_UPDATE_INTERVAL,
+    CONF_FORECAST_DAYS,
+    DEFAULT_UPDATE_INTERVAL,
+    DEFAULT_FORECAST_DAYS,
     DOMAIN,
     TRACKING_OPTIONS,
 )
@@ -68,6 +72,50 @@ PER_ARRAY_KEYS = (
     CONF_PARTIAL_SHADING,
     CONF_HORIZON_FILEPATH,
 )
+
+
+def _forecast_settings_schema(options: dict[str, Any]) -> dict[vol.Marker, Any]:
+    """Allow fewer requests while keeping today and tomorrow available."""
+    return {
+        vol.Required(
+            CONF_UPDATE_INTERVAL,
+            default=options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL),
+        ): vol.All(
+            NumberSelector(
+                NumberSelectorConfig(
+                    min=30, max=1440, step=1, mode=NumberSelectorMode.BOX,
+                    unit_of_measurement="min",
+                )
+            ),
+            vol.Coerce(int),
+        ),
+        vol.Required(
+            CONF_FORECAST_DAYS,
+            default=options.get(CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS),
+        ): vol.All(
+            NumberSelector(
+                NumberSelectorConfig(
+                    min=2, max=16, step=1, mode=NumberSelectorMode.BOX,
+                    unit_of_measurement="d",
+                )
+            ),
+            vol.Coerce(int),
+        ),
+    }
+
+
+def _forecast_settings_options(
+    common: dict[str, Any], stored: dict[str, Any]
+) -> dict[str, Any]:
+    """Keep implicit defaults unchanged when editing an older entry."""
+    return {
+        key: common.get(key, default)
+        for key, default in (
+            (CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL),
+            (CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS),
+        )
+        if key in stored or common.get(key, default) != default
+    }
 
 
 def _is_sequence(value: Any) -> bool:
@@ -269,6 +317,7 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                         CONF_BASE_URL, default="https://api.open-meteo.com"
                     ): str,
                     vol.Optional(CONF_MODEL, default="best_match"): str,
+                    **_forecast_settings_schema({}),
                     vol.Required(CONF_INVERTER_POWER, default=0): vol.All(
                         NumberSelector(
                             NumberSelectorConfig(
@@ -313,6 +362,12 @@ class OpenMeteoSolarForecastFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_API_KEY: self._common[CONF_API_KEY],
                     CONF_BASE_URL: self._common[CONF_BASE_URL],
                     CONF_MODEL: self._common[CONF_MODEL],
+                    CONF_UPDATE_INTERVAL: self._common.get(
+                        CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL
+                    ),
+                    CONF_FORECAST_DAYS: self._common.get(
+                        CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS
+                    ),
                     CONF_INVERTER_POWER: self._common[CONF_INVERTER_POWER],
                     CONF_MAX_SNOWCOVER_DEPTH_CM: self._common[
                         CONF_MAX_SNOWCOVER_DEPTH_CM
@@ -358,6 +413,7 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
             last_step=False,
             data_schema=vol.Schema(
                 {
+                    **_forecast_settings_schema(options),
                     vol.Optional(
                         CONF_API_KEY,
                         description={
@@ -418,6 +474,7 @@ class OpenMeteoSolarForecastOptionFlowHandler(OptionsFlow):
                     CONF_API_KEY: self._common.get(CONF_API_KEY),
                     CONF_BASE_URL: self._common[CONF_BASE_URL],
                     CONF_MODEL: self._common[CONF_MODEL],
+                    **_forecast_settings_options(self._common, self.config_entry.options),
                     CONF_INVERTER_POWER: self._common[CONF_INVERTER_POWER],
                     CONF_MAX_SNOWCOVER_DEPTH_CM: self._common[
                         CONF_MAX_SNOWCOVER_DEPTH_CM

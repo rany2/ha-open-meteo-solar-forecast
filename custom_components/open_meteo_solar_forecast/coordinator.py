@@ -32,6 +32,10 @@ from .const import (
     CONF_MODEL,
     CONF_MODULES_POWER,
     CONF_TRACKING,
+    CONF_UPDATE_INTERVAL,
+    CONF_FORECAST_DAYS,
+    DEFAULT_UPDATE_INTERVAL,
+    DEFAULT_FORECAST_DAYS,
     DOMAIN,
     LOGGER,
 )
@@ -39,6 +43,7 @@ from .const import (
 import numpy
 
 STORAGE_VERSION = 2
+HISTORY_DAYS = 92
 
 
 class RetainedForecastStore(Store[dict[str, Any]]):
@@ -59,6 +64,16 @@ def storage_key(entry_id: str) -> str:
     return f"{DOMAIN}.{entry_id}"
 
 
+def forecast_covers_time(estimate: Estimate, at: datetime | None = None) -> bool:
+    """Check whether a quarter-hour forecast interval covers the requested time."""
+    if at is None:
+        at = estimate.now()
+    interval_start = at.replace(
+        minute=at.minute - at.minute % 15, second=0, microsecond=0
+    )
+    return interval_start in estimate.watts
+
+
 def _config_fingerprint(entry: ConfigEntry) -> str:
     """Fingerprint the settings that affect forecast values.
 
@@ -66,6 +81,7 @@ def _config_fingerprint(entry: ConfigEntry) -> str:
     azimuth or panel power) must not be served after an options reload.
     """
     values = {**entry.data, **entry.options}
+    values.pop(CONF_UPDATE_INTERVAL, None)
     return json.dumps(values, sort_keys=True, default=str)
 
 
@@ -127,6 +143,49 @@ def _resolve_array_count(*values: Any) -> int:
 def _entry_value(entry: ConfigEntry, key: str) -> Any:
     """Get config value from options with fallback to entry data."""
     return entry.options.get(key, entry.data.get(key))
+
+
+def _history_days_to_fetch(
+    retained: Estimate | None, last_update: datetime | None, now: datetime
+) -> int:
+    """Refresh yesterday and all days since the last successful request."""
+    if retained is None or last_update is None or last_update > now:
+        return HISTORY_DAYS
+    today = now.astimezone(retained.api_timezone).date()
+    last_day = last_update.astimezone(retained.api_timezone).date()
+    return min(HISTORY_DAYS, max(1, (today - last_day).days + 1))
+
+
+def _merge_forecast_history(
+    retained: Estimate, fresh: Estimate, past_days: int, requested_at: datetime
+) -> Estimate:
+    """Keep older history while replacing the entire requested time range."""
+    today = requested_at.astimezone(fresh.api_timezone).date()
+    oldest_day = today - timedelta(days=HISTORY_DAYS)
+    first_refreshed_day = today - timedelta(days=past_days)
+
+    def merge_timestamps(previous, current):
+        history = {
+            timestamp: value
+            for timestamp, value in previous.items()
+            if oldest_day
+            <= timestamp.astimezone(fresh.api_timezone).date()
+            < first_refreshed_day
+        }
+        return dict(sorted((history | current).items()))
+
+    history_days = {
+        day: value
+        for day, value in retained.wh_days.items()
+        if oldest_day <= day < first_refreshed_day
+    }
+    return Estimate(
+        watts=merge_timestamps(retained.watts, fresh.watts),
+        wh_period=merge_timestamps(retained.wh_period, fresh.wh_period),
+        wh_period_15m=merge_timestamps(retained.wh_period_15m, fresh.wh_period_15m),
+        wh_days=dict(sorted((history_days | fresh.wh_days).items())),
+        api_timezone=fresh.api_timezone,
+    )
 
 def checkHorizonFile(horizon_filepath):
     horizon_data_valid = True
@@ -293,9 +352,12 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             horizon_map=horizon_map,
             max_snowcover_depth_cm=entry.options.get(CONF_MAX_SNOWCOVER_DEPTH_CM, 0.0),
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
+            forecast_days=entry.options.get(CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS),
         )
 
-        update_interval = timedelta(minutes=30)
+        update_interval = timedelta(
+            minutes=entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+        )
 
         super().__init__(hass, LOGGER, name=DOMAIN, update_interval=update_interval)
 
@@ -346,15 +408,18 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
 
     async def _async_update_data(self) -> Estimate:
         """Fetch Open-Meteo Solar Forecast estimates."""
+        requested_at = dt_util.utcnow()
+        retained = self.data
         # On the first refresh after a restart or reload, reuse the stored
         # forecast if it is younger than the update interval instead of
         # hitting the API again.
-        if self.data is None:
+        if retained is None:
             retained = await self._async_load_retained_estimate()
             if (
                 retained is not None
                 and self._last_successful_update is not None
-                and dt_util.utcnow() - self._last_successful_update
+                and timedelta(0)
+                <= requested_at - self._last_successful_update
                 < self.update_interval
             ):
                 LOGGER.debug(
@@ -364,8 +429,23 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
                 return retained
 
         try:
+            self.forecast.past_days = _history_days_to_fetch(
+                retained, self._last_successful_update, requested_at
+            )
             async with asyncio.timeout(API_TIMEOUT_SECONDS):
                 estimate = await self.forecast.estimate()
+                if (
+                    retained is not None
+                    and retained.api_timezone != estimate.api_timezone
+                    and self.forecast.past_days < HISTORY_DAYS
+                ):
+                    # Rebuild history when the API changes its UTC offset.
+                    self.forecast.past_days = HISTORY_DAYS
+                    estimate = await self.forecast.estimate()
+            if retained is not None:
+                estimate = _merge_forecast_history(
+                    retained, estimate, self.forecast.past_days, requested_at
+                )
         except Exception as err:
             retained = self.data
             if retained is None:
