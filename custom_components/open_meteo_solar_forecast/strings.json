@@ -9,11 +9,15 @@
           "name": "[%key:common::config_flow::data::name%]",
           "model": "Weather model",
           "inverter_power": "Inverter capacity",
-          "max_snowcover_depth_cm": "Maximum snow cover depth"
+          "max_snowcover_depth_cm": "Maximum snow cover depth",
+          "update_interval": "Update interval",
+          "forecast_days": "Forecast days"
         },
         "data_description": {
           "inverter_power": "The AC capacity of a single inverter shared by all arrays in Watt (0 = no limit). Ignored if any array has its own inverter capacity set on the array pages.",
-          "max_snowcover_depth_cm": "If greater than 0, the snow cover depth which results in zero module power."
+          "max_snowcover_depth_cm": "If greater than 0, the snow cover depth which results in zero module power.",
+          "update_interval": "Minutes between API requests (30–1440). Sensor values still update locally every minute.",
+          "forecast_days": "Calendar days to request, including today (2–16). Sensors beyond the available forecast are unavailable."
         }
       },
       "array": {
@@ -61,11 +65,15 @@
           "base_url": "[%key:component::open_meteo_solar_forecast::config::step::user::data::base_url%]",
           "model": "[%key:component::open_meteo_solar_forecast::config::step::user::data::model%]",
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data::inverter_power%]",
-          "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_snowcover_depth_cm%]"
+          "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data::max_snowcover_depth_cm%]",
+          "update_interval": "Update interval",
+          "forecast_days": "Forecast days"
         },
         "data_description": {
           "inverter_power": "[%key:component::open_meteo_solar_forecast::config::step::user::data_description::inverter_power%]",
-          "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data_description::max_snowcover_depth_cm%]"
+          "max_snowcover_depth_cm": "[%key:component::open_meteo_solar_forecast::config::step::user::data_description::max_snowcover_depth_cm%]",
+          "update_interval": "Minutes between API requests (30–1440). Sensor values still update locally every minute.",
+          "forecast_days": "Calendar days to request, including today (2–16). Sensors beyond the available forecast are unavailable."
         }
       },
       "array": {

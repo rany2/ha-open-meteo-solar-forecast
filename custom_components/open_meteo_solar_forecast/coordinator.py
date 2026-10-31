@@ -32,6 +32,10 @@ from .const import (
     CONF_MODEL,
     CONF_MODULES_POWER,
     CONF_TRACKING,
+    CONF_UPDATE_INTERVAL,
+    CONF_FORECAST_DAYS,
+    DEFAULT_UPDATE_INTERVAL,
+    DEFAULT_FORECAST_DAYS,
     DOMAIN,
     LOGGER,
 )
@@ -60,6 +64,17 @@ def storage_key(entry_id: str) -> str:
     return f"{DOMAIN}.{entry_id}"
 
 
+def forecast_covers_time(estimate: Estimate, at: datetime | None = None) -> bool:
+    """Check whether a quarter-hour forecast interval covers the requested time."""
+    if at is None:
+        at = estimate.now()
+    interval_start = at.replace(
+        minute=at.minute - at.minute % 15, second=0, microsecond=0
+    )
+    return interval_start in estimate.watts
+
+
+
 def _config_fingerprint(entry: ConfigEntry) -> str:
     """Fingerprint the settings that affect forecast values.
 
@@ -67,6 +82,7 @@ def _config_fingerprint(entry: ConfigEntry) -> str:
     azimuth or panel power) must not be served after an options reload.
     """
     values = {**entry.data, **entry.options}
+    values.pop(CONF_UPDATE_INTERVAL, None)
     return json.dumps(values, sort_keys=True, default=str)
 
 
@@ -337,9 +353,12 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             horizon_map=horizon_map,
             max_snowcover_depth_cm=entry.options.get(CONF_MAX_SNOWCOVER_DEPTH_CM, 0.0),
             weather_model=entry.options.get(CONF_MODEL, "best_match"),
+            forecast_days=entry.options.get(CONF_FORECAST_DAYS, DEFAULT_FORECAST_DAYS),
         )
 
-        update_interval = timedelta(minutes=30)
+        update_interval = timedelta(
+            minutes=entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
+        )
 
         super().__init__(hass, LOGGER, name=DOMAIN, update_interval=update_interval)
 

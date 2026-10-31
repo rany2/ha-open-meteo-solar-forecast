@@ -29,7 +29,19 @@ from homeassistant.util import slugify
 from open_meteo_solar_forecast.models import Estimate
 
 from .const import ATTR_WATTS, ATTR_WH_PERIOD, ATTR_WH_PERIOD_15M, DOMAIN
-from .coordinator import OpenMeteoSolarForecastDataUpdateCoordinator
+from .coordinator import (
+    OpenMeteoSolarForecastDataUpdateCoordinator,
+    forecast_covers_time,
+)
+
+POWER_FORECAST_OFFSETS = {
+    "power_production_next_15minutes": timedelta(minutes=15),
+    "power_production_next_30minutes": timedelta(minutes=30),
+    "power_production_next_hour": timedelta(hours=1),
+    "power_production_next_12hours": timedelta(hours=12),
+    "power_production_next_24hours": timedelta(hours=24),
+}
+
 
 
 @dataclass(frozen=True)
@@ -294,6 +306,42 @@ class OpenMeteoSolarForecastSensorEntity(
                 second=0,
             )
         )
+
+    @property
+    def available(self) -> bool:
+        """Require forecast data for the period represented by this sensor."""
+        estimate = self.coordinator.data
+        if not super().available or estimate is None:
+            return False
+        now = estimate.now()
+        if not forecast_covers_time(estimate, now):
+            return False
+
+        key = self.entity_description.key
+        if key in ("energy_production_today", "power_highest_peak_time_today"):
+            day = now.date()
+        elif key in ("energy_production_tomorrow", "power_highest_peak_time_tomorrow"):
+            day = (now + timedelta(days=1)).date()
+        elif key.startswith("energy_production_d"):
+            offset = int(key.removeprefix("energy_production_d"))
+            day = (now + timedelta(days=offset)).date()
+        else:
+            day = None
+
+        if day is not None:
+            if key.startswith("power_highest_peak_time"):
+                return any(timestamp.date() == day for timestamp in estimate.watts)
+            return day in estimate.wh_days
+
+        if key in POWER_FORECAST_OFFSETS:
+            return forecast_covers_time(estimate, now + POWER_FORECAST_OFFSETS[key])
+        if key in ("energy_current_hour", "energy_next_hour"):
+            hour = now.replace(minute=0, second=0, microsecond=0)
+            if key == "energy_next_hour":
+                hour += timedelta(hours=1)
+            return hour in estimate.wh_period
+        return True
+
 
     @property
     def native_value(self) -> datetime | StateType:

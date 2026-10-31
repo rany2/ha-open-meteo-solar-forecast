@@ -82,9 +82,13 @@ class ForecastHistoryTests(unittest.IsolatedAsyncioTestCase):
     async def test_first_fetch_and_regular_update_use_actual_library_parameters(self):
         async def weather_request(path, *, params):
             self.requests.append(int(params["past_days"]))
-            self.assertEqual(params["forecast_days"], "16")
-            start = self.now.replace(hour=0) - timedelta(days=int(params["past_days"]))
-            count = (int(params["past_days"]) + 16) * 96
+            self.assertEqual(
+                params["forecast_days"], str(self.coordinator.forecast.forecast_days)
+            )
+            start = self.now.replace(
+                hour=0, minute=0, second=0, microsecond=0
+            ) - timedelta(days=int(params["past_days"]))
+            count = (int(params["past_days"]) + int(params["forecast_days"])) * 96
             times = [
                 int((start + timedelta(minutes=15 * i)).timestamp())
                 for i in range(count)
@@ -112,16 +116,46 @@ class ForecastHistoryTests(unittest.IsolatedAsyncioTestCase):
                 },
             }
 
-        self.coordinator.forecast._request = AsyncMock(side_effect=weather_request)
-        initial = await self.coordinator._async_update_data()
-        self.coordinator.data = initial
-        self.now += timedelta(minutes=30)
-        updated = await self.coordinator._async_update_data()
-        self.assertEqual(self.requests, [92, 1])
-        self.assertEqual(updated.watts, initial.watts)
-        self.assertEqual(updated.wh_period, initial.wh_period)
-        self.assertEqual(updated.wh_days, initial.wh_days)
-        self.assertEqual(updated.wh_period_15m, initial.wh_period_15m)
+        for forecast_days in (16, 7, 2):
+            with self.subTest(forecast_days=forecast_days):
+                self.entry.options["forecast_days"] = forecast_days
+                self.coordinator = self.make_coordinator()
+                self.requests.clear()
+                self.coordinator.forecast._request = AsyncMock(
+                    side_effect=weather_request
+                )
+                initial = await self.coordinator._async_update_data()
+                self.coordinator.data = initial
+                self.now += timedelta(minutes=30)
+                updated = await self.coordinator._async_update_data()
+                self.assertEqual(self.requests, [92, 1])
+                self.assertEqual(updated.watts, initial.watts)
+                self.assertEqual(updated.wh_period, initial.wh_period)
+                self.assertEqual(updated.wh_days, initial.wh_days)
+                self.assertEqual(updated.wh_period_15m, initial.wh_period_15m)
+
+    async def test_longer_refresh_interval_reuses_existing_history(self):
+        self.prepare_refresh(last_update=self.now - timedelta(minutes=45))
+        stored = self.cached(self.coordinator)
+        self.entry.options["update_interval"] = 120
+        restarted = self.make_coordinator(stored)
+        restarted.forecast.estimate = AsyncMock()
+        restored = await restarted._async_update_data()
+        restarted.forecast.estimate.assert_not_awaited()
+        self.assertEqual(restored.wh_period_15m, self.coordinator.data.wh_period_15m)
+
+    async def test_shorter_horizon_discards_old_future_data(self):
+        self.prepare_refresh()
+        self.coordinator.data = self.estimate((-5, -1, 0, 1, 15))
+        stored = self.cached(self.coordinator)
+        self.entry.options["forecast_days"] = 2
+        restarted = self.make_coordinator(stored)
+        fresh = self.estimate((-5, -1, 0, 1), 200)
+        restarted.forecast.estimate = AsyncMock(return_value=fresh)
+        result = await restarted._async_update_data()
+        restarted.forecast.estimate.assert_awaited_once()
+        self.assertEqual(restarted.forecast.forecast_days, 2)
+        self.assertEqual(result.wh_days, fresh.wh_days)
 
     async def test_merge_prunes_history_and_replaces_missing_forecast_intervals(self):
         self.prepare_refresh()

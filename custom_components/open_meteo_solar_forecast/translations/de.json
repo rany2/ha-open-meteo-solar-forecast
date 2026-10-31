@@ -5,9 +5,15 @@
         "data": {
           "api_key": "API-Schlüssel",
           "name": "Name",
-          "max_snowcover_depth_cm": "Wenn > 0, die Schneehöhe (cm), bei welcher das Modul keine Leistung mehr liefert."
+          "max_snowcover_depth_cm": "Wenn > 0, die Schneehöhe (cm), bei welcher das Modul keine Leistung mehr liefert.",
+          "update_interval": "Aktualisierungsintervall",
+          "forecast_days": "Prognosetage"
         },
-        "description": "Allgemeine Einstellungen für alle PV-Anlagen. Klicke auf „Weiter“, um Standort, Ausrichtung, Leistung und weitere Einstellungen jeder Anlage zu bearbeiten."
+        "description": "Allgemeine Einstellungen für alle PV-Anlagen. Klicke auf „Weiter“, um Standort, Ausrichtung, Leistung und weitere Einstellungen jeder Anlage zu bearbeiten.",
+        "data_description": {
+          "update_interval": "Minuten zwischen API-Abfragen (30–1440). Sensorwerte werden weiterhin jede Minute lokal aktualisiert.",
+          "forecast_days": "Anzahl der Kalendertage einschließlich heute (2–16). Sensoren außerhalb der verfügbaren Prognose sind nicht verfügbar."
+        }
       },
       "array": {
         "data": {
@@ -95,9 +101,15 @@
       "init": {
         "data": {
           "api_key": "API-Schlüssel",
-          "max_snowcover_depth_cm": "Kritische Schneehöhe (cm)"
+          "max_snowcover_depth_cm": "Kritische Schneehöhe (cm)",
+          "update_interval": "Aktualisierungsintervall",
+          "forecast_days": "Prognosetage"
         },
-        "description": "Allgemeine Einstellungen für alle PV-Anlagen. Klicke auf „Weiter“, um Standort, Ausrichtung, Leistung und weitere Einstellungen jeder Anlage zu bearbeiten."
+        "description": "Allgemeine Einstellungen für alle PV-Anlagen. Klicke auf „Weiter“, um Standort, Ausrichtung, Leistung und weitere Einstellungen jeder Anlage zu bearbeiten.",
+        "data_description": {
+          "update_interval": "Minuten zwischen API-Abfragen (30–1440). Sensorwerte werden weiterhin jede Minute lokal aktualisiert.",
+          "forecast_days": "Anzahl der Kalendertage einschließlich heute (2–16). Sensoren außerhalb der verfügbaren Prognose sind nicht verfügbar."
+        }
       },
       "array": {
         "data": {

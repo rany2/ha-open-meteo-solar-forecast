@@ -2,7 +2,7 @@
 
 This custom component integrates the [open-meteo-solar-forecast](https://github.com/rany2/open-meteo-solar-forecast) with Home Assistant. It allows you to see what your solar panels may produce in the future.
 
-Forecasts update every 30 minutes. The first request loads 92 days of history and 16 days of forecast. Later requests refresh yesterday and the forecast, retaining older history locally. After a gap, the integration requests the days since the last successful update as well. History remains limited to 92 days and survives restarts. Changed settings or a changed API UTC offset cause a full history refresh.
+By default, forecasts update every 30 minutes with 16 days of forecast. The first request loads 92 days of history. Later requests refresh yesterday and the forecast, retaining older history locally. After a gap, the integration requests the days since the last successful update as well. History remains limited to 92 days and survives restarts. Changed forecast settings or a changed API UTC offset cause a full history refresh.
 
 ## Installation
 
@@ -25,6 +25,19 @@ Forecasts update every 30 minutes. The first request loads 92 days of history an
 ## Configuration
 
 To use this integration in your installation, head to "Settings" in the Home Assistant UI, then "Integrations". Click on the plus button and search for "Open-Meteo Solar Forecast" and follow the instructions.
+
+### Request frequency and forecast length
+
+The general settings in setup and the options wizard let you reduce API usage:
+
+- **Update interval:** 30–1440 minutes between forecast requests (default: 30).
+- **Forecast days:** 2–16 calendar days including today (default: 16).
+
+For example, choose 120 minutes and 7 days to refresh every two hours with a
+one-week forecast. Sensors still update locally every minute using the downloaded
+data. Sensors for times outside the available forecast become unavailable.
+Changing only the update interval keeps the retained history and reuses a stored
+forecast when it is still fresh under the new interval.
 
 ### Multiple PV Arrays
 
