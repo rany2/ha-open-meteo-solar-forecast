@@ -59,13 +59,16 @@ def storage_key(entry_id: str) -> str:
     return f"{DOMAIN}.{entry_id}"
 
 
-def _config_fingerprint(entry: ConfigEntry) -> str:
+def _config_fingerprint(
+    entry: ConfigEntry,
+    horizon_map: tuple[tuple[float, float], ...] | list[tuple[tuple[float, float], ...]],
+) -> str:
     """Fingerprint the settings that affect forecast values.
 
     A retained forecast computed with a different configuration (e.g. changed
     azimuth or panel power) must not be served after an options reload.
     """
-    values = {**entry.data, **entry.options}
+    values = {**entry.data, **entry.options, "horizon_map": horizon_map}
     return json.dumps(values, sort_keys=True, default=str)
 
 
@@ -206,7 +209,7 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         self._store: Store[dict[str, Any]] = RetainedForecastStore(
             hass, STORAGE_VERSION, storage_key(entry.entry_id)
         )
-        self._config_fingerprint = _config_fingerprint(entry)
+        self._config_fingerprint = _config_fingerprint(entry, horizon_map)
 
         array_count = _resolve_array_count(
             _entry_value(entry, CONF_LATITUDE),
