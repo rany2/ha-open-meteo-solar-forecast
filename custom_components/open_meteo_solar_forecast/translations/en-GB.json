@@ -45,5 +45,25 @@
         "name": "Estimated power production - now"
       }
     }
+  },
+  "services": {
+    "update_array_azimuth": {
+      "name": "Update array azimuth",
+      "description": "Queue heading changes and combine them into at most one entry reload per 30 minutes or the longer configured update interval.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Integration entry",
+          "description": "The loaded Open-Meteo Solar Forecast entry to update."
+        },
+        "array_number": {
+          "name": "Array number",
+          "description": "Position in wizard order, starting at 1. Required for entries with multiple arrays."
+        },
+        "azimuth": {
+          "name": "Azimuth",
+          "description": "Compass heading: 0 = north, 90 = east, 180 = south, 270 = west."
+        }
+      }
+    }
   }
 }

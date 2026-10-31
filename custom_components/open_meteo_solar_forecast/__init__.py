@@ -9,6 +9,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, Platform
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers.storage import Store
+from homeassistant.helpers.typing import ConfigType
 
 from .const import (
     CONF_AZIMUTH,
@@ -88,6 +89,14 @@ def _normalize_option(value: Any, array_count: int, default: Any) -> list[Any]:
         return normalized
 
     return [value] * array_count
+
+
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Register integration actions once, independently of entry reloads."""
+    from .azimuth import async_setup_azimuth_service
+
+    async_setup_azimuth_service(hass)
+    return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
