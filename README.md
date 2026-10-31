@@ -70,6 +70,8 @@ For `damping_evening`, the same effect occurs in reverse, with power decreasing 
 
 A horizon profile text file accounts for direct sunlight blockage from obstacles (buildings, trees, etc.). The file contains two tab-separated columns of floats: azimuth (0° = north, 180° = south) and elevation angle (0° = flat horizon, 90° = directly overhead). Use a minimum of two lines with azimuth values strictly increasing from 0° to 360°; intermediate values are interpolated linearly.
 
+Angles must be finite numbers. Elevations can range from -90° to 90°; negative values describe a horizon below the horizontal plane. Blank lines and comments beginning with `#` are allowed.
+
 **Note:** Store the file outside the custom_component directory to avoid overwriting during updates.
 
 Use horizon enables/disables shading and takes effect immediately. It can be combined with damping factors.

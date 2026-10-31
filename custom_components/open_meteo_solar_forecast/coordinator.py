@@ -6,6 +6,7 @@ import asyncio
 import json
 from collections.abc import Sequence
 from datetime import date, datetime, timedelta, timezone
+from math import isfinite
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -35,8 +36,6 @@ from .const import (
     DOMAIN,
     LOGGER,
 )
-
-import numpy
 
 STORAGE_VERSION = 2
 
@@ -129,57 +128,56 @@ def _entry_value(entry: ConfigEntry, key: str) -> Any:
     return entry.options.get(key, entry.data.get(key))
 
 def checkHorizonFile(horizon_filepath):
-    horizon_data_valid = True
-    message = ""
-    
+    """Read a tab-separated horizon profile and validate its angles."""
+    horizon = []
     try:
-        open(horizon_filepath)
+        with open(horizon_filepath, encoding="utf-8") as horizon_file:
+            for line_number, line in enumerate(horizon_file, start=1):
+                line = line.partition("#")[0].strip()
+                if not line:
+                    continue
+                columns = line.split("\t")
+                if len(columns) != 2:
+                    return None, (
+                        f"Invalid horizon file: Line {line_number} must contain "
+                        "exactly two tab-separated numbers."
+                    )
+                try:
+                    azimuth, elevation = (float(value) for value in columns)
+                except ValueError:
+                    return None, (
+                        f"Invalid horizon file: Line {line_number} must contain "
+                        "numbers with decimal points."
+                    )
+                if not (isfinite(azimuth) and isfinite(elevation)):
+                    return None, (
+                        f"Invalid horizon file: Line {line_number} contains "
+                        "a non-finite angle."
+                    )
+                if not 0 <= azimuth <= 360 or not -90 <= elevation <= 90:
+                    return None, (
+                        f"Invalid horizon file: Line {line_number} must have "
+                        "azimuth from 0 to 360 and elevation from -90 to 90 degrees."
+                    )
+                horizon.append((azimuth, elevation))
     except FileNotFoundError:
-        horizon_data_valid = False
-        message = "Invalid horizon file: Horizon file '" + horizon_filepath + "' not found! Specify path like e.g. '/config/www/horizon.txt'"
-    
-    if horizon_data_valid:
-        horizon_data = numpy.genfromtxt(horizon_filepath , delimiter="\t", dtype=float)
-        hm = ((0,90),(360,90))
-        
-        # ... check array shape (error)
-        sh = horizon_data.shape
-        if isinstance(sh, tuple) and len(sh) == 2:
-            if sh[0] < 2 or not sh[1] == 2:
-                horizon_data_valid = False
-                message = "Invalid horizon file: The array shape is " + str(sh) + ", which is invalid. It has to be at least two rows and exactly two columns (N>1 , 2). Please check (two columns, tab delimiter, decimal points)."
-            else:
-                hm = tuple([tuple(row) for row in horizon_data])
-        else:
-            horizon_data_valid = False
-            message = "Invalid horizon file: The array shape cannot be determined. It has to be at least two rows and exactly two columns (N>1 , 2). Please check (two columns, tab delimiter, decimal points)."
-        
-        # ... check for floats (error) - via valid sum of floats or NaN
-        if numpy.isnan(numpy.sum(hm)):
-            horizon_data_valid = False
-            message = "Invalid horizon file: The data seems to contain non-float values. Please check (two columns, tab delimiter, decimal points)."
-        
-        # ... check range 0...360° (warning only)
-        if horizon_data_valid:
-            hm_0 = int(hm[0][0])
-            hm_n = int(hm[-1][0])
-            if not hm_0 == 0 or not hm_n == 360:
-                horizon_data_valid = False
-                message = "Invalid horizon file: Azimuth values (" + str(hm_0) + "° to " + str(hm_n) + "°) do not contain 0° and/or 360°. I cannot judge whether the full range of applicable azimuths is covered by the horizon file. Please check..."
-            
-            # ... check ascending azimuths (warning only)
-            n = sh[0]
-            for i in range(1,n):
-                a1 = horizon_data[i-1][0]
-                a2 = horizon_data[i][0]
-                if not (a2 > a1):
-                    message = "Invalid horizon file: Azimuth values are not ascending around value of " + str(a1) + ". Please check..."
-                    horizon_data_valid = False
-    
-    if horizon_data_valid:
-        return hm, message
-    else:
-        return None, message  
+        return None, (
+            f"Invalid horizon file: Horizon file '{horizon_filepath}' not found! "
+            "Specify a path outside the integration directory, e.g. '/config/www/horizon.txt'."
+        )
+    except (OSError, UnicodeError) as err:
+        return None, (
+            f"Invalid horizon file: Cannot read '{horizon_filepath}' "
+            f"as UTF-8 text ({type(err).__name__})."
+        )
+
+    if len(horizon) < 2:
+        return None, "Invalid horizon file: At least two rows are required."
+    if horizon[0][0] != 0 or horizon[-1][0] != 360:
+        return None, "Invalid horizon file: Azimuth must start at 0 and end at 360 degrees."
+    if any(right[0] <= left[0] for left, right in zip(horizon, horizon[1:])):
+        return None, "Invalid horizon file: Azimuth values must be strictly increasing."
+    return tuple(horizon), ""
 
 class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate]):
     """The Solar Forecast Data Update Coordinator."""
