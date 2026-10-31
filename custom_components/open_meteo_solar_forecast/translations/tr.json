@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)",
-          "declination": "Sapma (0 = Yatay, 90 = Dikey)",
           "latitude": "Enlem",
           "longitude": "Boylam",
           "modules_power": "Solar modüllerinizin toplam en yüksek Watt gücü"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Sapma (0 = Yatay, 90 = Dikey)",
+          "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)",
           "damping_evening": "Sönümleme faktörü: akşam sonuçları ayarlar",
           "damping_morning": "Sönümleme faktörü: sabah sonuçları ayarlar",
-          "declination": "Sapma (0 = Yatay, 90 = Dikey)",
           "modules_power": "Solar modüllerinizin toplam en yüksek Watt gücü"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Sapma (0 = Yatay, 90 = Dikey)",
+          "azimuth": "Azimut (360 derece, 0 = Kuzey, 90 = Doğu, 180 = Güney, 270 = Batı)"
         }
       }
     }

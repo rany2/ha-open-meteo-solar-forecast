@@ -8,10 +8,14 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimute (360 graus, 0 = Norte, 90 = Este, 180 = Sul, 270 = Oeste)",
-          "declination": "Declive (0 = Horizontal, 90 = Vertical)",
           "latitude": "Latitude",
           "longitude": "Longitude"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declive (0 = Horizontal, 90 = Vertical)",
+          "azimuth": "Azimute (360 graus, 0 = Norte, 90 = Este, 180 = Sul, 270 = Oeste)"
         }
       }
     }
@@ -23,9 +27,12 @@
     "step": {
       "init": {},
       "array": {
+        "data": {}
+      },
+      "orientation": {
         "data": {
-          "azimuth": "Azimute (360 graus, 0 = Norte, 90 = Este, 180 = Sul, 270 = Oeste)",
-          "declination": "Declive (0 = Horizontal, 90 = Vertical)"
+          "declination": "Declive (0 = Horizontal, 90 = Vertical)",
+          "azimuth": "Azimute (360 graus, 0 = Norte, 90 = Este, 180 = Sul, 270 = Oeste)"
         }
       }
     }

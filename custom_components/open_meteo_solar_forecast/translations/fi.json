@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Atsimuutti (360 astetta, 0 = pohjoinen, 90 = itä, 180 = etelä, 270 = länsi)",
-          "declination": "Deklinaatio (0 = vaaka, 90 = pystysuuntainen)",
           "latitude": "Leveysaste",
           "longitude": "Pituusaste",
           "modules_power": "Aurinkopaneelien kokonaisteho watteina"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinaatio (0 = vaaka, 90 = pystysuuntainen)",
+          "azimuth": "Atsimuutti (360 astetta, 0 = pohjoinen, 90 = itä, 180 = etelä, 270 = länsi)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Atsimuutti (360 astetta, 0 = pohjoinen, 90 = itä, 180 = etelä, 270 = länsi)",
           "damping_evening": "Vaimennuskerroin: säätää tuloksia illalla",
           "damping_morning": "Vaimennuskerroin: säätää tuloksia aamulla",
-          "declination": "Deklinaatio (0 = vaaka, 90 = pystysuuntainen)",
           "modules_power": "Aurinkopaneelien kokonaisteho watteina"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinaatio (0 = vaaka, 90 = pystysuuntainen)",
+          "azimuth": "Atsimuutti (360 astetta, 0 = pohjoinen, 90 = itä, 180 = etelä, 270 = länsi)"
         }
       }
     }

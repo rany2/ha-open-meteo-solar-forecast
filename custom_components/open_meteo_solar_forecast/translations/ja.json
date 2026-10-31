@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "方位角(360度、0=北、90=東、180=南、270=西)",
-          "declination": "偏角(0＝水平、90＝垂直)",
           "latitude": "緯度",
           "longitude": "経度",
           "modules_power": "ソーラーモジュールの総ワットピーク電力"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "偏角(0＝水平、90＝垂直)",
+          "azimuth": "方位角(360度、0=北、90=東、180=南、270=西)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "方位角(360度、0=北、90=東、180=南、270=西)",
           "damping_evening": "ダンピングファクター：夕方の結果を調整する。",
           "damping_morning": "ダンピングファクター：朝の結果を調整する。",
-          "declination": "偏角(0＝水平、90＝垂直)",
           "modules_power": "ソーラーモジュールの総ワットピーク電力"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "偏角(0＝水平、90＝垂直)",
+          "azimuth": "方位角(360度、0=北、90=東、180=南、270=西)"
         }
       }
     }

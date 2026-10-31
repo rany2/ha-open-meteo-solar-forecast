@@ -5,6 +5,22 @@
       "array": {
         "data": {
           "modules_power": "Total Watt peak power of your solar modules"
+        },
+        "data_description": {
+          "tracking": "Select the axes that follow the sun. The next page asks only for fixed angles; dual-axis trackers skip angle entry entirely.",
+          "efficiency_factor": "Electrical DC efficiency (1 = no electrical loss). The library also applies a separate temperature correction."
+        }
+      },
+      "orientation": {
+        "data_description": {
+          "declination": "Actual panel tilt: 0° = horizontal, 90° = vertical.",
+          "azimuth": "Actual panel heading: 0° = north, 90° = east, 180° = south, 270° = west."
+        },
+        "title": "Fixed panel angles",
+        "description": "Fixed angles for array {array_number}. Axes that track the sun do not need an angle.",
+        "data": {
+          "declination": "Declination",
+          "azimuth": "Azimuth"
         }
       }
     }
@@ -43,6 +59,28 @@
       },
       "power_production_now": {
         "name": "Estimated power production - now"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "array": {
+        "data_description": {
+          "tracking": "Select the axes that follow the sun. The next page asks only for fixed angles; dual-axis trackers skip angle entry entirely.",
+          "efficiency_factor": "Electrical DC efficiency (1 = no electrical loss). The library also applies a separate temperature correction."
+        }
+      },
+      "orientation": {
+        "data_description": {
+          "declination": "Actual panel tilt: 0° = horizontal, 90° = vertical.",
+          "azimuth": "Actual panel heading: 0° = north, 90° = east, 180° = south, 270° = west."
+        },
+        "title": "Fixed panel angles",
+        "description": "Fixed angles for array {array_number}. Axes that track the sun do not need an angle.",
+        "data": {
+          "declination": "Declination",
+          "azimuth": "Azimuth"
+        }
       }
     }
   }

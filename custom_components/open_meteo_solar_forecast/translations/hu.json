@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)",
-          "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
           "latitude": "Szélesség",
           "longitude": "Hosszúság",
           "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
+          "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)",
           "damping_evening": "Csillapítási tényező: korrigálja az esti eredményeket",
           "damping_morning": "Csillapítási tényező: korrigálja a reggeli eredményeket",
-          "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
           "modules_power": "A napelemmodulok teljes Watt csúcsteljesítménye"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Elhajlás (0 = vízszintes, 90 = függőleges)",
+          "azimuth": "Azimut (360 fok, 0 = észak, 90 = kelet, 180 = dél, 270 = nyugat)"
         }
       }
     }

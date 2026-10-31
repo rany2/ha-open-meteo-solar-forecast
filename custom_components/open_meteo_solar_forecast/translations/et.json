@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)",
-          "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
           "latitude": "Laiuskraad",
           "longitude": "Pikkuskraad",
           "modules_power": "Päikesemoodulite koguvõimsus vattides"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
+          "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)",
           "damping_evening": "Summutustegur: korrigeerib tulemusi õhtul",
           "damping_morning": "Summutustegur: korrigeerib tulemusi hommikul",
-          "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
           "modules_power": "Päikesemoodulite koguvõimsus vattides"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinatsioon (0 = horisontaalne, 90 = vertikaalne)",
+          "azimuth": "Asimuut (360 kraadi, 0 = põhi, 90 = ida, 180 = lõuna, 270 = lääs)"
         }
       }
     }

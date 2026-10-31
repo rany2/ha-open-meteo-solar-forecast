@@ -8,10 +8,14 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 de grade, 0 = Nord, 90 = Est, 180 = Sud, 270 = Vest)",
-          "declination": "Declinație (0 = Orizontal, 90 = Vertical)",
           "latitude": "Latitudine",
           "longitude": "Longitudine"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declinație (0 = Orizontal, 90 = Vertical)",
+          "azimuth": "Azimut (360 de grade, 0 = Nord, 90 = Est, 180 = Sud, 270 = Vest)"
         }
       }
     }

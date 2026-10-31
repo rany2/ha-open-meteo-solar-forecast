@@ -8,10 +8,14 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 grader, 0 = Nord, 90 = Øst, 180 = Sør, 270 = Vest)",
-          "declination": "Deklinasjon (0 = horisontal, 90 = vertikal)",
           "latitude": "Breddegrad",
           "longitude": "Lengdegrad"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Deklinasjon (0 = horisontal, 90 = vertikal)",
+          "azimuth": "Azimut (360 grader, 0 = Nord, 90 = Øst, 180 = Sør, 270 = Vest)"
         }
       }
     }

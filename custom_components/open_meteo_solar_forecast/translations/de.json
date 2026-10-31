@@ -11,9 +11,7 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 Grad, 0 = Norden, 90 = Osten, 180 = Süden, 270 = Westen)",
           "tracking": "Solar-Tracker-Typ: none, azimuth (vertikale Achse), tilt (Neigungsachse) oder dual (zweiachsig)",
-          "declination": "Deklination (0 = Horizontal, 90 = Vertikal)",
           "latitude": "Breitengrad",
           "longitude": "Längengrad",
           "modules_power": "Gesamt-Watt-Spitzenleistung deiner Solarmodule",
@@ -22,7 +20,23 @@
           "partial_shading": "(Nur zusammen mit Horizontlinie:) Wenn aktiviert, werden Schatten als partiell behandelt.",
           "add_another": "Weitere Anlage hinzufügen"
         },
-        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren."
+        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren.",
+        "data_description": {
+          "tracking": "Wähle die Achsen, die der Sonne folgen. Danach werden nur feste Winkel abgefragt. Bei zweiachsigen Trackern entfällt die Winkeleingabe.",
+          "efficiency_factor": "Faktor für elektrische DC-Verluste (1 = keine). Die Bibliothek berechnet zusätzlich eine temperaturabhängige Leistungskorrektur."
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Neigung",
+          "azimuth": "Azimut"
+        },
+        "data_description": {
+          "declination": "Tatsächliche Modulneigung: 0° = horizontal, 90° = vertikal.",
+          "azimuth": "Tatsächliche Modulausrichtung: 0° = Norden, 90° = Osten, 180° = Süden, 270° = Westen."
+        },
+        "title": "Feste Modulwinkel",
+        "description": "Feste Winkel für PV-Anlage {array_number}. Von der Sonne nachgeführte Achsen benötigen keine Eingabe."
       }
     }
   },
@@ -101,18 +115,32 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 Grad, 0 = Norden, 90 = Osten, 180 = Süden, 270 = Westen)",
           "tracking": "Solar-Tracker-Typ: none, azimuth (vertikale Achse), tilt (Neigungsachse) oder dual (zweiachsig)",
           "damping_evening": "Dämpfungsfaktor: Passt die Ergebnisse am Abend an (0.0-1.0, 0.0 = keine Dämpfung, 1.0 = maximale Dämpfung)",
           "damping_morning": "Dämpfungsfaktor: Passt die Ergebnisse am Morgen an (0.0-1.0, 0.0 = keine Dämpfung, 1.0 = maximale Dämpfung)",
-          "declination": "Deklination (0 = Horizontal, 90 = Vertikal)",
           "modules_power": "Gesamt-Watt-Spitzenleistung deiner Solarmodule",
           "use_horizon": "Berücksichtige Horizontline aus Horizont-Datei",
           "horizon_filepath": "Pfad zur Horizont-Datei",
           "partial_shading": "Behandle Schatten als partiell",
           "add_another": "Weitere Anlage hinzufügen"
         },
-        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren."
+        "description": "Einstellungen für PV-Anlage {array_number}. Aktiviere „Weitere Anlage hinzufügen“, um eine weitere Anlage zu konfigurieren.",
+        "data_description": {
+          "tracking": "Wähle die Achsen, die der Sonne folgen. Danach werden nur feste Winkel abgefragt. Bei zweiachsigen Trackern entfällt die Winkeleingabe.",
+          "efficiency_factor": "Faktor für elektrische DC-Verluste (1 = keine). Die Bibliothek berechnet zusätzlich eine temperaturabhängige Leistungskorrektur."
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Neigung",
+          "azimuth": "Azimut"
+        },
+        "data_description": {
+          "declination": "Tatsächliche Modulneigung: 0° = horizontal, 90° = vertikal.",
+          "azimuth": "Tatsächliche Modulausrichtung: 0° = Norden, 90° = Osten, 180° = Süden, 270° = Westen."
+        },
+        "title": "Feste Modulwinkel",
+        "description": "Feste Winkel für PV-Anlage {array_number}. Von der Sonne nachgeführte Achsen benötigen keine Eingabe."
       }
     }
   }

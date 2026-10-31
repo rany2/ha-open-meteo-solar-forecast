@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)",
-          "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
           "latitude": "Latitude",
           "longitude": "Longitude",
           "modules_power": "Puissance de crête totale en watts de vos modules solaires"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
+          "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)",
           "damping_evening": "Facteur d'amortissement : ajuste les résultats le soir",
           "damping_morning": "Facteur d'amortissement : ajuste les résultats le matin",
-          "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
           "modules_power": "Puissance de crête totale en watts de vos modules solaires"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Déclinaison (0 = horizontale, 90 = verticale)",
+          "azimuth": "Azimut (360 degrés, 0 = Nord, 90 = Est, 180 = Sud, 270 = Ouest)"
         }
       }
     }

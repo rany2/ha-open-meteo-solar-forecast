@@ -4,9 +4,13 @@
       "user": {},
       "array": {
         "data": {
-          "azimuth": "Azimut (360 grados, 0 = Norte, 90 = Este, 180 = Sur, 270 = Oeste)",
-          "declination": "Declinación (0 = Horizontal, 90 = Vertical)",
           "modules_power": "Potencia pico total en vatios de sus módulos solares"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Declinación (0 = Horizontal, 90 = Vertical)",
+          "azimuth": "Azimut (360 grados, 0 = Norte, 90 = Este, 180 = Sur, 270 = Oeste)"
         }
       }
     }

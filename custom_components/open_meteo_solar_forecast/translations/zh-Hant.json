@@ -8,11 +8,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）",
-          "declination": "偏角（0 = 水平、90 = 垂直）",
           "latitude": "緯度",
           "longitude": "經度",
           "modules_power": "太陽能模組總峰值功率"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "偏角（0 = 水平、90 = 垂直）",
+          "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）"
         }
       }
     }
@@ -66,11 +70,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）",
           "damping_evening": "阻尼因素：調整傍晚結果",
           "damping_morning": "阻尼因素：調整清晨結果",
-          "declination": "偏角（0 = 水平、90 = 垂直）",
           "modules_power": "太陽能模組總峰值功率"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "偏角（0 = 水平、90 = 垂直）",
+          "azimuth": "方位角（360 度單位。0 = 北、90 = 東、180 = 南、270 = 西）"
         }
       }
     }

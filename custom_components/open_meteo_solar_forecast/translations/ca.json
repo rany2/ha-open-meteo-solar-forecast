@@ -9,11 +9,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 graus, 0 = nord, 90 = est, 180 = sud, 270 = oest)",
-          "declination": "Inclinació (0 = horitzontal, 90 = vertical)",
           "latitude": "Latitud",
           "longitude": "Longitud",
           "modules_power": "Potència màxima total dels panells solars"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Inclinació (0 = horitzontal, 90 = vertical)",
+          "azimuth": "Azimut (360 graus, 0 = nord, 90 = est, 180 = sud, 270 = oest)"
         }
       }
     }
@@ -67,11 +71,15 @@
       },
       "array": {
         "data": {
-          "azimuth": "Azimut (360 graus, 0 = nord, 90 = est, 180 = sud, 270 = oest)",
           "damping_evening": "Factor d'amortiment: ajusta els resultats al vespre",
           "damping_morning": "Factor d'amortiment: ajusta els resultats al matí",
-          "declination": "Inclinació (0 = horitzontal, 90 = vertical)",
           "modules_power": "Potència màxima total dels panells solars"
+        }
+      },
+      "orientation": {
+        "data": {
+          "declination": "Inclinació (0 = horitzontal, 90 = vertical)",
+          "azimuth": "Azimut (360 graus, 0 = nord, 90 = est, 180 = sud, 270 = oest)"
         }
       }
     }
