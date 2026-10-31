@@ -59,6 +59,16 @@ def storage_key(entry_id: str) -> str:
     return f"{DOMAIN}.{entry_id}"
 
 
+def forecast_covers_time(estimate: Estimate, at: datetime | None = None) -> bool:
+    """Check whether a quarter-hour forecast interval covers the requested time."""
+    if at is None:
+        at = estimate.now()
+    interval_start = at.replace(
+        minute=at.minute - at.minute % 15, second=0, microsecond=0
+    )
+    return interval_start in estimate.watts
+
+
 def _config_fingerprint(entry: ConfigEntry) -> str:
     """Fingerprint the settings that affect forecast values.
 
@@ -326,6 +336,10 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
             LOGGER.warning("Discarding malformed retained forecast data")
             return None
 
+        if not forecast_covers_time(estimate):
+            LOGGER.debug("Discarding retained forecast outside its time range")
+            return None
+
         self._last_successful_update = dt_util.parse_datetime(last_update)
         return estimate
 
@@ -366,8 +380,12 @@ class OpenMeteoSolarForecastDataUpdateCoordinator(DataUpdateCoordinator[Estimate
         try:
             async with asyncio.timeout(API_TIMEOUT_SECONDS):
                 estimate = await self.forecast.estimate()
+            if not forecast_covers_time(estimate):
+                raise UpdateFailed("API returned no forecast for the current time")
         except Exception as err:
             retained = self.data
+            if retained is not None and not forecast_covers_time(retained):
+                retained = None
             if retained is None:
                 retained = await self._async_load_retained_estimate()
             if retained is None:
