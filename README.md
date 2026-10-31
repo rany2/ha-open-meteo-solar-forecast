@@ -2,6 +2,8 @@
 
 This custom component integrates the [open-meteo-solar-forecast](https://github.com/rany2/open-meteo-solar-forecast) with Home Assistant. It allows you to see what your solar panels may produce in the future.
 
+Forecasts update every 30 minutes. The first request loads 92 days of history and 16 days of forecast. Later requests refresh yesterday and the forecast, retaining older history locally. After a gap, the integration requests the days since the last successful update as well. History remains limited to 92 days and survives restarts. Changed settings or a changed API UTC offset cause a full history refresh.
+
 ## Installation
 
 ### HACS
