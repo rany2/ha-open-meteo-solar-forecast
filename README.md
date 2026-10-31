@@ -32,6 +32,19 @@ To change the configuration later, open the integration's options and click "Nex
 
 Declination and azimuth accept fractional degrees (e.g. a declination of `22.5`).
 
+### Updating an Array's Location
+
+The `open_meteo_solar_forecast.update_array_location` action updates one array.
+Select `config_entry_id` when you have multiple integration entries and
+`array_number` when the entry has multiple arrays. Array numbers follow the
+configuration wizard order, starting at 1. Calls with an ambiguous target are
+rejected. Existing calls without a target still work for a single entry with a
+single array.
+
+Omit `location_override` to use Home Assistant's current location, or supply
+`latitude` and `longitude`. Other arrays keep their configured coordinates.
+The action requires an administrator or an automation context.
+
 ### Azimuth
 
 Azimuth ranges from 0° to 360°: North (0°), East (90°), South (180°), West (270°). For negative values, add 360° (e.g., -90° becomes 270°).

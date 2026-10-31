@@ -1,5 +1,21 @@
 update_array_location:
   fields:
+    config_entry_id:
+      name: Integration entry
+      description: Required when more than one Open-Meteo Solar Forecast entry exists.
+      required: false
+      selector:
+        config_entry:
+          integration: open_meteo_solar_forecast
+    array_number:
+      name: Array number
+      description: Array position in the configuration wizard, starting at 1. Required for entries with multiple arrays.
+      required: false
+      selector:
+        number:
+          min: 1
+          step: 1
+          mode: box
     location_override:
       required: false
       selector:

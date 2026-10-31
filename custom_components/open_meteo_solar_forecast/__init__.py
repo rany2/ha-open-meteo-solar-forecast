@@ -5,10 +5,16 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Any
 
+import voluptuous as vol
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, Platform
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.exceptions import ServiceValidationError
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.service import async_register_admin_service
 from homeassistant.helpers.storage import Store
+from homeassistant.helpers.typing import ConfigType
 
 from .const import (
     CONF_AZIMUTH,
@@ -90,6 +96,80 @@ def _normalize_option(value: Any, array_count: int, default: Any) -> list[Any]:
     return [value] * array_count
 
 
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Register the location service once for all config entries."""
+
+    async def async_update_array_location(call: ServiceCall) -> None:
+        entries = {
+            entry.entry_id: entry
+            for entry in hass.config_entries.async_entries(DOMAIN)
+        }
+        entry_id = call.data.get("config_entry_id")
+        if entry_id is None:
+            if len(entries) != 1:
+                raise ServiceValidationError("Select a config_entry_id to update")
+            entry = next(iter(entries.values()))
+        elif entry_id not in entries:
+            raise ServiceValidationError(
+                "Unknown Open-Meteo Solar Forecast config entry"
+            )
+        else:
+            entry = entries[entry_id]
+
+        array_count = _resolve_array_count(entry)
+        array_number = call.data.get("array_number")
+        if array_number is None:
+            if array_count != 1:
+                raise ServiceValidationError("Select an array_number to update")
+            array_number = 1
+        if array_number > array_count:
+            raise ServiceValidationError(
+                "array_number exceeds the configured array count"
+            )
+
+        location = call.data.get(
+            "location_override",
+            {
+                CONF_LATITUDE: hass.config.latitude,
+                CONF_LONGITUDE: hass.config.longitude,
+            },
+        )
+        coordinates = {}
+        for key in (CONF_LATITUDE, CONF_LONGITUDE):
+            values = _normalize_option(_entry_value(entry, key), array_count, None)
+            values[array_number - 1] = location[key]
+            coordinates[key] = values[0] if array_count == 1 else values
+
+        hass.config_entries.async_update_entry(
+            entry,
+            data={**entry.data, **coordinates},
+            options={**entry.options, **coordinates},
+        )
+
+    async_register_admin_service(
+        hass,
+        DOMAIN,
+        "update_array_location",
+        async_update_array_location,
+        schema=vol.Schema(
+            {
+                vol.Optional("config_entry_id"): cv.string,
+                vol.Optional("array_number"): vol.All(vol.Coerce(int), vol.Range(min=1)),
+                vol.Optional("location_override"): vol.Schema(
+                    {
+                        vol.Required(CONF_LATITUDE): cv.latitude,
+                        vol.Required(CONF_LONGITUDE): cv.longitude,
+                        vol.Optional("radius"): vol.All(
+                            vol.Coerce(float), vol.Range(min=0)
+                        ),
+                    }
+                ),
+            }
+        ),
+    )
+    return True
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Solar Forecast from a config entry."""
     default_horizon_map: tuple[tuple[float, float], ...] = ((0.0, 0.0), (360.0, 0.0))
@@ -137,21 +217,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
-
-    async def async_update_array_location(call: ServiceCall | None = None):
-        new_location = call.data.get("location_override", {
-                "latitude": hass.config.latitude,
-                "longitude": hass.config.longitude,
-        })  # Optional location override defaults to current Home Assistant location
-
-        # Updating config entry will automatically update the coordinator
-        hass.config_entries.async_update_entry(
-            entry,
-            data={**entry.data, CONF_LATITUDE: new_location["latitude"], CONF_LONGITUDE: new_location["longitude"]},
-            options={**entry.options, CONF_LATITUDE: new_location["latitude"], CONF_LONGITUDE: new_location["longitude"]},
-        )
-
-    hass.services.async_register(DOMAIN, "update_array_location", async_update_array_location)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
